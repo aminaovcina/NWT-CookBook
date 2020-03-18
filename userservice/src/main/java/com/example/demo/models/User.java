@@ -9,20 +9,20 @@ import java.util.List;
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String title;
-    private Date releasedate;
-    private String description;
-    private int preparationduration;
-    // @ManyToOne //vise recepata pripada istoj kategoriji
-    // private Category category;
-    // @ManyToOne
-    // private User creator;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private Date dateOfBirth;
+    private String city;
+    private String email;
+
+
     protected User() {
     };
     //constructor
 
     //getteri
-    public String getTitle() {
-        return title;
+    public String getFistName() {
+        return firstName;
     }
 }
