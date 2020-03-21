@@ -1,6 +1,6 @@
 package com.example.demo.controllers;
 
-import com.example.demo.repositories.UserInterface;
+import com.example.demo.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
     @Autowired
-    private UserInterface userRepository;
+    private UserRepository userRepository;
 
 }

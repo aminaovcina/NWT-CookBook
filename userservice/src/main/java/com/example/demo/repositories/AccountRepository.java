@@ -1,7 +1,9 @@
 package com.example.demo.repositories;
 
+import java.util.UUID;
+
 import com.example.demo.models.Account;
 import org.springframework.data.repository.CrudRepository;
 
-public interface AccountInterface extends CrudRepository<User, Long>  {
+public interface AccountRepository extends CrudRepository<Account, UUID>  {
 }

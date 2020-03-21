@@ -1,7 +1,10 @@
 package com.example.demo.repositories;
 
+import java.util.UUID;
+
 import com.example.demo.models.User;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserInterface extends CrudRepository<User, Long>  {
+public interface UserRepository extends CrudRepository<User, UUID>  {
 }
+
