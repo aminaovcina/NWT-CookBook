@@ -1,8 +1,9 @@
 package com.example.demo;
 
-import java.util.UUID;
+import java.util.Calendar;
 
 import com.example.demo.models.Account;
+import com.example.demo.models.Gender;
 import com.example.demo.models.User;
 import com.example.demo.repositories.AccountRepository;
 import com.example.demo.repositories.UserRepository;
@@ -26,26 +27,22 @@ public class UserApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		User user = new User();
-		user.setId(UUID.randomUUID());
-		user.setFirstName("azra");
-		user.setLastName("ibric");
-		user.setEmail("ayra@bstelecom.ba");
-		user.setCity("sarajevo");
-		user.setDate_Of_Birth("12.2.2012.");
-		user.setGender("zensko");
+		/*Calendar dateOfBirth = Calendar.getInstance();
+		dateOfBirth.set(1997, 10, 3); //godina, mjesec, dan
 
+
+		User user = new User("azra", "ibric",  Gender.female, dateOfBirth.getTime(), "sarajevo", "azra@bb.com");
+		//User user1 = new User("ana", "anic",  Gender.female, dateOfBirth.getTime(), "sarajevo", "azrabb.com");
 		
 		userRepository.save(user);
+		//userRepository.save(user1);
 
-		Account account = new Account();
-		account.setId(UUID.randomUUID());
-		account.setPassword("1234azra");
-		account.setUsername("azra");
-		account.setUser(user);
+		Account account = new Account(user, "azraibric", "azra1234");
+		//Account account1 = new Account(user, "anaanic", "ana1234");
 
-		
 		accountRepository.save(account);
+		//accountRepository.save(account1);
+		*/
 		
 	} 
 

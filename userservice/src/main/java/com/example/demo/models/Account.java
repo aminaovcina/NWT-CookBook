@@ -1,29 +1,42 @@
 package com.example.demo.models;
 
-import java.io.Serializable;
-import java.util.UUID;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Account")
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 
+    @NotNull
+    @Size(max = 128)
     private String username;
+
+    @NotNull
+    @Size(max = 128)
     private String password;
 
 
     public Account() {
         super();
     };
+
+    public Account(User user, String username, String password) {
+        this.user = user;
+        this.username = username;
+        this.password = password;
+    }
     //constructor
 
     /**
@@ -41,13 +54,13 @@ public class Account {
     /**
      * @return the id
      */
-    public UUID getId() {
+    public int getId() {
         return id;
     }
     /**
      * @param id the id to set
      */
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
     //getteri
