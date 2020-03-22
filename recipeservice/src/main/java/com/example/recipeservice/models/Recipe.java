@@ -1,44 +1,48 @@
 package com.example.recipeservice.models;
+
 import javax.persistence.*;
-import java.util.Date;
+
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Recipe")
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private UUID id;
     private String title;
-    private Date releasedate;
     private String description;
-    private int preparationduration;
-    @ManyToOne //vise recepata pripada istoj kategoriji
-    private Category category;
-    @ManyToOne //vise kategorija pripada istom tipu jela
+    private int cookingtemperature;
+    private int cookingtime;
+    @OneToMany(mappedBy = "recipe") //Jedan recipe moze imati vise categorya
+    private List<RecipeCategory> rc;
+    @ManyToOne //vise recepata pripada istom tipu jela
     private Dish dish;
-    @OneToOne
+    @OneToOne(mappedBy = "recipe")
     private Post post;
     protected Recipe() {
+        super();
     };
     //constructor
-    public Recipe(String title, Date releasedate, String description, int duration){
+    public Recipe(String title, String description, int duration, int temperature){
         this.title = title;
-        this.releasedate = releasedate;
         this.description = description;
-        this.preparationduration = duration;
+        this.cookingtime = duration;
+        this.cookingtemperature = temperature;
     }
     //getteri
     public String getTitle() {
         return title;
     }
-    public Date getReleaseDate() {
-        return releasedate;
-    }
     public String getDescription() {
         return description;
     }
-    public int getPreparationDuration(){
-        return preparationduration;
+    public int getCookingTime(){
+        return cookingtime;
+    }
+    public int getCookingTemperature(){
+        return cookingtemperature;
     }
 
 }

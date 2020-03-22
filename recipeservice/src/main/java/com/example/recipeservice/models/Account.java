@@ -1,6 +1,7 @@
 package com.example.recipeservice.models;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.*;
 
@@ -9,8 +10,8 @@ import javax.persistence.*;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @OneToMany(mappedBy = "post") //Jedan korisnik ima vise objava
+    private UUID id;
+    @OneToMany(mappedBy = "creator") //Jedan korisnik ima vise objava
     private List<Post> posts;
     public Account() {}
     @Override
@@ -20,7 +21,7 @@ public class Account {
                 id
         );
     }
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
