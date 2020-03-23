@@ -1,17 +1,21 @@
 package com.example.recipeservice.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "Recipe")
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
+    @NotNull
+    @Size(max = 128)
     private String title;
+    @Size(max = 300)
     private String description;
     private int cookingtemperature;
     private int cookingtime;
@@ -25,13 +29,18 @@ public class Recipe {
         super();
     };
     //constructor
-    public Recipe(String title, String description, int duration, int temperature){
+    public Recipe(String title, String description, int duration, int temperature, Dish dish, List<RecipeCategory> rc){
         this.title = title;
         this.description = description;
         this.cookingtime = duration;
         this.cookingtemperature = temperature;
+        this.dish = dish;
+        this.rc = rc;
     }
     //getteri
+    public Long getId(){
+        return id;
+    }
     public String getTitle() {
         return title;
     }
@@ -43,6 +52,12 @@ public class Recipe {
     }
     public int getCookingTemperature(){
         return cookingtemperature;
+    }
+    public Dish getDish(){
+        return dish;
+    }
+    public Post getPost(){
+        return post;
     }
 
 }

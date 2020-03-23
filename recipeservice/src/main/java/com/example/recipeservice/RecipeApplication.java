@@ -17,7 +17,17 @@ public class RecipeApplication {
 	@Bean
 	public CommandLineRunner demo(CategoryInterface cRepository, AccountInterface aRepository, DishInterface dRepository, PostInterface pRepository, RecipeInterface rRepository,RecipeCategoryInterface rcRepositroy){
 		return (args) -> {
-			dRepository.save(new Dish("Main dish", "The star of the meal.",null));
+			Dish dish = new Dish("Main dish", "The star of the meal.");
+			dRepository.save(dish);
+			Dish dish2 = new Dish("Dessert", "Sweetest part of the meal");
+			dRepository.save(dish2);
+			Category kategorija = new Category("EasyMeal");
+			cRepository.save(kategorija);
+			Category kategorija2 = new Category("NoBaking");
+			cRepository.save(kategorija2);
+			rRepository.save(new Recipe("Klepe", "Klepice slatke male", 30, 270, dish, null));
+			rRepository.save(new Recipe("Tufahija", "Tufahije za pola sata", 30, 270, dish2, null));
+
 		};
 	}
 }

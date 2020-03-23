@@ -1,26 +1,32 @@
 package com.example.recipeservice.models;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Dish")
 public class Dish {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
+    @Column(unique = true)
     private String title;
+    @Size(max = 250)
     private String description;
     @OneToMany(mappedBy = "dish") //Jedan dish ima vise recipe
     private List<Recipe> recipes;
     protected Dish() {
+        super();
     };
-    public Dish(String title, String description, List<Recipe> recipes){
+    public Dish(String title, String description){
         this.title = title;
         this.description = description;
-        this.recipes = recipes;
+    }
+    public Long getId(){
+        return id;
     }
     public String getTitle() {
         return title;

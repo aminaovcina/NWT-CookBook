@@ -1,9 +1,10 @@
 package com.example.recipeservice.models;
 
 import java.util.List;
-import java.util.UUID;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -11,15 +12,22 @@ import javax.persistence.*;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
+    @Column(unique = true)
     private String name;
     @OneToMany(mappedBy = "category") //Jedan category moze imati vise recipea
     private List<RecipeCategory> rc;
     protected Category() {
+        super();
     };
-  
+    public Category(String name){
+        this.name = name;
+    }
     public String getName() {
         return name;
+    }
+    public Long getId(){
+        return id;
     }
     
 }

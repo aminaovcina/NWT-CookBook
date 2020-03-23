@@ -10,17 +10,19 @@ import javax.persistence.*;
 public class RecipeCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
     @ManyToOne
     private Recipe recipe;
     @ManyToOne
     private Category category;
-    protected RecipeCategory() {};
+    protected RecipeCategory() {
+        super();
+    };
     public RecipeCategory(Recipe recipe, Category category){
         this.category = category;
         this.recipe = recipe;
     }
-    public UUID getId(){
+    public Long getId(){
         return id;
     }
     public Recipe getRecipe(){
