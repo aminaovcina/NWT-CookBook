@@ -1,10 +1,7 @@
 package com.example.recipeservice.models;
 
 import java.util.List;
-
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 
 @Entity

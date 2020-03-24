@@ -1,15 +1,21 @@
 package com.example.recipeservice.controllers;
 
-import com.example.recipeservice.repositories.CategoryInterface;
+import java.util.List;
+
+import com.example.recipeservice.models.Category;
+import com.example.recipeservice.services.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("category")
-
 @RestController
 public class CategoryController {
     @Autowired
-    private CategoryInterface categoryRepository;
+    CategoryService categoryService;
+
+    @GetMapping("/category")
+    private List<Category> getAllCategories(){
+        return categoryService.getAllCategories();
+    }
 
 }

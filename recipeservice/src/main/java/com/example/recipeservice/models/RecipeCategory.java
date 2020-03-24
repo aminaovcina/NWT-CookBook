@@ -1,7 +1,5 @@
 package com.example.recipeservice.models;
 
-import java.util.UUID;
-
 import javax.persistence.*;
 
 

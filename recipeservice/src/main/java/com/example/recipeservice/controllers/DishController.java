@@ -1,15 +1,23 @@
 package com.example.recipeservice.controllers;
 
-import com.example.recipeservice.repositories.DishInterface;
+import java.util.List;
+
+import com.example.recipeservice.models.Dish;
+import com.example.recipeservice.services.DishService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("dish")
 
 @RestController
 public class DishController {
     @Autowired
-    private DishInterface dishRepository;
+    DishService dishService;
+
+    @GetMapping("/dish")
+    private List<Dish> getAllDishes(){
+        return dishService.getAllDishes();
+    }
+
 
 }

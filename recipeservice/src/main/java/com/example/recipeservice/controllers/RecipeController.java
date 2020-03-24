@@ -1,7 +1,6 @@
 package com.example.recipeservice.controllers;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.example.recipeservice.models.Recipe;
 import com.example.recipeservice.services.RecipeService;

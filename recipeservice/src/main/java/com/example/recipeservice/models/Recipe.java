@@ -23,6 +23,7 @@ public class Recipe {
     private List<RecipeCategory> rc;
     @ManyToOne //vise recepata pripada istom tipu jela
     private Dish dish;
+    private Long idDish;
     @OneToOne(mappedBy = "recipe")
     private Post post;
     protected Recipe() {
@@ -35,6 +36,7 @@ public class Recipe {
         this.cookingtime = duration;
         this.cookingtemperature = temperature;
         this.dish = dish;
+        this.idDish = dish.getId();
         this.rc = rc;
     }
     //getteri
@@ -55,6 +57,9 @@ public class Recipe {
     }
     public Dish getDish(){
         return dish;
+    }
+    public Long getDishId(){
+        return idDish;
     }
     public Post getPost(){
         return post;

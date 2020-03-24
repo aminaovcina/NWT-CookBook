@@ -2,7 +2,6 @@ package com.example.recipeservice.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.example.recipeservice.models.Dish;
 import com.example.recipeservice.models.Recipe;
@@ -31,8 +30,8 @@ public class RecipeService{
         List<Recipe> svi = (List<Recipe>) recipeRepository.findAll();
         List<Recipe> samo = new ArrayList<Recipe>();
          for(Recipe receptic : svi){
-             Dish novi = receptic.getDish();
-             if(novi.getId() == dish){
+             Long novi = receptic.getDishId();
+             if(novi == dish){
                  samo.add(receptic);
           }
       }
