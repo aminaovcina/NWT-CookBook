@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.Calendar;
 
+import com.example.demo.controllers.UserController;
 import com.example.demo.models.Account;
 import com.example.demo.models.Gender;
 import com.example.demo.models.User;
@@ -12,22 +13,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class UserApplication implements CommandLineRunner {
+public class UserApplication {
 
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
 	AccountRepository accountRepository;
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SpringApplication.run(UserApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
+	@Bean
+	public CommandLineRunner demo(UserRepository cRepository, AccountRepository aRepository){
+		return (args) -> {
+			Calendar dateOfBirth = Calendar.getInstance();
+			dateOfBirth.set(1997, 10, 3); //godina, mjesec, dan
+			User user = new User("azra", "ibric",  Gender.female, dateOfBirth.getTime(), "sarajevo", "azra@bb.com");
+			cRepository.save(user);
+
+			Account account = new Account(user, "azraibric", "azra1234");
+			accountRepository.save(account);
+
+		};
+	}
+
+	/*public void run(final String... args) throws Exception {
 		
-		/*Calendar dateOfBirth = Calendar.getInstance();
+		Calendar dateOfBirth = Calendar.getInstance();
 		dateOfBirth.set(1997, 10, 3); //godina, mjesec, dan
 
 
@@ -42,9 +57,10 @@ public class UserApplication implements CommandLineRunner {
 
 		accountRepository.save(account);
 		//accountRepository.save(account1);
-		*/
-		
-	} 
 
-	
+
+
+
+
+	}*/
 }

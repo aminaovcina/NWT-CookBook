@@ -1,8 +1,10 @@
 package com.example.demo.services;
 
 import java.util.List;
+
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,10 @@ public class UserService {
     }
 
     public void delete(int id) {
+        userRepository.deleteById(id);
+    }
+
+    public void findOne(int id) {
         userRepository.deleteById(id);
     }
 }

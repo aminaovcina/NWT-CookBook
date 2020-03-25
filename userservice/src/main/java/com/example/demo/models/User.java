@@ -20,11 +20,11 @@ public class User {
     
     @NotNull
     @Size(max = 65)
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
 
     @Size(max = 65)
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     private String lastName;
 
     @Enumerated(EnumType.STRING)
@@ -32,8 +32,8 @@ public class User {
     private Gender gender;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "date_of_birth")
-    private Date date_Of_Birth;
+    @Column(name = "dateOfBirth")
+    private Date dateOfBirth;
 
     @Size(max = 100)
     private String city;
@@ -52,7 +52,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
-        this.date_Of_Birth = date_Of_Birth;
+        this.dateOfBirth = date_Of_Birth;
         this.city = city;
         this.email = email;
     }
@@ -72,7 +72,7 @@ public String getCity() {
  * @return the date_Of_Birth
  */
 public Date getDate_Of_Birth() {
-    return date_Of_Birth;
+    return dateOfBirth;
 }/**
  * @return the email
  */
@@ -112,7 +112,7 @@ public void setCity(String city) {
  * @param date_Of_Birth the date_Of_Birth to set
  */
 public void setDate_Of_Birth(Date date_Of_Birth) {
-    this.date_Of_Birth = date_Of_Birth;
+    this.dateOfBirth = date_Of_Birth;
 }/**
  * @param email the email to set
  */

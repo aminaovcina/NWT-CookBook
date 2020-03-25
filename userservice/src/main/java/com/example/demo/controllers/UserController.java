@@ -1,14 +1,18 @@
 package com.example.demo.controllers;
 
 import java.util.List;
+
 import com.example.demo.models.User;
+import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 public class UserController {
+
 
     @Autowired
     UserService userService;
@@ -33,4 +37,5 @@ public class UserController {
         userService.saveOrUpdate(user);
         return user.getId();
     }
+
 }
