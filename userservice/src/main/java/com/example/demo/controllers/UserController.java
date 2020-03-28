@@ -1,9 +1,10 @@
 package com.example.demo.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
+import com.example.demo.errors.exception.UserNotFoundException;
 import com.example.demo.models.User;
-import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,42 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+  /*  @GetMapping("/user")
+    private User getUser(@Valid @RequestParam int id) {
+
+        User user = null;
+        try 
+        {
+           user = userService.getUser(id);
+        } catch (NoSuchElementException k)
+        {
+          throw new UserNotFoundException("User: "+id+ " not Found" );
+        }
+        return user;
+    }*/
+
     @GetMapping("/user/{id}")
-    private User getUser(@PathVariable("id") int id) {
-        return userService.getUserById(id);
+    private User getUserById(@PathVariable("id") int id) {
+        User user = null;
+        try 
+        {
+           user = userService.getUserById(id);
+        } catch (NoSuchElementException k)
+        {
+          throw new UserNotFoundException("User: "+ id + " not Found" );
+        }
+        return user;
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/user/delete/{id}")
     private void deleteUser(@PathVariable("id") int id) {
-        userService.delete(id);
+        try 
+        {
+          userService.delete(id);
+        } catch (Exception k)
+        {
+          throw new UserNotFoundException("User: "+ id + " not Found" );
+        }
     }
 
     @PostMapping("/user/save")

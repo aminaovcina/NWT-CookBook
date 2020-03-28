@@ -21,6 +21,7 @@ public class Account {
 
     @NotNull
     @Size(max = 128)
+    @Column(unique = true)
     private String username;
 
     @NotNull

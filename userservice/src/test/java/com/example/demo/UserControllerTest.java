@@ -1,8 +1,11 @@
 package com.example.demo;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.example.demo.errors.ApiError;
 import com.example.demo.models.Gender;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
@@ -23,8 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -95,7 +96,58 @@ public class UserControllerTest {
 		userService.delete(1);
 		assertThat(userRepository.count()).isEqualTo(1);
 	}
-		
+
+
+	@Test
+	@Order(4)
+	public void shouldShow400() throws Exception {
+
+	
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/h")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertUserToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToUser();
+	}
+
+
+	@Test
+	@Order(5)
+	public void shouldShow404() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/;")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertUserToJson()))
+		.andExpect(status().isNotFound())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToUser();
+	}
+
+	@Test
+	@Order(6)
+	public void shouldShow400Delete() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.delete("/user/delete/k")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertUserToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToUser();
+	}
+
+	@Test
+	@Order(7)
+	public void MethodNotAllowed() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/delete/1")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertUserToJson()))
+		.andExpect(status().isMethodNotAllowed())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToUser();
+	}
 /*
 	@Test
 	@Order(4)
@@ -114,5 +166,6 @@ public class UserControllerTest {
 
 */
 	
+
 
 }
