@@ -2,6 +2,7 @@ package com.example.recipeservice.services;
 
 import java.util.List;
 
+import com.example.recipeservice.exceptionHandling.CategoryAlreadyExistsException;
 import com.example.recipeservice.models.Category;
 import com.example.recipeservice.repositories.CategoryInterface;
 
@@ -14,5 +15,14 @@ public class CategoryService{
     CategoryInterface categoryRepository;
     public List<Category> getAllCategories() {
         return (List<Category>) categoryRepository.findAll();
+    }
+    public Category createCategory(String name) {
+        List<Category> categories = getAllCategories();
+        categories.forEach(c-> {
+            if (c.getName().equals(name)) {
+                throw new CategoryAlreadyExistsException(name);
+            }
+        });
+        return categoryRepository.save(new Category(name));
     }
 }
