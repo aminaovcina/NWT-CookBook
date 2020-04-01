@@ -1,7 +1,9 @@
 package com.example.recipeservice.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
+import com.example.recipeservice.exceptionHandling.RecipeNotFoundException;
 import com.example.recipeservice.models.Recipe;
 import com.example.recipeservice.services.RecipeService;
 
@@ -23,14 +25,25 @@ public class RecipeController {
     }
     @GetMapping("/recipe/{id}")
     private Recipe getRecipeById(@PathVariable("id") Long id) {
-        return recipeService.getRecipeById(id);
+        Recipe recipe = null;
+        try{
+            recipe = recipeService.getRecipeById(id);
+        }catch(NoSuchElementException ex){
+            throw new RecipeNotFoundException(id);
+        }
+        return recipe;
     }
-    @DeleteMapping("/recipe/{id}")
+    @DeleteMapping("/recipe/delete/{id}")
     private void deleteRecipe(@PathVariable("id") Long id) {
-        recipeService.deleteRecipe(id);
+        try{
+            recipeService.deleteRecipe(id);
+        }catch(Exception ex){
+            throw new RecipeNotFoundException(id);
+        }
+        
     }
     @PostMapping("/recipe/save")
-    private Long saveUser(@RequestBody Recipe recipe) {
+    private Long saveRecipe(@RequestBody Recipe recipe) {
         recipeService.saveOrUpdateRecipe(recipe);
         return recipe.getId();
     }

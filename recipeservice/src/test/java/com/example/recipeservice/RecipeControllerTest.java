@@ -100,8 +100,43 @@ public class RecipeControllerTest {
     @Order(4)
     public void deleteRecipe() throws Exception {
         saveOrUpdateRecipe();
-        String url = "/recipe/"+newRecipe.getId().toString();
+        String url = "/recipe/delete/"+newRecipe.getId().toString();
         mvc.perform(MockMvcRequestBuilders.delete(url)).andExpect(status().isOk());
     }
+    @Test
+	@Order(5)
+	public void shouldShow400() throws Exception {
+
+	
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/recipe/h")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertRecipeToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToRecipe();
+    }
+    @Test
+	@Order(6)
+	public void shouldShow400Delete() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.delete("/recipe/delete/k")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertRecipeToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToRecipe();
+    }
+    @Test
+	@Order(7)
+	public void MethodNotAllowed() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/recipe/delete/1")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertRecipeToJson()))
+		.andExpect(status().isMethodNotAllowed())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToRecipe();
+	}
 
 }

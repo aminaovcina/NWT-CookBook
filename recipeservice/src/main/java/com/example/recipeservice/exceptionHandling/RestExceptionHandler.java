@@ -39,6 +39,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
       ApiError apiError = new ApiError(HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(), builder.toString());
       return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
   }
+  @ExceptionHandler({RecipeNotFoundException.class })
+  public ResponseEntity<Object> handleRecipeNotFound(
+    RecipeNotFoundException ex, WebRequest request) {
+        ApiError apiError =  new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), ex.getMessage());
+      return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+  }
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<Object> handleTheSameProperty(Exception ex, HttpServletRequest request, HttpServletResponse response) {
