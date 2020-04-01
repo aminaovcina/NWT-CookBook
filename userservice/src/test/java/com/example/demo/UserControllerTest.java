@@ -90,13 +90,13 @@ public class UserControllerTest {
 	
 
 
-	@Test
+/*	@Test
 	@Order(3)
 	public void deleteOneUser() throws Exception {
 		userService.delete(1);
 		assertThat(userRepository.count()).isEqualTo(1);
 	}
-
+*/
 
 	@Test
 	@Order(4)

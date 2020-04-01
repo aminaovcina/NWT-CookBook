@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.Calendar;
+import java.util.List;
 
 import com.example.demo.controllers.UserController;
 import com.example.demo.models.Account;
@@ -13,9 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+@EnableEurekaClient
 @SpringBootApplication
+@RestController
 public class UserApplication {
 
 	@Autowired
@@ -25,6 +33,16 @@ public class UserApplication {
 	public static void main(final String[] args) {
 		SpringApplication.run(UserApplication.class, args);
 	}
+
+	@RequestMapping(value = "/")
+   public String home() {
+      return "Eureka Client application";
+   }
+	@Bean
+	 @LoadBalanced
+	 public RestTemplate getRestTemplate() {
+	 	return new RestTemplate();
+	 }
 
 	@Bean
 	public CommandLineRunner demo(UserRepository cRepository, AccountRepository aRepository){
@@ -38,6 +56,19 @@ public class UserApplication {
 			accountRepository.save(account);
 
 		};
+	}
+
+	/*@RestController
+	class ServiceInstanceRestController {
+
+		@Autowired
+		private DiscoveryClient discoveryClient;
+
+		@RequestMapping("/service-instances/{applicationName}")
+		public List<ServiceInstance> serviceInstancesByApplicationName(
+				@PathVariable String applicationName) {
+			return this.discoveryClient.getInstances(applicationName);
+		}
 	}
 
 	/*public void run(final String... args) throws Exception {
