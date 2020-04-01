@@ -19,18 +19,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-//@EnableEurekaClient
+@EnableEurekaClient
 @SpringBootApplication
+@RestController
 public class RecipeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RecipeApplication.class, args);
 	}
-	// @Bean
-	// @LoadBalanced
-	// public RestTemplate getRestTemplate() {
-	// 	return new RestTemplate();
-	// }
+	@RequestMapping(value = "/")
+   public String home() {
+      return "Eureka Client application";
+   }
+	@Bean
+	 @LoadBalanced
+	 public RestTemplate getRestTemplate() {
+	 	return new RestTemplate();
+	 }
 	@Bean
 	public CommandLineRunner demo(CategoryInterface cRepository, AccountInterface aRepository, DishInterface dRepository, PostInterface pRepository, RecipeInterface rRepository,RecipeCategoryInterface rcRepositroy){
 		return (args) -> {
