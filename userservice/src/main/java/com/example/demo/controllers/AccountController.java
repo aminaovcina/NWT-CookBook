@@ -1,6 +1,9 @@
 package com.example.demo.controllers;
 
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import com.example.demo.models.Account;
 import com.example.demo.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +21,24 @@ public class AccountController {
         accountService.saveOrUpdate(account);
         return account.getId();
     }
+
+    @GetMapping("/accounts")
+    private List<Account> getAllAccounts() {
+        return accountService.getAllAccounts();
+    }
+
+    @GetMapping("/account/{id}")
+    private Account getUserById(@PathVariable("id") int id) {
+        Account account = null;
+        account = accountService.getAccountById(id);
+        return account;
+    }
+
+    @DeleteMapping("/account/delete/{id}")
+    private void deleteUser(@PathVariable("id") int id) {
+        accountService.delete(id);
+    }
+
+
 
 }
