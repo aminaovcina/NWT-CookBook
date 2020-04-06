@@ -47,51 +47,14 @@ public class UserApplication {
 	@Bean
 	public CommandLineRunner demo(UserRepository cRepository, AccountRepository aRepository){
 		return (args) -> {
-			Calendar dateOfBirth = Calendar.getInstance();
+		/*	Calendar dateOfBirth = Calendar.getInstance();
 			dateOfBirth.set(1997, 10, 3); //godina, mjesec, dan
 			User user = new User("azra", "ibric",  Gender.female, dateOfBirth.getTime(), "sarajevo", "azra@bb.com");
 			cRepository.save(user);
 
 			Account account = new Account(user, "azraibric", "azra1234");
-			accountRepository.save(account);
+			accountRepository.save(account);*/
 
 		};
 	}
-
-	/*@RestController
-	class ServiceInstanceRestController {
-
-		@Autowired
-		private DiscoveryClient discoveryClient;
-
-		@RequestMapping("/service-instances/{applicationName}")
-		public List<ServiceInstance> serviceInstancesByApplicationName(
-				@PathVariable String applicationName) {
-			return this.discoveryClient.getInstances(applicationName);
-		}
-	}
-
-	/*public void run(final String... args) throws Exception {
-		
-		Calendar dateOfBirth = Calendar.getInstance();
-		dateOfBirth.set(1997, 10, 3); //godina, mjesec, dan
-
-
-		User user = new User("azra", "ibric",  Gender.female, dateOfBirth.getTime(), "sarajevo", "azra@bb.com");
-		//User user1 = new User("ana", "anic",  Gender.female, dateOfBirth.getTime(), "sarajevo", "azrabb.com");
-		
-		userRepository.save(user);
-		//userRepository.save(user1);
-
-		Account account = new Account(user, "azraibric", "azra1234");
-		//Account account1 = new Account(user, "anaanic", "ana1234");
-
-		accountRepository.save(account);
-		//accountRepository.save(account1);
-
-
-
-
-
-	}*/
 }
