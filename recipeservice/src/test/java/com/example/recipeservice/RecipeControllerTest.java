@@ -77,7 +77,7 @@ public class RecipeControllerTest {
     public String convertRecipeToJson() {
         ObjectMapper m = new ObjectMapper();
         try {
-            return m.writeValueAsString(new Recipe("KlepeZaBrisanje", "Klepice slatke male za brisanje", 30, 270, null, null));
+            return m.writeValueAsString(new Recipe("KlepeZaBrisanje", "Klepice slatke male za brisanje", 30, 270, null, null, null, null));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

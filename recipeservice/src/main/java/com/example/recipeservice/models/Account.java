@@ -11,8 +11,8 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy = "creator") //Jedan korisnik ima vise objava
-    private List<Post> posts;
+    @OneToMany(mappedBy = "account") //Jedan korisnik ima vise objava
+    private List<Recipe> posts;
     public Account() {
         super();
     }

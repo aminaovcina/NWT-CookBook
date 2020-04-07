@@ -3,11 +3,12 @@ package com.example.recipeservice.models;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import java.util.Date;
 import java.util.List;
 
 
 @Entity
-@Table(name = "Recipe")
+@Table(name = "recipe")
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,25 +20,29 @@ public class Recipe {
     private String description;
     private int cookingtemperature;
     private int cookingtime;
+    @Temporal(TemporalType.DATE)
+    private Date postdate;
     @OneToMany(mappedBy = "recipe") //Jedan recipe moze imati vise categorya
     private List<RecipeCategory> rc;
     @ManyToOne //vise recepata pripada istom tipu jela
+    @JoinColumn(name="dish_id")
     private Dish dish;
-    private Long idDish;
-    @OneToOne(mappedBy = "recipe")
-    private Post post;
+    @ManyToOne
+    @JoinColumn(name="account_id")
+    private Account account;
     protected Recipe() {
         super();
     };
     //constructor
-    public Recipe(String title, String description, int duration, int temperature, Dish dish, List<RecipeCategory> rc){
+    public Recipe(String title, String description, int duration, int temperature, Dish dish, List<RecipeCategory> rc, Date date, Account account){
         this.title = title;
         this.description = description;
         this.cookingtime = duration;
         this.cookingtemperature = temperature;
         this.dish = dish;
-        this.idDish = dish.getId();
         this.rc = rc;
+        this.account = account;
+        this.postdate = date;
     }
     //getteri
     public Long getId(){
@@ -59,10 +64,13 @@ public class Recipe {
         return dish;
     }
     public Long getDishId(){
-        return idDish;
+        return dish.getId();
     }
-    public Post getPost(){
-        return post;
+    public Long getAccountId(){
+        return account.getId();
+    }
+    public Date getPostDate(){
+        return postdate;
     }
 
 }

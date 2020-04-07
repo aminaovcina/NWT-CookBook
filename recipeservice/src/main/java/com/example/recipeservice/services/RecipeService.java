@@ -3,7 +3,6 @@ package com.example.recipeservice.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.recipeservice.models.Dish;
 import com.example.recipeservice.models.Recipe;
 import com.example.recipeservice.repositories.RecipeInterface;
 

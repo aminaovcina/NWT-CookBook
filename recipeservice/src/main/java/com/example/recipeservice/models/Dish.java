@@ -17,6 +17,7 @@ public class Dish {
     private String description;
     @OneToMany(mappedBy = "dish") //Jedan dish ima vise recipe
     private List<Recipe> recipes;
+
     protected Dish() {
         super();
     };

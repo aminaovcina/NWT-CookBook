@@ -1,9 +1,11 @@
 package com.example.recipeservice;
 
+import java.util.Date;
 import java.util.List;
 
 import com.example.recipeservice.models.*;
 import com.example.recipeservice.repositories.*;
+import com.thoughtworks.xstream.mapper.Mapper.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -37,7 +39,7 @@ public class RecipeApplication {
 	 	return new RestTemplate();
 	 }
 	@Bean
-	public CommandLineRunner demo(CategoryInterface cRepository, AccountInterface aRepository, DishInterface dRepository, PostInterface pRepository, RecipeInterface rRepository,RecipeCategoryInterface rcRepositroy){
+	public CommandLineRunner demo(CategoryInterface cRepository, AccountInterface aRepository, DishInterface dRepository, RecipeInterface rRepository,RecipeCategoryInterface rcRepositroy){
 		return (args) -> {
 			Dish dish = new Dish("Main dish", "The star of the meal.");
 			dRepository.save(dish);
@@ -47,8 +49,13 @@ public class RecipeApplication {
 			cRepository.save(kategorija);
 			Category kategorija2 = new Category("NoBaking");
 			cRepository.save(kategorija2);
-			rRepository.save(new Recipe("Klepe", "Klepice slatke male", 30, 270, dish, null));
-			rRepository.save(new Recipe("Tufahija", "Tufahije za pola sata", 30, 270, dish2, null));
+			Date d1 = new Date(); 
+			Account korisnik = new Account();
+			aRepository.save(korisnik);
+			Recipe recipe1 = new Recipe("Klepe", "Klepice slatke male", 30, 270, dish, null, d1, korisnik);
+			rRepository.save(recipe1);
+			rRepository.save(new Recipe("Tufahija", "Tufahije za pola sata", 30, 270, dish2, null, d1, korisnik));
+			
 
 		};
 	}
