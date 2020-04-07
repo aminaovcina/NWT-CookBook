@@ -22,6 +22,17 @@ public class RecipeService{
     public void saveOrUpdateRecipe(Recipe recipe){
         recipeRepository.save(recipe);
     }
+    public List<Recipe> getRecipesByUser(Long user){
+        List<Recipe> svi = (List<Recipe>) recipeRepository.findAll();
+        List<Recipe> samo = new ArrayList<Recipe>();
+         for(Recipe receptic : svi){
+             Long novi = receptic.getAccountId();
+             if(novi == user){
+                 samo.add(receptic);
+          }
+      }
+       return samo;
+    }
     public void deleteRecipe(Long id){
         recipeRepository.deleteById(id);
     }

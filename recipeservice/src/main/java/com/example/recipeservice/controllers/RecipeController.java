@@ -23,6 +23,10 @@ public class RecipeController {
     private List<Recipe> getRecipesByDish(@PathVariable("id") Long id){
         return recipeService.getRecipesByDish(id);
     }
+    @GetMapping("/recipes/user/{id}")
+    private List<Recipe> getRecipesByUser(@PathVariable("id") Long id){
+        return recipeService.getRecipesByUser(id);
+    }
     @GetMapping("/recipe/{id}")
     private Recipe getRecipeById(@PathVariable("id") Long id) {
         Recipe recipe = null;
