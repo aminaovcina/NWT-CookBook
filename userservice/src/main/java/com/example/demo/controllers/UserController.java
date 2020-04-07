@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.example.demo.errors.exception.UserNotFoundException;
+//import com.example.demo.feign.RecipeClient;
+import com.example.demo.models.Recipe;
 import com.example.demo.models.User;
 import com.example.demo.services.UserService;
 
@@ -13,29 +15,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
-
-
     @Autowired
     UserService userService;
+
+   /* @Autowired
+    RecipeClient recipeClient;*/
 
     @GetMapping("/users")
     private List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-
-  /*  @GetMapping("/user")
-    private User getUser(@Valid @RequestParam int id) {
-
-        User user = null;
-        try 
-        {
-           user = userService.getUser(id);
-        } catch (NoSuchElementException k)
-        {
-          throw new UserNotFoundException("User: "+id+ " not Found" );
-        }
-        return user;
-    }*/
 
     @GetMapping("/user/{id}")
     private User getUserById(@PathVariable("id") int id) {
@@ -67,4 +56,14 @@ public class UserController {
         return user.getId();
     }
 
+    //komunikacija sa recipeservisom
+
+  /* @GetMapping("user_recipes/{id}")
+    public List<Recipe> getCustomerById(@PathVariable String id){
+
+      List<Recipe> recipes = recipeClient.getRecipes();
+
+      return recipes;
+    }
+*/
 }

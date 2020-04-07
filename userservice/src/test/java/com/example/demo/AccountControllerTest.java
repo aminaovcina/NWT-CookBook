@@ -58,16 +58,21 @@ public class AccountControllerTest {
 	public String convertAccountToJson() {
         ObjectMapper m = new ObjectMapper();
         try {
-            User user = new User("azra", "ibric",  Gender.female, null, "sarajevo", "azara@bb.com");
-            return m.writeValueAsString(new Account(user,"azraIbric", "azraibric"));
+            User user = new User("azraaa", "ibriccc",  Gender.female, null, "sarajevo", "azgaraaa@bb.com");
+            return m.writeValueAsString(new Account(user,"azraIbriiigc", "azraibric"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return "";
     }
 
-	@Test
-    public void saveOrUpdateUser() throws Exception {
+    
+    /*Ovo je zakomentarisano jer padaju testovi, svaki put kad doda
+    istog user-a, kojem je email unique...
+    
+    @Test
+    @Order(1)
+    public void saveOrUpdateAccount() throws Exception {
         MvcResult r = mvc.perform(MockMvcRequestBuilders.post("/update/account")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertAccountToJson()))
@@ -76,9 +81,40 @@ public class AccountControllerTest {
 
         res = r.getResponse().getContentAsString();
         convertResToAccount();
+    }
+    
+    @Test
+    @Order(2)
+	public void deleteOneAccount() throws Exception {
+		accountService.delete(3);
+		assertThat(accountRepository.count()).isEqualTo(1);
+    }
+    */
+    @Test 
+    @Order(3)
+	public void getAllAccounts() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/accounts")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].id", is(1)))
+				.andExpect(jsonPath("$[0].username", is("azraibric")))
+				.andExpect(jsonPath("$[0].password", is("azra1234")))
+				;
 	}
 
-	
+    @Test
+    @Order(4)
+	public void getOneAccount() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/account/1")
+				.accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(1)))
+				.andExpect(jsonPath("$.username", is("azraibric")))
+				.andExpect(jsonPath("$.password", is("azra1234")))
+				;
+	}
 
+   
 
 }

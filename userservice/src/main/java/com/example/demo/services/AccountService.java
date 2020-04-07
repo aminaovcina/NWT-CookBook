@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.List;
+
 import com.example.demo.models.Account;
 import com.example.demo.repositories.AccountRepository;
 
@@ -16,5 +18,18 @@ public class AccountService {
     public void saveOrUpdate(Account account) {
         accountRepository.save(account);
     }
+
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAll();
+    }
+
+    public Account getAccountById(int id) {
+        return accountRepository.findById(id).get();
+    }
+
+    public void delete(int id) {
+        accountRepository.deleteById(id);
+    }
+
 
 }
