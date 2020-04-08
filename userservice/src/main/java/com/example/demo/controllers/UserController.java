@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.example.demo.errors.exception.UserNotFoundException;
-//import com.example.demo.feign.RecipeClient;
+import com.example.demo.feign.RecipeClient;
 import com.example.demo.models.Recipe;
 import com.example.demo.models.User;
 import com.example.demo.services.UserService;
@@ -18,8 +18,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-   /* @Autowired
-    RecipeClient recipeClient;*/
+    @Autowired
+    RecipeClient recipeClient;
 
     @GetMapping("/users")
     private List<User> getAllUsers() {
@@ -58,12 +58,12 @@ public class UserController {
 
     //komunikacija sa recipeservisom
 
-  /* @GetMapping("user_recipes/{id}")
+   @GetMapping("user_recipes/{id}")
     public List<Recipe> getCustomerById(@PathVariable String id){
 
       List<Recipe> recipes = recipeClient.getRecipes();
 
       return recipes;
     }
-*/
+
 }

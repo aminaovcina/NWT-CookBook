@@ -35,6 +35,10 @@ public class User {
     @Column(name = "dateOfBirth")
     private Date dateOfBirth;
 
+
+    @Column(name = "Active")
+    private Boolean active;
+
     @Size(max = 100)
     private String city;
 
@@ -58,6 +62,19 @@ public class User {
     }
   //geter i i seteri
 
+  /**
+   * @return the active
+   */
+  public Boolean getActive() {
+      return active;
+  }
+
+  /**
+   * @param active the active to set
+   */
+  public void setActive(Boolean active) {
+      this.active = active;
+  }
 /**
  * @return the account
  */

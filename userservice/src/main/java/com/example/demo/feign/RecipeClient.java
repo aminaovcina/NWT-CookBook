@@ -1,4 +1,4 @@
-/*package com.example.demo.feign;
+package com.example.demo.feign;
 
 import com.example.demo.models.Recipe;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -9,7 +9,7 @@ import java.util.List;
 @FeignClient(name="recipeservice")
 public interface RecipeClient {
 
-    @GetMapping("/recipe")
+    @GetMapping("/recipes/user/1")
     List<Recipe> getRecipes();
    
-}*/
+}
