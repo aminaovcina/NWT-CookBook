@@ -1,11 +1,7 @@
 package com.example.demo;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import com.example.demo.errors.ApiError;
 import com.example.demo.models.Gender;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
@@ -74,10 +70,10 @@ public class UserControllerTest {
             e.printStackTrace();
         }
         return "";
-    }
-	/*Ovo je zakomentarisano jer padaju testovi, svaki put kad doda
-    istog user-a, kojem je email unique
+	}
 	
+	//test 2 i 3 padaju nakon drugog pokretanja, jer email ne moze biti isti, dok kada brise
+	//usera, on je prvi put tu, a drugi put je obrisan, pa nema sta brisati...
 	@Test
     @Order(2)
     public void saveOrUpdateUser() throws Exception {
@@ -91,8 +87,6 @@ public class UserControllerTest {
         convertResToUser();
 	}
 	
-
-
 	@Test
 	@Order(3)
 	public void deleteOneUser() throws Exception {
@@ -100,12 +94,10 @@ public class UserControllerTest {
 		assertThat(userRepository.count()).isEqualTo(1);
 	}
 
-*/
+
 	@Test
 	@Order(4)
 	public void shouldShow400() throws Exception {
-
-	
 		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/h")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(convertUserToJson()))
@@ -165,6 +157,30 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$.city", is("sarajevo")))
 				.andExpect(jsonPath("$.email", is("azra@bb.com")))
 				.andExpect(jsonPath("$.date_Of_Birth", is("1997-11-03")))
+				;
+	}
+
+
+	//testiranje apija za komunikaciju izmedju recipe servisa i user servisa
+	@Test
+	@Order(9)
+	public void getUsersRecipe() throws Exception {
+		mvc.perform(MockMvcRequestBuilders.get("/user_recipes/5")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(5)))
+				.andExpect(jsonPath("$.firstName", is("azz")))
+				.andExpect(jsonPath("$.lastName", is("ibr")))
+				.andExpect(jsonPath("$.gender", is("female")))
+				.andExpect(jsonPath("$.city", is("saa")))
+				.andExpect(jsonPath("$.email", is("azzzz@bb.com")))
+				.andExpect(jsonPath("$.active", is(true)))
+				
+				.andExpect(jsonPath("$.recipes", hasSize(2)))
+				.andExpect(jsonPath("$.recipes[0].id", is(6)))
+				.andExpect(jsonPath("$.recipes[0].title", is("Klepe")))
+				.andExpect(jsonPath("$.recipes[0].description", is("Klepice slatke male")))
+				
 				;
 	}
 

@@ -12,6 +12,5 @@ public interface RecipeUser{
 
     @GetMapping("/recipes/user/{id}")
     List<Recipe> getRecipesByUser(@PathVariable("id") Long id);
-
   
 }

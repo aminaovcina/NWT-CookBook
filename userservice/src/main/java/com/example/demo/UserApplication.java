@@ -55,6 +55,7 @@ public class UserApplication {
 	 	return new RestTemplate();
 	 }
 
+	 //////prvobitno dodavanje usera i accounta kroz kod - prvi projektni zadatak
 	@Bean
 	public CommandLineRunner demo(UserRepository cRepository, AccountRepository aRepository){
 		return (args) -> {

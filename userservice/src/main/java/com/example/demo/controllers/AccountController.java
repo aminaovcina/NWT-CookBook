@@ -2,8 +2,6 @@ package com.example.demo.controllers;
 
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
 import com.example.demo.models.Account;
 import com.example.demo.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
