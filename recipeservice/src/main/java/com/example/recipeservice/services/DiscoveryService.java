@@ -14,7 +14,7 @@ public class DiscoveryService {
 
     public String getUserInstance() {
     List<String> services = new ArrayList<String>();
-        discoveryClient.getInstances("eurekauser").forEach(instance ->
+        discoveryClient.getInstances("userservice").forEach(instance ->
         {
             services.add(String.format("%s", instance.getUri()));
         });
