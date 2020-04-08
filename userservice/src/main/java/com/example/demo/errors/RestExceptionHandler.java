@@ -64,7 +64,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
      
-      ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "The same e-mail address", ex.getMessage());
+      ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "The same e-mail address or username", ex.getMessage());
       return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
   }
 }
