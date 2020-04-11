@@ -26,9 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -66,10 +63,8 @@ public class AccountControllerTest {
         return "";
     }
 
-    
-    /*Ovo je zakomentarisano jer padaju testovi, svaki put kad doda
-    istog user-a, kojem je email unique...
-    
+    //test 2 i 3 padaju nakon drugog pokretanja, jer username ne moze biti isti, dok kada brise
+	//account, on je prvi put tu, a drugi put je obrisan, pa nema sta brisati...
     @Test
     @Order(1)
     public void saveOrUpdateAccount() throws Exception {
@@ -89,7 +84,7 @@ public class AccountControllerTest {
 		accountService.delete(3);
 		assertThat(accountRepository.count()).isEqualTo(1);
     }
-    */
+    
     @Test 
     @Order(3)
 	public void getAllAccounts() throws Exception {
@@ -114,7 +109,5 @@ public class AccountControllerTest {
 				.andExpect(jsonPath("$.password", is("azra1234")))
 				;
 	}
-
-   
 
 }
