@@ -15,4 +15,7 @@ public class DishService{
     public List<Dish> getAllDishes() {
         return (List<Dish>) dishRepository.findAll();
     }
+    public Dish getDishById(Long id){
+        return dishRepository.findById(id).get();
+    }
 }

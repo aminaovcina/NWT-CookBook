@@ -41,19 +41,20 @@ public class RecipeApplication {
 	@Bean
 	public CommandLineRunner demo(CategoryInterface cRepository, AccountInterface aRepository, DishInterface dRepository, RecipeInterface rRepository,RecipeCategoryInterface rcRepositroy){
 		return (args) -> {
-			// Dish dish = new Dish("Main dish", "The star of the meal.");
-			// //dRepository.save(dish);
+			//insertovanje po jednog primjerka svih entiteta
+			//Dish dish = new Dish("Test dish", "The test star of the meal.");
+			//dRepository.save(dish);
 			// Dish dish2 = new Dish("Dessert", "Sweetest part of the meal");
 			// //dRepository.save(dish2);
-			// Category kategorija = new Category("EasyMeal");
-			// cRepository.save(kategorija);
+			//Category kategorija = new Category("Holiday");
+			//cRepository.save(kategorija);
 			// Category kategorija2 = new Category("NoBaking");
 			// cRepository.save(kategorija2);
-			// Date d1 = new Date(); 
-			// Account korisnik = new Account();
-			// aRepository.save(korisnik);
-			// Recipe recipe1 = new Recipe("Klepe", "Klepice slatke male", 30, 270, dish, null, d1, korisnik);
-			// rRepository.save(recipe1);
+			//Date d1 = new Date(); 
+			//Account korisnik = new Account();
+			//aRepository.save(korisnik);
+			//Recipe recipe1 = new Recipe("Klepe", "Klepice slatke male", 30, 270, dish, d1, null, korisnik);
+			//rRepository.save(recipe1);
 			// rRepository.save(new Recipe("Tufahija", "Tufahije za pola sata", 30, 270, dish2, null, d1, korisnik));
 			
 

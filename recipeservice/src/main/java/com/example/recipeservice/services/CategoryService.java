@@ -16,13 +16,18 @@ public class CategoryService{
     public List<Category> getAllCategories() {
         return (List<Category>) categoryRepository.findAll();
     }
-    public Category createCategory(String name) {
+    public Category getCategoryById(Long id){
+        return categoryRepository.findById(id).get();
+    }
+    
+    public Category createCategory(Category name) {
         List<Category> categories = getAllCategories();
         categories.forEach(c-> {
-            if (c.getName().equals(name)) {
-                throw new CategoryAlreadyExistsException(name);
+            if (c.getName().equals(name.getName())) {
+                throw new CategoryAlreadyExistsException(name.getName());
             }
         });
-        return categoryRepository.save(new Category(name));
+        return categoryRepository.save(name);
     }
+
 }

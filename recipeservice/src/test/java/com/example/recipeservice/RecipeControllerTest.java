@@ -51,13 +51,13 @@ public class RecipeControllerTest {
     @Test
     @Order(2)
     public void getRecipeById() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/recipe/6")
+        mvc.perform(MockMvcRequestBuilders.get("/recipe/1")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(6)))
-                .andExpect(jsonPath("$.title", is("Tufahija")))
-                .andExpect(jsonPath("$.description", is("Tufahije za pola sata")))
-                .andExpect(jsonPath("$.cookingTemperature", is(270)))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Jelo s mesom i povrcem")))
+                .andExpect(jsonPath("$.description", is("Jelo se priprema sa povrcem i mesom. Itd")))
+                .andExpect(jsonPath("$.cookingTemperature", is(230)))
                 .andExpect(jsonPath("$.cookingTime", is(30)))
         ;
     }
@@ -76,17 +76,17 @@ public class RecipeControllerTest {
 
     public String convertRecipeToJson() {
         ObjectMapper m = new ObjectMapper();
-        try {
-            return m.writeValueAsString(new Recipe("KlepeZaBrisanje", "Klepice slatke male za brisanje", 30, 270, null, null, null, null));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+         try {
+            return m.writeValueAsString(new Recipe("Klepe", "Klepice slatke male", 30, 270, null, null, null));
+     } catch (JsonProcessingException e) {
+             e.printStackTrace();
         }
         return "";
     }
 
     @Test
     @Order(3)
-    public void saveOrUpdateRecipe() throws Exception {
+    public void saveRecipe() throws Exception {
         MvcResult r = mvc.perform(MockMvcRequestBuilders.post("/recipe/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertRecipeToJson()))
@@ -99,15 +99,13 @@ public class RecipeControllerTest {
     @Test
     @Order(4)
     public void deleteRecipe() throws Exception {
-        saveOrUpdateRecipe();
+        saveRecipe();
         String url = "/recipe/delete/"+newRecipe.getId().toString();
         mvc.perform(MockMvcRequestBuilders.delete(url)).andExpect(status().isOk());
     }
     @Test
 	@Order(5)
 	public void shouldShow400() throws Exception {
-
-	
 		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/recipe/h")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(convertRecipeToJson()))
@@ -128,15 +126,50 @@ public class RecipeControllerTest {
         convertResToRecipe();
     }
     @Test
-	@Order(7)
-	public void MethodNotAllowed() throws Exception {
-		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/recipe/delete/1")
+    public void getRecipeByDish() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/recipesByDish/1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].title", is("Jelo s mesom i povrcem")))
+                .andExpect(jsonPath("$[0].description", is("Jelo se priprema sa povrcem i mesom. Itd")))
+                .andExpect(jsonPath("$[0].cookingTemperature", is(230)))
+                .andExpect(jsonPath("$[0].cookingTime", is(30)))
+        ;
+    }
+    @Test
+	public void shouldShow400ByDish() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/recipesByDish/h")
 		.contentType(MediaType.APPLICATION_JSON)
 		.content(convertRecipeToJson()))
-		.andExpect(status().isMethodNotAllowed())
+		.andExpect(status().isBadRequest())
 		.andReturn();
 		res = r.getResponse().getContentAsString();
         convertResToRecipe();
-	}
+    }
+
+    @Test
+    public void getRecipeByUser() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/recipes/user/1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].title", is("Jelo s mesom i povrcem")))
+                .andExpect(jsonPath("$[0].description", is("Jelo se priprema sa povrcem i mesom. Itd")))
+                .andExpect(jsonPath("$[0].cookingTemperature", is(230)))
+                .andExpect(jsonPath("$[0].cookingTime", is(30)))
+        ;
+    }
+    @Test
+	public void shouldShow400ByUser() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/recipes/user/h")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertRecipeToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToRecipe();
+    }
+
 
 }

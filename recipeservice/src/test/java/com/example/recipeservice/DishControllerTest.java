@@ -30,13 +30,32 @@ public class DishControllerTest {
         mvc.perform(MockMvcRequestBuilders.get("/dish")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].id", is(1)))
                 .andExpect(jsonPath("$[0].title", is("Main dish")))
-                .andExpect(jsonPath("$[0].description", is("The star of the meal.")))
+                .andExpect(jsonPath("$[0].description", is("Best part of the meal")))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].title", is("Dessert")))
-                .andExpect(jsonPath("$[1].description", is("Sweetest part of the meal")))
+                .andExpect(jsonPath("$[2].id", is(3)))
+                .andExpect(jsonPath("$[2].title", is("Salad")))
+                .andExpect(jsonPath("$[2].description", is("Healthy part of the meal")))
                 ;
+    }
+    @Test
+    public void getDish() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/dish/1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Main dish")))
+                .andExpect(jsonPath("$.description", is("Best part of the meal")))
+                ;
+    }
+    @Test
+    public void getDishByIdBadParamete() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/dish/-12")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is5xxServerError())
+              ;
     }
 }
