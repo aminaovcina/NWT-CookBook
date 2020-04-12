@@ -17,16 +17,12 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-/*
-    public User getUser(int id) {
-        return userRepository.findById(id).get();
-    }*/
 
     public User getUserById(int id) {
         return userRepository.findById(id).get();
     }
 
-    public void saveOrUpdate(User user) {
+    public void save(User user) {
         userRepository.save(user);
     }
 
@@ -37,4 +33,5 @@ public class UserService {
     public void findOne(int id) {
         userRepository.deleteById(id);
     }
+
 }

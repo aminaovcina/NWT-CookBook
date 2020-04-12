@@ -43,6 +43,7 @@ public class AccountControllerTest {
     String res;
     Account newAccount;
 
+    
     public void convertResToAccount() {
         ObjectMapper m = new ObjectMapper();
 
@@ -52,6 +53,7 @@ public class AccountControllerTest {
             e.printStackTrace();
         }
     }
+    //za post metodu
 	public String convertAccountToJson() {
         ObjectMapper m = new ObjectMapper();
         try {
@@ -62,13 +64,24 @@ public class AccountControllerTest {
         }
         return "";
     }
+    //za put metodu
+    public String convertAccountToJsonUpdate() {
+        ObjectMapper m = new ObjectMapper();
+        try {
+            User user = new User("anicaaa", "anic",  Gender.female, null, "sarajevo", "anaaa@bb.com");
+            return m.writeValueAsString(new Account(user,"aniiic", "anapass"));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     //test 2 i 3 padaju nakon drugog pokretanja, jer username ne moze biti isti, dok kada brise
 	//account, on je prvi put tu, a drugi put je obrisan, pa nema sta brisati...
     @Test
     @Order(1)
-    public void saveOrUpdateAccount() throws Exception {
-        MvcResult r = mvc.perform(MockMvcRequestBuilders.post("/update/account")
+    public void saveAccount() throws Exception {
+        MvcResult r = mvc.perform(MockMvcRequestBuilders.post("/account/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertAccountToJson()))
                 .andExpect(status().isOk())
@@ -110,4 +123,92 @@ public class AccountControllerTest {
 				;
 	}
 
+    @Test
+	@Order(5)
+	public void updateAccount() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.put("/account/update/15")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(convertAccountToJsonUpdate()))
+        .andExpect(status().isOk())
+        .andReturn();
+
+        res = r.getResponse().getContentAsString();
+        convertResToAccount();
+	}
+
+
+    //error test
+
+    @Test
+	@Order(6)
+	public void shouldShow404() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/account/;")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertAccountToJson()))
+		.andExpect(status().isNotFound())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToAccount();
+	}
+
+	@Test
+	@Order(7)
+	public void shouldShow400Delete() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.delete("/account/delete/k")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertAccountToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToAccount();
+	}
+
+	@Test
+	@Order(8)
+	public void MethodNotAllowed() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/account/delete/1")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertAccountToJson()))
+		.andExpect(status().isMethodNotAllowed())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToAccount();
+    }
+    
+    @Test
+	@Order(9)
+	public void shouldShow400Update() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.put("/account/update/k")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertAccountToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToAccount();
+    }
+    
+    @Test
+	@Order(10)
+	public void shouldShowExceptionTheSameEmail() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.put("/account/update/100")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertAccountToJson()))
+		.andExpect(status().isNotFound())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToAccount();
+    }
+    
+    
+	@Test
+    @Order(11)
+    public void TheSameEmailError() throws Exception {
+        MvcResult r = mvc.perform(MockMvcRequestBuilders.post("/account/save")
+                .contentType(MediaType.APPLICATION_JSON)
+				.content("{'username': 'azraibric'}"))
+				.andExpect(status().isBadRequest())
+                .andReturn();
+        res = r.getResponse().getContentAsString();
+        convertResToAccount();
+	}
 }

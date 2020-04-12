@@ -56,7 +56,7 @@ public class UserApplication {
 	 }
 
 	 //////prvobitno dodavanje usera i accounta kroz kod - prvi projektni zadatak
-	@Bean
+/*	@Bean
 	public CommandLineRunner demo(UserRepository cRepository, AccountRepository aRepository){
 		return (args) -> {
 		/*	Calendar dateOfBirth = Calendar.getInstance();

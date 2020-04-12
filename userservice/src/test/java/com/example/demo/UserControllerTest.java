@@ -71,12 +71,30 @@ public class UserControllerTest {
         }
         return "";
 	}
+	public String convertUserToJsonTheSmeEmail() {
+        ObjectMapper m = new ObjectMapper();
+        try {
+            return m.writeValueAsString(new User("azra", "ibric",  Gender.female, null, "sarajevo", "azara@bb.com"));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
+	}
+	public String convertUserToJsonUpdate() {
+        ObjectMapper m = new ObjectMapper();
+        try {
+            return m.writeValueAsString(new User("azra", "ibric",  Gender.female, null, "sarajevo", "azzzz@bb.com"));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
+	}
 	
 	//test 2 i 3 padaju nakon drugog pokretanja, jer email ne moze biti isti, dok kada brise
 	//usera, on je prvi put tu, a drugi put je obrisan, pa nema sta brisati...
 	@Test
     @Order(2)
-    public void saveOrUpdateUser() throws Exception {
+    public void saveUser() throws Exception {
         MvcResult r = mvc.perform(MockMvcRequestBuilders.post("/user/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertUserToJson()))
@@ -93,59 +111,22 @@ public class UserControllerTest {
 		userService.delete(1);
 		assertThat(userRepository.count()).isEqualTo(1);
 	}
-
-
+	
 	@Test
 	@Order(4)
-	public void shouldShow400() throws Exception {
-		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/h")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(convertUserToJson()))
-		.andExpect(status().isBadRequest())
-		.andReturn();
-		res = r.getResponse().getContentAsString();
+	public void updateUser() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.put("/user/update/1")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(convertUserToJsonUpdate()))
+        .andExpect(status().isOk())
+        .andReturn();
+
+        res = r.getResponse().getContentAsString();
         convertResToUser();
 	}
-
 
 	@Test
 	@Order(5)
-	public void shouldShow404() throws Exception {
-		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/;")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(convertUserToJson()))
-		.andExpect(status().isNotFound())
-		.andReturn();
-		res = r.getResponse().getContentAsString();
-        convertResToUser();
-	}
-
-	@Test
-	@Order(6)
-	public void shouldShow400Delete() throws Exception {
-		MvcResult r = mvc.perform(MockMvcRequestBuilders.delete("/user/delete/k")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(convertUserToJson()))
-		.andExpect(status().isBadRequest())
-		.andReturn();
-		res = r.getResponse().getContentAsString();
-        convertResToUser();
-	}
-
-	@Test
-	@Order(7)
-	public void MethodNotAllowed() throws Exception {
-		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/delete/1")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(convertUserToJson()))
-		.andExpect(status().isMethodNotAllowed())
-		.andReturn();
-		res = r.getResponse().getContentAsString();
-        convertResToUser();
-	}
-
-	@Test
-	@Order(8)
 	public void getOneUser() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/user/1")
 				.accept(MediaType.APPLICATION_JSON))
@@ -159,11 +140,9 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$.date_Of_Birth", is("1997-11-03")))
 				;
 	}
-
-
 	//testiranje apija za komunikaciju izmedju recipe servisa i user servisa
 	@Test
-	@Order(9)
+	@Order(6)
 	public void getUsersRecipe() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/user_recipes/5")
 				.accept(MediaType.APPLICATION_JSON))
@@ -179,10 +158,68 @@ public class UserControllerTest {
 				.andExpect(jsonPath("$.recipes", hasSize(2)))
 				.andExpect(jsonPath("$.recipes[0].id", is(6)))
 				.andExpect(jsonPath("$.recipes[0].title", is("Klepe")))
-				.andExpect(jsonPath("$.recipes[0].description", is("Klepice slatke male")))
-				
-				;
+				.andExpect(jsonPath("$.recipes[0].description", is("Klepice slatke male")));
+	}
+
+/// error tests
+	@Test
+	@Order(7)
+	public void shouldShow400() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/h")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertUserToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToUser();
 	}
 
 
+	@Test
+	@Order(8)
+	public void shouldShow404() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/125")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertUserToJson()))
+		.andExpect(status().isNotFound())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToUser();
+	}
+
+	@Test
+	@Order(9)
+	public void shouldShow400Delete() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.delete("/user/delete/k")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertUserToJson()))
+		.andExpect(status().isBadRequest())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToUser();
+	}
+
+	@Test
+	@Order(10)
+	public void MethodNotAllowed() throws Exception {
+		MvcResult r = mvc.perform(MockMvcRequestBuilders.get("/user/delete/1")
+		.contentType(MediaType.APPLICATION_JSON)
+		.content(convertUserToJson()))
+		.andExpect(status().isMethodNotAllowed())
+		.andReturn();
+		res = r.getResponse().getContentAsString();
+        convertResToUser();
+	}
+
+	@Test
+    @Order(11)
+    public void TheSameEmailError() throws Exception {
+        MvcResult r = mvc.perform(MockMvcRequestBuilders.post("/user/save")
+                .contentType(MediaType.APPLICATION_JSON)
+				.content(convertUserToJsonTheSmeEmail()))
+				.andExpect(status().isBadRequest())
+                .andReturn();
+        res = r.getResponse().getContentAsString();
+        convertResToUser();
+	}
 }

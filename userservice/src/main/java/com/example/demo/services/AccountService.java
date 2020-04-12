@@ -15,7 +15,7 @@ public class AccountService {
     AccountRepository accountRepository;
 
 
-    public void saveOrUpdate(Account account) {
+    public void save(Account account) {
         accountRepository.save(account);
     }
 
@@ -30,6 +30,5 @@ public class AccountService {
     public void delete(int id) {
         accountRepository.deleteById(id);
     }
-
 
 }
