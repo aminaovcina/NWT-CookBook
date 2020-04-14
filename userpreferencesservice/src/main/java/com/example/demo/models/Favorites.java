@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "favorites", schema = "targetSchemaName")
@@ -16,10 +17,10 @@ public class Favorites{
     @Column(name = "id")
     private Integer id;
 
-    @NotBlank(message = "User ID is mandatory")
+    @NotNull(message = "User ID is mandatory")
     private Integer idUser;
 
-    @NotBlank(message = "Recipe ID is mandatory")
+    @NotNull(message = "Recipe ID is mandatory")
     private Integer idRecipe;
 
 

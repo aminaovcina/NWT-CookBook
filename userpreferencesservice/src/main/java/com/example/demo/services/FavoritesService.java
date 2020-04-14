@@ -25,12 +25,8 @@ public class FavoritesService {
     public List<Favorites> getFavoritesByUser(int id) {
         return favoritesRepository.findByIdUser(id);
     }
-    
-    public List<Favorites> getFavoritesByRecipe(int idRecipe) {
-        return favoritesRepository.findByIdRecipe(idRecipe);
-    }
 
-    public void saveOrUpdate(Favorites fav) {
+    public void save(Favorites fav) {
         favoritesRepository.save(fav);
     }
 
@@ -38,23 +34,11 @@ public class FavoritesService {
         favoritesRepository.deleteById(id);
     }
 
-    public void deleteByIdUSer(Integer id){
-        List<Favorites> lista = getFavoritesByUser(id);
-        for (Favorites fav : lista) {
-            delete(fav.getId());
-        }
-    }
-
-    public void deleteByIdRecipe(Integer id){
-        List<Favorites> lista = getFavoritesByRecipe(id);
-        for (Favorites fav : lista) {
-            delete(fav.getId());
-        }
-    }
-
+/*
     public Favorites createFavorite(int idUser, int idRecipe){
         Favorites fav = new Favorites(idUser, idRecipe);
         favoritesRepository.save(fav);
         return fav;
     }
+    */
 }

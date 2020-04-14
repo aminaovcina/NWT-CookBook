@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "subscription", schema = "targetSchemaName")
@@ -16,11 +17,11 @@ public class Subscription{
     @Column(name = "id")
     private Integer id;
 
-    @NotBlank(message = "Subscriber ID is mandatory")
+    @NotNull(message = "Subscriber ID is mandatory")
     @Column(name = "idSubUser")
     private Integer idSubUser;
 
-    @NotBlank(message = "Subscribed user ID is mandatory")
+    @NotNull(message = "Subscribed user ID is mandatory")
     @Column(name = "idUser")
     private Integer idUser;
 
