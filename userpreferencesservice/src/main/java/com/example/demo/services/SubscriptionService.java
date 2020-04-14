@@ -21,16 +21,12 @@ public class SubscriptionService {
     public Subscription getSubscriptionsById(int id) {
         return subscriptionRepository.findById(id).get();
     }
-
-    public List<Subscription> getSubscriptionBySubUser(int id) {
-        return subscriptionRepository.findByIdSubUser(id);
-    }
     
-    public List<Subscription> getSubscriptioneByUser(int id) {
+    public List<Subscription> getSubscriptionsByUser(int id) {
         return subscriptionRepository.findByIdUser(id);
     }
 
-    public void saveOrUpdate(Subscription sub) {
+    public void save(Subscription sub) {
         subscriptionRepository.save(sub);
     }
 
@@ -38,13 +34,11 @@ public class SubscriptionService {
         subscriptionRepository.deleteById(id);
     }
 
-    public void findOne(int id) {
-        subscriptionRepository.deleteById(id);
-    }
-
+/*
     public Subscription createSubscription(Integer idSubUser, Integer idUser){
         Subscription sub = new Subscription(idSubUser, idUser);
         subscriptionRepository.save(sub);
         return sub;
     }
+    */
 }
