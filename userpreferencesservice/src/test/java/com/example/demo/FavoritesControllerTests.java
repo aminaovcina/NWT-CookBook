@@ -73,7 +73,7 @@ public class FavoritesControllerTests {
     @Order(2)
     public void getFavoriteById() throws Exception {
         mmvc.perform(MockMvcRequestBuilders.get("/favs/1").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(jsonPath("$.id", is(1))).andExpect(jsonPath("$.idUser", is(2)))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.idUser", is(2)))
                 .andExpect(jsonPath("$.idRecipe", is(1)));
     }
 
@@ -81,7 +81,7 @@ public class FavoritesControllerTests {
     @Order(3)
     public void getFavoritesByUser() throws Exception {
         mmvc.perform(MockMvcRequestBuilders.get("/favs/user/2").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].idRecipe", is(1))).andExpect(jsonPath("$[0].idUser", is(2)));
     }
 
