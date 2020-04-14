@@ -36,16 +36,16 @@ public class RecipeControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id", is(5)))
-                .andExpect(jsonPath("$[0].title", is("Klepe")))
-                .andExpect(jsonPath("$[0].description", is("Klepice slatke male")))
-                .andExpect(jsonPath("$[0].cookingTemperature", is(270)))
-                .andExpect(jsonPath("$[0].cookingTime", is(30)))
-                .andExpect(jsonPath("$[1].id", is(6)))
-                .andExpect(jsonPath("$[1].title", is("Tufahija")))
-                .andExpect(jsonPath("$[1].description", is("Tufahije za pola sata")))
-                .andExpect(jsonPath("$[1].cookingTemperature", is(270)))
-                .andExpect(jsonPath("$[1].cookingTime", is(30)))
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].title", is("Jelo s mesom i povrcem")))
+                .andExpect(jsonPath("$[0].description", is("Jelo se priprema sa povrcem i mesom. Itd")))
+                 .andExpect(jsonPath("$[0].cookingTemperature", is(230)))
+                 .andExpect(jsonPath("$[0].cookingTime", is(30)))
+                 .andExpect(jsonPath("$[1].id", is(2)))
+                .andExpect(jsonPath("$[1].title", is("Jelo s secerom i vodom")))
+                .andExpect(jsonPath("$[1].description", is("Jelo se priprema sa vodom i secerom. Itd")))
+                 .andExpect(jsonPath("$[1].cookingTemperature", is(230)))
+                 .andExpect(jsonPath("$[1].cookingTime", is(30)))
                 ;
     }
     @Test
@@ -170,6 +170,8 @@ public class RecipeControllerTest {
 		res = r.getResponse().getContentAsString();
         convertResToRecipe();
     }
+
+    
 
 
 }

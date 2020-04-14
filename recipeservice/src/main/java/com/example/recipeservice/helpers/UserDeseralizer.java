@@ -1,18 +1,23 @@
 package com.example.recipeservice.helpers;
 
-import java.io.Serializable;
+import com.example.recipeservice.models.Account;
 
-public class UserDeseralizer implements Serializable {
+public class UserDeseralizer{
+public String firstName;
+public String lastName;
 
-private String name;
-private String lastname;
+// public String getName(){
+//     return this.firstName;
 
-public String getName(){
-    return this.name;
-
-}
-public String getLastName(){
-    return lastname;
-}
+// }
+// public void setName(String name){
+//     this.firstName = name;
+// }
+// public String getLastName(){
+//     return lastName;
+// }
+// public void setLastname(String lastname){
+//     this.lastName = lastname;
+// }
 
 }

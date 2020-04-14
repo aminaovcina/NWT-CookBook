@@ -54,13 +54,6 @@ public class CategoryControllerTest {
                 ;
     }
     @Test
-    public void getCategoryByIdBadParamete() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/category/-12")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is5xxServerError())
-              ;
-    }
-    @Test
     public void getCategoryByIdBadParameter() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/category/fkdsj")
                 .accept(MediaType.APPLICATION_JSON))
