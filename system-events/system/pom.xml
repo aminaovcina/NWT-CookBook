@@ -14,6 +14,11 @@
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
+    <properties>
+	<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+		<java.version>1.8</java.version>
+	</properties>
+
 	<dependencies>
    
 		<dependency>
@@ -108,8 +113,73 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-	</dependencies>
 
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>2.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+                        <version>2.0.0.RELEASE</version>
+
+		</dependency>
+        
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+                        <version>2.0.0.RELEASE</version>
+
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-okhttp</artifactId>
+            <version>11.0</version>
+		</dependency>
+        <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+
+
+    <dependency>
+      <groupId>io.github.lognet</groupId>
+      <artifactId>grpc-spring-boot-starter</artifactId>
+      <version>3.3.0</version>
+    </dependency>
+
+
+        <dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-netty</artifactId>
+    <version>1.16.1</version>
+</dependency>
+<dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-protobuf</artifactId>
+    <version>1.16.1</version>
+</dependency>
+<dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-stub</artifactId>
+    <version>1.16.1</version>
+</dependency>
+
+
+
+	</dependencies>
+<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
   <extensions>
     <extension>
@@ -131,14 +201,10 @@
         <pluginArtifact>
           io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}
         </pluginArtifact>
+        <protocArtifact>com.google.protobuf:protoc:3.1.0</protocArtifact>
+        <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.0.1</pluginArtifact>
       </configuration>
-      <executions>
-      </executions>
-
-      <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+      
     </plugin>
   </plugins>
 </build>
