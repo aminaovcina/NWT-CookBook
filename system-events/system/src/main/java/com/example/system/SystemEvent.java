@@ -10,7 +10,6 @@ public class SystemEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
    
-    @NotNull
     @Size(max = 65)
     @Column(name = "timestamp")
     private String timestamp;

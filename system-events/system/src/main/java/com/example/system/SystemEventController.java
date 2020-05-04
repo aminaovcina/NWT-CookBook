@@ -12,11 +12,9 @@ public class SystemEventController {
     SystemEventService seService;
 
     @PostMapping("/system-events")
-    private int saveUser(@RequestBody SystemEvent user) {
-    
+    public SystemEvent saveUser(@RequestBody SystemEvent user) {
         seService.save(user);
-
-      return user.getId();
+        return user;
     }
   
 
