@@ -1,0 +1,24 @@
+syntax = "proto3";
+//option java_multiple_files = true;
+option java_generic_services = true;
+package com.example.demo;
+
+option go_package = "grpc";
+option java_package = "com.example.demo";
+
+message EventRequest {
+    int32 id = 1;
+    string timestamp = 2;
+    string serviceName = 3;
+    string userId = 4;
+    string request = 5;
+    int32 status = 6;
+}
+
+message EventResponse {
+    string status = 1;
+}
+
+service EventService {
+    rpc trackEvent(EventRequest) returns (EventResponse);
+}

@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import java.util.List;
 
+import com.example.demo.feign.SystemEvents;
+import com.example.demo.models.SystemEvent;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
 
@@ -33,5 +35,4 @@ public class UserService {
     public void findOne(int id) {
         userRepository.deleteById(id);
     }
-
 }
