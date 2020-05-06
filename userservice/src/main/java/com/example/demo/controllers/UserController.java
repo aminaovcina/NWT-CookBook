@@ -11,7 +11,9 @@ import com.example.demo.dto.UserDto;
 import com.example.demo.errors.exception.TheSameEmailException;
 import com.example.demo.errors.exception.UserNotFoundException;
 import com.example.demo.feign.RecipeUser;
+import com.example.demo.feign.SystemEvents;
 import com.example.demo.models.Recipe;
+import com.example.demo.models.SystemEvent;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
@@ -116,5 +118,4 @@ public class UserController {
      
       return dto;
     }
-   
 }
