@@ -1,10 +1,14 @@
 package com.example.demo.models;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "Account")
@@ -28,11 +32,11 @@ public class Account {
     @Size(max = 128)
     private String password;
 
-
+    
     public Account() {
         super();
     };
-
+  
     public Account(User user, String username, String password) {
         this.user = user;
         this.username = username;
