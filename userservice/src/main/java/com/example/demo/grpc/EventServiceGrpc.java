@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.grpc;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
@@ -24,32 +24,32 @@ public final class EventServiceGrpc {
 
   private EventServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "com.example.demo.EventService";
+  public static final String SERVICE_NAME = "com.example.demo.grpc.EventService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.example.demo.EventServiceOuterClass.EventRequest,
-      com.example.demo.EventServiceOuterClass.EventResponse> getTrackEventMethod;
+  private static volatile io.grpc.MethodDescriptor<com.example.demo.grpc.EventRequest,
+      com.example.demo.grpc.EventResponse> getTrackEventMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "trackEvent",
-      requestType = com.example.demo.EventServiceOuterClass.EventRequest.class,
-      responseType = com.example.demo.EventServiceOuterClass.EventResponse.class,
+      requestType = com.example.demo.grpc.EventRequest.class,
+      responseType = com.example.demo.grpc.EventResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.demo.EventServiceOuterClass.EventRequest,
-      com.example.demo.EventServiceOuterClass.EventResponse> getTrackEventMethod() {
-    io.grpc.MethodDescriptor<com.example.demo.EventServiceOuterClass.EventRequest, com.example.demo.EventServiceOuterClass.EventResponse> getTrackEventMethod;
+  public static io.grpc.MethodDescriptor<com.example.demo.grpc.EventRequest,
+      com.example.demo.grpc.EventResponse> getTrackEventMethod() {
+    io.grpc.MethodDescriptor<com.example.demo.grpc.EventRequest, com.example.demo.grpc.EventResponse> getTrackEventMethod;
     if ((getTrackEventMethod = EventServiceGrpc.getTrackEventMethod) == null) {
       synchronized (EventServiceGrpc.class) {
         if ((getTrackEventMethod = EventServiceGrpc.getTrackEventMethod) == null) {
           EventServiceGrpc.getTrackEventMethod = getTrackEventMethod =
-              io.grpc.MethodDescriptor.<com.example.demo.EventServiceOuterClass.EventRequest, com.example.demo.EventServiceOuterClass.EventResponse>newBuilder()
+              io.grpc.MethodDescriptor.<com.example.demo.grpc.EventRequest, com.example.demo.grpc.EventResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "trackEvent"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.demo.EventServiceOuterClass.EventRequest.getDefaultInstance()))
+                  com.example.demo.grpc.EventRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.demo.EventServiceOuterClass.EventResponse.getDefaultInstance()))
+                  com.example.demo.grpc.EventResponse.getDefaultInstance()))
               .setSchemaDescriptor(new EventServiceMethodDescriptorSupplier("trackEvent"))
               .build();
         }
@@ -87,8 +87,8 @@ public final class EventServiceGrpc {
 
     /**
      */
-    public void trackEvent(com.example.demo.EventServiceOuterClass.EventRequest request,
-        io.grpc.stub.StreamObserver<com.example.demo.EventServiceOuterClass.EventResponse> responseObserver) {
+    public void trackEvent(com.example.demo.grpc.EventRequest request,
+        io.grpc.stub.StreamObserver<com.example.demo.grpc.EventResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getTrackEventMethod(), responseObserver);
     }
 
@@ -98,8 +98,8 @@ public final class EventServiceGrpc {
             getTrackEventMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.example.demo.EventServiceOuterClass.EventRequest,
-                com.example.demo.EventServiceOuterClass.EventResponse>(
+                com.example.demo.grpc.EventRequest,
+                com.example.demo.grpc.EventResponse>(
                   this, METHODID_TRACK_EVENT)))
           .build();
     }
@@ -125,8 +125,8 @@ public final class EventServiceGrpc {
 
     /**
      */
-    public void trackEvent(com.example.demo.EventServiceOuterClass.EventRequest request,
-        io.grpc.stub.StreamObserver<com.example.demo.EventServiceOuterClass.EventResponse> responseObserver) {
+    public void trackEvent(com.example.demo.grpc.EventRequest request,
+        io.grpc.stub.StreamObserver<com.example.demo.grpc.EventResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getTrackEventMethod(), getCallOptions()), request, responseObserver);
     }
@@ -152,7 +152,7 @@ public final class EventServiceGrpc {
 
     /**
      */
-    public com.example.demo.EventServiceOuterClass.EventResponse trackEvent(com.example.demo.EventServiceOuterClass.EventRequest request) {
+    public com.example.demo.grpc.EventResponse trackEvent(com.example.demo.grpc.EventRequest request) {
       return blockingUnaryCall(
           getChannel(), getTrackEventMethod(), getCallOptions(), request);
     }
@@ -178,8 +178,8 @@ public final class EventServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.demo.EventServiceOuterClass.EventResponse> trackEvent(
-        com.example.demo.EventServiceOuterClass.EventRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.example.demo.grpc.EventResponse> trackEvent(
+        com.example.demo.grpc.EventRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getTrackEventMethod(), getCallOptions()), request);
     }
@@ -205,8 +205,8 @@ public final class EventServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_TRACK_EVENT:
-          serviceImpl.trackEvent((com.example.demo.EventServiceOuterClass.EventRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.demo.EventServiceOuterClass.EventResponse>) responseObserver);
+          serviceImpl.trackEvent((com.example.demo.grpc.EventRequest) request,
+              (io.grpc.stub.StreamObserver<com.example.demo.grpc.EventResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -230,7 +230,7 @@ public final class EventServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return com.example.demo.EventServiceOuterClass.getDescriptor();
+      return com.example.demo.grpc.EventServiceOuterClass.getDescriptor();
     }
 
     @java.lang.Override

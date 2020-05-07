@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface SystemEvents{
 
     @PostMapping("/system-events")
-    SystemEvent save(@RequestBody SystemEvent product);
+    public SystemEvent save(@RequestBody SystemEvent product);
 
 }

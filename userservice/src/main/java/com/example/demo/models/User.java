@@ -42,6 +42,12 @@ public class User {
     @Size(max = 100)
     private String city;
 
+    @Size(max = 100)
+    private String token;
+
+    @Size(max = 100)
+    private String username;
+
     @Email
     @Size(max = 100)
     @Column(unique = true)
@@ -50,6 +56,16 @@ public class User {
 
     public User() {
         super();
+    }
+    public User ( String firstName, String lastName, Gender gender, Date date_Of_Birth, String city, String email, String token) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.dateOfBirth = date_Of_Birth;
+        this.city = city;
+        this.email = email;
+        this.token = token;
     }
     public User ( String firstName, String lastName, Gender gender, Date date_Of_Birth, String city, String email) {
 
@@ -61,7 +77,17 @@ public class User {
         this.email = email;
     }
   //geter i i seteri
-
+/**
+ * @return the username
+ */
+public String getUsername() {
+    return username;
+}/**
+ * @param username the username to set
+ */
+public void setUsername(String username) {
+    this.username = username;
+}
   /**
    * @return the active
    */
@@ -156,6 +182,16 @@ public void setId(int id) {
 public void setLastName(String lastName) {
     this.lastName = lastName;
 }
-
+/**
+ * @param token the token to set
+ */
+public void setToken(String token) {
+    this.token = token;
+}/**
+ * @return the token
+ */
+public String getToken() {
+    return token;
+}
 
 }

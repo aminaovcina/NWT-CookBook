@@ -3,6 +3,7 @@ package com.example.demo.errors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.errors.exception.AuthorizationException;
 import com.example.demo.errors.exception.TheSameEmailException;
 import com.example.demo.errors.exception.TheSameUsernameExeption;
 import com.example.demo.errors.exception.UserNotFoundException;
@@ -82,6 +83,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handleTheUsername(
     TheSameUsernameExeption ex, WebRequest request) {
       ApiError apiError =  new ApiError(HttpStatus.BAD_REQUEST,  "Username is not unique!", ex.getMessage());
+      
+      return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+  }
+
+//za autorizaciju
+  @ExceptionHandler({AuthorizationException.class })
+  public ResponseEntity<Object> handleAuthorization(
+    AuthorizationException ex, WebRequest request) {
+      ApiError apiError =  new ApiError(HttpStatus.UNAUTHORIZED,  "You are not allowed to use this!", ex.getMessage());
       
       return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
   }
