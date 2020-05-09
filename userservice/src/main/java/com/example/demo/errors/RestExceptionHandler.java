@@ -3,6 +3,7 @@ package com.example.demo.errors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.errors.exception.AuthenticationException;
 import com.example.demo.errors.exception.AuthorizationException;
 import com.example.demo.errors.exception.TheSameEmailException;
 import com.example.demo.errors.exception.TheSameUsernameExeption;
@@ -91,7 +92,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   @ExceptionHandler({AuthorizationException.class })
   public ResponseEntity<Object> handleAuthorization(
     AuthorizationException ex, WebRequest request) {
-      ApiError apiError =  new ApiError(HttpStatus.UNAUTHORIZED,  "You are not allowed to use this!", ex.getMessage());
+      ApiError apiError =  new ApiError(HttpStatus.UNAUTHORIZED,  "Authorization error!", ex.getMessage());
+      
+      return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+  }
+//za autentifikaciju
+  @ExceptionHandler({AuthenticationException.class })
+  public ResponseEntity<Object> handleAuthentication(
+    AuthenticationException ex, WebRequest request) {
+      ApiError apiError =  new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, "Authentification error!", ex.getMessage());
       
       return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
   }

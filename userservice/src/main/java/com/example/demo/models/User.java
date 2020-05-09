@@ -3,10 +3,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.persistence.Entity;
 
 import java.util.Date;
-
-
 @Entity
 @Table(name = "user")
 public class User {
@@ -45,19 +44,22 @@ public class User {
     @Size(max = 100)
     private String token;
 
-    @Size(max = 100)
-    private String username;
+   // @Size(max = 100)
+    //private String username;
 
     @Email
     @Size(max = 100)
     @Column(unique = true)
     private String email;
 
+    @JoinColumn(name="role")
+    @ManyToOne(cascade=CascadeType.ALL)
+    private Role role;
 
     public User() {
         super();
     }
-    public User ( String firstName, String lastName, Gender gender, Date date_Of_Birth, String city, String email, String token) {
+    public User ( String firstName, String lastName, Gender gender, Date date_Of_Birth, String city, String email, String token, Role role) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -66,6 +68,7 @@ public class User {
         this.city = city;
         this.email = email;
         this.token = token;
+        this.role = role;
     }
     public User ( String firstName, String lastName, Gender gender, Date date_Of_Birth, String city, String email) {
 
@@ -77,17 +80,25 @@ public class User {
         this.email = email;
     }
   //geter i i seteri
+
+  /**
+   * @return the roleId
+   */
+ /**
+  * @param role the role to set
+  */
+ public void setRole(Role role) {
+     this.role = role;
+ }/**
+  * @return the role
+  */
+ public Role getRole() {
+     return role;
+ }
 /**
  * @return the username
  */
-public String getUsername() {
-    return username;
-}/**
- * @param username the username to set
- */
-public void setUsername(String username) {
-    this.username = username;
-}
+
   /**
    * @return the active
    */

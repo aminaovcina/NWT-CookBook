@@ -3,37 +3,26 @@ package com.example.demo.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import com.example.demo.dto.UserDto;
+import com.example.demo.errors.exception.AuthenticationException;
 import com.example.demo.errors.exception.TheSameEmailException;
 import com.example.demo.errors.exception.UserNotFoundException;
 import com.example.demo.feign.RecipeUser;
-import com.example.demo.feign.SystemEvents;
 import com.example.demo.helper.AuthorizationHelper;
 import com.example.demo.models.Account;
 import com.example.demo.models.Recipe;
-import com.example.demo.models.SystemEvent;
 import com.example.demo.models.User;
 import com.example.demo.models.UserLogin;
-import com.example.demo.models.UserRequest;
+import com.example.demo.models.UserRegister;
 import com.example.demo.repositories.AccountRepository;
 import com.example.demo.repositories.UserRepository;
-import com.example.demo.services.AccountService;
 import com.example.demo.services.UserService;
-import com.google.api.Authentication;
-import com.ibm.watson.assistant.v2.model.MessageResponse;
-
-import org.hibernate.validator.internal.engine.messageinterpolation.parser.MessageState;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -71,7 +60,8 @@ public class UserController {
   }
 
   @GetMapping("/user/{id}")
-  private User getUserById(@PathVariable("id") int id) {
+  private User getUserById(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id) {
+    authorizationhelper.authorize(token);
     User user = null;
     try {
       user = userService.getUserById(id);
@@ -82,7 +72,8 @@ public class UserController {
   }
 
   @DeleteMapping("/user/delete/{id}")
-  private void deleteUser(@PathVariable("id") int id) {
+  private void deleteUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id) {
+    authorizationhelper.authorize(token);
     try {
       userService.delete(id);
     } catch (Exception k) {
@@ -91,7 +82,8 @@ public class UserController {
   }
 
   @PostMapping("/user/save")
-  private int saveUser(@RequestBody User user) {
+  private int saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody User user) {
+    authorizationhelper.authorize(token);
     try {
       userService.save(user);
     }
@@ -102,7 +94,8 @@ public class UserController {
   }
 
   @PutMapping("/user/update/{id}")
-  private User putUser(@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
+  private User putUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
+    authorizationhelper.authorize(token);
     User user = userService.getUserById(id);
     try {
       user.setFirstName(userDetails.getFirstName());
@@ -153,7 +146,7 @@ public class UserController {
     //api za registraciju
 
     @PostMapping("/register")
-  public User registerUser(@Valid @RequestBody UserRequest userRequest) {
+  public User registerUser(@Valid @RequestBody UserRegister userRequest) {
     User user = new User();
     try {
       user.setFirstName(userRequest.getFirstName());
@@ -163,6 +156,7 @@ public class UserController {
       user.setDate_Of_Birth(userRequest.getDateOfBirth());
       user.setActive(userRequest.getActive());
       user.setEmail(userRequest.getEmail());
+      user.setRole(userRequest.getRole());
 
       if(userRequest.getPassword().equals(userRequest.getPasswordConfirm())) {
         //kodiraj password u token i sacuvaj u tabelu User
@@ -185,25 +179,21 @@ public class UserController {
    @PostMapping("/login")
    public Account loginUser(@Valid @RequestBody UserLogin loginRequest) {
      Account account = new Account();
-     try {
+     
         String userName = loginRequest.getUsername();
         String password = loginRequest.getPassword();
         User user = getUserFromTable(userName);
+
        //provjera da li taj token postoji u tabeli User
       if(bCryptPasswordEncoder.matches(password, user.getToken())) {
         account.setToken(user.getToken());
         account.setUser(user);
         aRepository.save(account);
       }
+      else throw new AuthenticationException("");
+      return account;
 
-     } catch (Exception k) {
-       k.printStackTrace();
-       throw new UserNotFoundException("User: " +  account.getId() + " not Found");
-     }
-      
-       return account;
-   }
-
+    }
    
 
    public User getUserFromTable(String userName) {

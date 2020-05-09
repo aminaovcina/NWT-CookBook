@@ -2,7 +2,7 @@ package com.example.demo.models;
 
 import java.util.Date;
 
-public class UserRequest {
+public class UserRegister {
     private String firstName;
     private String lastName;
     private Gender gender;
@@ -13,20 +13,23 @@ public class UserRequest {
 
     private String password;
     private String passwordConfirm;
-    private String username;
+    private Role role;
 
+    /**
+     * @param role the role to set
+     */
+    public void setRole(Role role) {
+        this.role = role;
+    }/**
+     * @return the role
+     */
+    public Role getRole() {
+        return role;
+    }
     /**
      * @param username the username to set
      */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
+
 
     /**
      * @param firstName the firstName to set
