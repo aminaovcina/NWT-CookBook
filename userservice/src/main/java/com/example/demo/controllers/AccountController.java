@@ -30,7 +30,8 @@ public class AccountController {
 
 
     @PostMapping("/account/save")
-    public int saveUser(@RequestBody Account account) {
+    public int saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody Account account) {
+        authorizationhelper.authorize(token);
         try {
             accountService.save(account);
         }
@@ -41,12 +42,14 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    public List<Account> getAllAccounts() {
+    public List<Account> getAllAccounts(@RequestHeader(AUTHORIZATION) String token) {
+        authorizationhelper.authorize(token);
         return accountService.getAllAccounts();
     }
 
     @GetMapping("/account/{id}")
-    public Account getUserById(@PathVariable("id") int id) {
+    public Account getUserById(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id) {
+        authorizationhelper.authorize(token);
         Account account = null;
         try {
             account = accountService.getAccountById(id);
@@ -57,7 +60,8 @@ public class AccountController {
     }
 
     @DeleteMapping("/account/delete/{id}")
-    public void deleteAccount(@PathVariable("id") int id) {
+    public void deleteAccount(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id) {
+        authorizationhelper.authorize(token);
         try {
             accountService.delete(id);
         } catch (Exception k) {
@@ -66,7 +70,8 @@ public class AccountController {
     }
 
     @PutMapping("/account/update/{id}")
-    public Account putUser(@PathVariable("id") int id, @Valid @RequestBody Account accountDetails) {
+    public Account putUser(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id, @Valid @RequestBody Account accountDetails) {
+        authorizationhelper.authorize(token);
       Account account = accountService.getAccountById(id);
       try {
         account.setToken(accountDetails.getToken());
@@ -77,6 +82,25 @@ public class AccountController {
       }
        
         return account;
+    }
+
+    //api za validaciju sA mikroservisima
+    @GetMapping("/accounts/validate")
+    public boolean getAccountValidate(@RequestHeader(AUTHORIZATION) String token) {
+        
+        try {
+            String tokenFromTable="";
+
+            //provjera da li token ima u tabeli accounta
+            List<Account> accounts = accountService.getAllAccounts();
+            for(int i=0; i<accounts.size(); i++)
+                if(accounts.get(i).getToken().equals(token)) return true;
+
+
+        } catch (Exception k) {
+            throw new UserNotFoundException("Token: " + token + " not Found");
+        }
+        return false;
     }
 
     //api za logout
@@ -104,4 +128,6 @@ public class AccountController {
     }
     return 0;
   }
+
+  
 }
