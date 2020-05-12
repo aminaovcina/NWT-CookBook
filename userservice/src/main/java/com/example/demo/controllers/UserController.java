@@ -54,8 +54,8 @@ public class UserController {
  
 
   @GetMapping("/users")
-  public List<User> getAllUsers(@RequestHeader(AUTHORIZATION) String token) {
-    authorizationhelper.authorize(token);
+  public List<User> getAllUsers() {
+ 
     return userService.getAllUsers();
   }
 
