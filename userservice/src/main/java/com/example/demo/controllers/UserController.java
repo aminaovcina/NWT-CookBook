@@ -54,13 +54,13 @@ public class UserController {
  
 
   @GetMapping("/users")
-  private List<User> getAllUsers(@RequestHeader(AUTHORIZATION) String token) {
+  public List<User> getAllUsers(@RequestHeader(AUTHORIZATION) String token) {
     authorizationhelper.authorize(token);
     return userService.getAllUsers();
   }
 
   @GetMapping("/user/{id}")
-  private User getUserById(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id) {
+  public User getUserById(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id) {
     authorizationhelper.authorize(token);
     User user = null;
     try {
@@ -72,7 +72,7 @@ public class UserController {
   }
 
   @DeleteMapping("/user/delete/{id}")
-  private void deleteUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id) {
+  public void deleteUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id) {
     authorizationhelper.authorize(token);
     try {
       userService.delete(id);
@@ -82,7 +82,7 @@ public class UserController {
   }
 
   @PostMapping("/user/save")
-  private int saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody User user) {
+  public int saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody User user) {
     authorizationhelper.authorize(token);
     try {
       userService.save(user);
@@ -94,7 +94,7 @@ public class UserController {
   }
 
   @PutMapping("/user/update/{id}")
-  private User putUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
+  public User putUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
     authorizationhelper.authorize(token);
     User user = userService.getUserById(id);
     try {
@@ -146,7 +146,7 @@ public class UserController {
     //api za registraciju
 
     @PostMapping("/register")
-  public User registerUser(@Valid @RequestBody UserRegister userRequest) {
+    public User registerUser(@Valid @RequestBody UserRegister userRequest) {
     User user = new User();
     try {
       user.setFirstName(userRequest.getFirstName());

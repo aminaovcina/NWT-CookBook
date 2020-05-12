@@ -30,7 +30,7 @@ public class AccountController {
 
 
     @PostMapping("/account/save")
-    private int saveUser(@RequestBody Account account) {
+    public int saveUser(@RequestBody Account account) {
         try {
             accountService.save(account);
         }
@@ -41,12 +41,12 @@ public class AccountController {
     }
 
     @GetMapping("/accounts")
-    private List<Account> getAllAccounts() {
+    public List<Account> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 
     @GetMapping("/account/{id}")
-    private Account getUserById(@PathVariable("id") int id) {
+    public Account getUserById(@PathVariable("id") int id) {
         Account account = null;
         try {
             account = accountService.getAccountById(id);
@@ -57,7 +57,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/account/delete/{id}")
-    private void deleteAccount(@PathVariable("id") int id) {
+    public void deleteAccount(@PathVariable("id") int id) {
         try {
             accountService.delete(id);
         } catch (Exception k) {
@@ -66,7 +66,7 @@ public class AccountController {
     }
 
     @PutMapping("/account/update/{id}")
-    private Account putUser(@PathVariable("id") int id, @Valid @RequestBody Account accountDetails) {
+    public Account putUser(@PathVariable("id") int id, @Valid @RequestBody Account accountDetails) {
       Account account = accountService.getAccountById(id);
       try {
         account.setToken(accountDetails.getToken());
