@@ -11,19 +11,24 @@ import com.example.recipeservice.models.Recipe;
 import com.example.recipeservice.services.AccountService;
 import com.example.recipeservice.services.DishService;
 import com.example.recipeservice.services.RecipeService;
+import com.example.recipeservice.services.UserHelperService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RecipeController {
+    public static final String AUTHORIZATION= "Authorization";
     @Autowired
     RecipeService recipeService;
     DishService dishService;
     AccountService accountService;
+    @Autowired
+    UserHelperService userHelperService;
 
     @GetMapping("/recipe")
-    private List<Recipe> getAllRecipes(){
+    private List<Recipe> getAllRecipes(@RequestHeader(AUTHORIZATION) String token){
+        userHelperService.getAccountValidate(token);
         return recipeService.getAllRecipes();
     }
     @GetMapping("/recipesByDish/{id}")
