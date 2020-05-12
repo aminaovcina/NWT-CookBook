@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import com.example.recipeservice.exceptionHandling.AccountNotFoundException;
 import com.example.recipeservice.exceptionHandling.DishNotFoundException;
 import com.example.recipeservice.exceptionHandling.RecipeNotFoundException;
+import com.example.recipeservice.helpers.AuthorizationHelper;
 import com.example.recipeservice.helpers.UserDeseralizer;
 import com.example.recipeservice.models.Recipe;
 import com.example.recipeservice.services.AccountService;
@@ -25,14 +26,17 @@ public class RecipeController {
     AccountService accountService;
     @Autowired
     UserHelperService userHelperService;
+    @Autowired
+    AuthorizationHelper authorizationhelper;
 
     @GetMapping("/recipe")
     private List<Recipe> getAllRecipes(@RequestHeader(AUTHORIZATION) String token){
-        userHelperService.getAccountValidate(token);
+        authorizationhelper.authorize(token);
         return recipeService.getAllRecipes();
     }
     @GetMapping("/recipesByDish/{id}")
-    private List<Recipe> getRecipesByDish(@PathVariable("id") Long id){
+        private List<Recipe> getRecipesByDish(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id){
+        authorizationhelper.authorize(token);
         List<Recipe> recepti = null;
         try{
             recepti = recipeService.getRecipesByDish(id);
@@ -43,7 +47,8 @@ public class RecipeController {
         return recepti; 
     }
     @GetMapping("/recipes/user/{id}")
-    private List<Recipe> getRecipesByUser(@PathVariable("id") Long id){
+    private List<Recipe> getRecipesByUser(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id){
+        authorizationhelper.authorize(token);
         List<Recipe> recepti = null;
         try{
             recepti = recipeService.getRecipesByUser(id);
@@ -54,7 +59,8 @@ public class RecipeController {
         return recepti;   
     }
     @GetMapping("/recipe/{id}")
-    private Recipe getRecipeById(@PathVariable("id") Long id) {
+    private Recipe getRecipeById(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id) {
+        authorizationhelper.authorize(token);
         Recipe recipe = null;
         try{
             recipe = recipeService.getRecipeById(id);
@@ -64,7 +70,8 @@ public class RecipeController {
         return recipe;
     }
     @DeleteMapping("/recipe/delete/{id}")
-    private void deleteRecipe(@PathVariable("id") Long id) {
+    private void deleteRecipe(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id) {
+        authorizationhelper.authorize(token);
         try{
             recipeService.deleteRecipe(id);
         }catch(Exception ex){
@@ -72,7 +79,8 @@ public class RecipeController {
         }      
     }
     @PostMapping("/recipe/save")
-    private Long saveRecipe(@RequestBody Recipe recipe) {
+    private Long saveRecipe(@RequestHeader(AUTHORIZATION) String token, @RequestBody Recipe recipe) {
+        authorizationhelper.authorize(token);
         recipeService.saveOrUpdateRecipe(recipe);
         return recipe.getId();
     } 

@@ -10,11 +10,11 @@ import com.example.recipeservice.helpers.UserDeseralizer;
 @FeignClient(name="userservice")
 public interface UserHelperService{
     public static final String AUTHORIZATION= "Authorization";
-    
+
     @GetMapping("/user/{id}")
     UserDeseralizer getUserById(@PathVariable("id") Long id);
 
     @GetMapping("accounts/validate")
-    String getAccountValidate(@RequestHeader(AUTHORIZATION) String token);
+    boolean getAccountValidate(@RequestHeader(AUTHORIZATION) String token);
 }
   
