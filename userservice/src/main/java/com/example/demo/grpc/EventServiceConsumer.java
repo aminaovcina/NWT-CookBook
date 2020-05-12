@@ -1,12 +1,11 @@
 package com.example.demo.grpc;
 
-import com.example.demo.EventServiceGrpc;
-import com.example.demo.EventServiceOuterClass.EventRequest;
 import com.example.demo.feign.SystemEvents;
 import com.example.demo.models.SystemEvent;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 
+import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -17,29 +16,29 @@ import org.springframework.stereotype.Component;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
-@EnableEurekaClient
-@EnableDiscoveryClient
 @Component
 public class EventServiceConsumer {
-    @Autowired
-    private EurekaClient client;
-
+   
     public void trackEvent(SystemEvent event) {
-        final InstanceInfo instanceInfo = client.getNextServerFromEureka("systemevents", false);
-        final ManagedChannel channel = ManagedChannelBuilder.forAddress(instanceInfo.getIPAddr(), instanceInfo.getPort())
+        //try{
+            //se.save(event);
+
+        
+        final ManagedChannel channel = ManagedChannelBuilder.forAddress("192.168.56.1", 6565)
                 .usePlaintext()
                 .build();
 
-        final EventServiceGrpc.EventServiceFutureStub stub = EventServiceGrpc.newFutureStub(channel); 
-        stub.trackEvent(EventRequest.newBuilder()
+        final EventServiceGrpc.EventServiceBlockingStub stub = EventServiceGrpc.newBlockingStub(channel); 
+        EventResponse response = stub.trackEvent(EventRequest.newBuilder()
         .setTimestamp(event.getTimestamp())
         .setStatus(event.getStatus())
         .setRequest(event.getRequest())
         .setServiceName(event.getServiceName())
-        .setStatus(event.getStatus())
         .build());
-
-        channel.shutdown();
+  /*  }
+    catch(Exception e) {
+       e.printStackTrace();
+    }*/
 
     }
 }

@@ -3,28 +3,33 @@ package com.example.demo.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
 import com.example.demo.dto.UserDto;
+import com.example.demo.errors.exception.AuthenticationException;
 import com.example.demo.errors.exception.TheSameEmailException;
 import com.example.demo.errors.exception.UserNotFoundException;
 import com.example.demo.feign.RecipeUser;
-import com.example.demo.feign.SystemEvents;
+import com.example.demo.helper.AuthorizationHelper;
+import com.example.demo.models.Account;
 import com.example.demo.models.Recipe;
-import com.example.demo.models.SystemEvent;
 import com.example.demo.models.User;
+import com.example.demo.models.UserLogin;
+import com.example.demo.models.UserRegister;
+import com.example.demo.repositories.AccountRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 public class UserController {
+  public static final String AUTHORIZATION= "Authorization";
+
   @Autowired
   UserService userService;
 
@@ -32,15 +37,31 @@ public class UserController {
   RecipeUser recipeUser;
 
   @Autowired
-  UserRepository uRepository;
+  AccountRepository aRepository;
+
+  @Autowired
+  AuthorizationHelper authorizationhelper;
+
+  private UserRepository applicationUserRepository;
+  private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    public UserController(UserRepository applicationUserRepository,
+                          BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.applicationUserRepository = applicationUserRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+ 
 
   @GetMapping("/users")
-  private List<User> getAllUsers() {
+  private List<User> getAllUsers(@RequestHeader(AUTHORIZATION) String token) {
+    authorizationhelper.authorize(token);
     return userService.getAllUsers();
   }
 
   @GetMapping("/user/{id}")
-  private User getUserById(@PathVariable("id") int id) {
+  private User getUserById(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id) {
+    authorizationhelper.authorize(token);
     User user = null;
     try {
       user = userService.getUserById(id);
@@ -51,7 +72,8 @@ public class UserController {
   }
 
   @DeleteMapping("/user/delete/{id}")
-  private void deleteUser(@PathVariable("id") int id) {
+  private void deleteUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id) {
+    authorizationhelper.authorize(token);
     try {
       userService.delete(id);
     } catch (Exception k) {
@@ -60,7 +82,8 @@ public class UserController {
   }
 
   @PostMapping("/user/save")
-  private int saveUser(@RequestBody User user) {
+  private int saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody User user) {
+    authorizationhelper.authorize(token);
     try {
       userService.save(user);
     }
@@ -71,45 +94,47 @@ public class UserController {
   }
 
   @PutMapping("/user/update/{id}")
-  private User putUser(@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
-    Optional<User> user = uRepository.findById(id);
+  private User putUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
+    authorizationhelper.authorize(token);
+    User user = userService.getUserById(id);
     try {
-      user.get().setFirstName(userDetails.getFirstName());
-      user.get().setLastName(userDetails.getLastName());
-      user.get().setCity(userDetails.getCity());
-      user.get().setGender(userDetails.getGender());
-      user.get().setDate_Of_Birth(userDetails.getDate_Of_Birth());
-      user.get().setActive(userDetails.getActive());
-      user.get().setEmail(userDetails.getEmail());
+      user.setFirstName(userDetails.getFirstName());
+      user.setLastName(userDetails.getLastName());
+      user.setCity(userDetails.getCity());
+      user.setGender(userDetails.getGender());
+      user.setDate_Of_Birth(userDetails.getDate_Of_Birth());
+      user.setActive(userDetails.getActive());
+      user.setEmail(userDetails.getEmail());
 
-      uRepository.save(user.get());
+      userService.save(user);
 
     } catch (Exception k) {
       throw new UserNotFoundException("User: " + id + " not Found");
     }
      
-      return user.get();
+      return user;
   }
 
   // komunikacija sa recipe servisom - Projektni zadatak 5
 
   @GetMapping("user_recipes/{id}")
   public UserDto getCustomerById(@PathVariable Long id) {
+
     UserDto dto = new UserDto();
     try {
-      Optional<User> user = uRepository.findById(id.intValue());
+      User user = userService.getUserById(id.intValue());
       
       List<Recipe> recipes = new ArrayList<Recipe>();
       recipes = recipeUser.getRecipesByUser(id);
 
         if(recipes.size()==0) 
-          user.get().setActive(false);
+          user.setActive(false);
         else 
-          user.get().setActive(true);
+          user.setActive(true);
         
-        uRepository.save(user.get());
+        userService.save(user);
       
-        BeanUtils.copyProperties(user.get(), dto);
+        BeanUtils.copyProperties(user, dto);
         dto.setRecipes(recipes);
 
     } catch (Exception k) {
@@ -118,4 +143,69 @@ public class UserController {
      
       return dto;
     }
+    //api za registraciju
+
+    @PostMapping("/register")
+  public User registerUser(@Valid @RequestBody UserRegister userRequest) {
+    User user = new User();
+    try {
+      user.setFirstName(userRequest.getFirstName());
+      user.setLastName(userRequest.getLastName());
+      user.setCity(userRequest.getCity());
+      user.setGender(userRequest.getGender());
+      user.setDate_Of_Birth(userRequest.getDateOfBirth());
+      user.setActive(userRequest.getActive());
+      user.setEmail(userRequest.getEmail());
+      user.setRole(userRequest.getRole());
+
+      if(userRequest.getPassword().equals(userRequest.getPasswordConfirm())) {
+        //kodiraj password u token i sacuvaj u tabelu User
+
+        user.setToken(bCryptPasswordEncoder.encode(userRequest.getPassword()));
+
+        userService.save(user);
+      }
+
+    } catch (Exception k) {
+      k.printStackTrace();
+      throw new UserNotFoundException("User: " +  user.getFirstName() + " not Found");
+    }
+     
+      return user;
+  }
+  
+   //api za login
+
+   @PostMapping("/login")
+   public Account loginUser(@Valid @RequestBody UserLogin loginRequest) {
+     Account account = new Account();
+     
+        String userName = loginRequest.getUsername();
+        String password = loginRequest.getPassword();
+        User user = getUserFromTable(userName);
+
+       //provjera da li taj token postoji u tabeli User
+      if(bCryptPasswordEncoder.matches(password, user.getToken())) {
+        account.setToken(user.getToken());
+        account.setUser(user);
+        aRepository.save(account);
+      }
+      else throw new AuthenticationException("");
+      return account;
+
+    }
+   
+
+   public User getUserFromTable(String userName) {
+
+    List<User> users = userService.getAllUsers();
+    for(int i=0; i<users.size(); i++) {
+      if(users.get(i).getEmail().equals(userName))
+       return users.get(i);
+    }
+    return null;
+  }
+
+  
+
 }

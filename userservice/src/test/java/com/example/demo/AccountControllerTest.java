@@ -58,7 +58,7 @@ public class AccountControllerTest {
         ObjectMapper m = new ObjectMapper();
         try {
             User user = new User("azraaa", "ibriccc",  Gender.female, null, "sarajevo", "azgaraaa@bb.com");
-            return m.writeValueAsString(new Account(user,"azraIbriiigc", "azraibric"));
+            return m.writeValueAsString(new Account(user,"azraIbriiigc"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class AccountControllerTest {
         ObjectMapper m = new ObjectMapper();
         try {
             User user = new User("anicaaa", "anic",  Gender.female, null, "sarajevo", "anaaa@bb.com");
-            return m.writeValueAsString(new Account(user,"aniiic", "anapass"));
+            return m.writeValueAsString(new Account(user,"aniiic"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

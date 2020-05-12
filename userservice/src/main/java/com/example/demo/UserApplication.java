@@ -1,15 +1,5 @@
 package com.example.demo;
 
-import java.util.Calendar;
-import java.util.List;
-
-import com.example.demo.controllers.UserController;
-import com.example.demo.models.Account;
-import com.example.demo.models.Gender;
-import com.example.demo.models.User;
-import com.example.demo.repositories.AccountRepository;
-import com.example.demo.repositories.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,24 +12,37 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
 @EnableFeignClients
 @EnableEurekaClient
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableAuthorizationServer
+@ComponentScan
 public class UserApplication {
 
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	AccountRepository accountRepository;
-	
+	@Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 	public static void main(final String[] args) {
 		SpringApplication.run(UserApplication.class, args);
-	
+		/*final InstanceInfo instanceInfo = client.getNextServerFromEureka("systemevents", false);
+        final ManagedChannel channel = ManagedChannelBuilder.forAddress(instanceInfo.getIPAddr(), instanceInfo.getPort())
+                .usePlaintext()
+                .build();
+
+        final EventServiceGrpc.EventServiceBlockingStub stub = EventServiceGrpc.newBlockingStub(channel); 
+        stub.trackEvent(EventRequest.newBuilder()
+        .setTimestamp("")
+        .setStatus(200)
+        .setRequest(null)
+        .setServiceName(null)
+        .build());
+
+        channel.shutdown();*/
 	}
 
 	/*@Bean

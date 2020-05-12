@@ -1,10 +1,14 @@
 package com.example.demo.models;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "Account")
@@ -15,28 +19,23 @@ public class Account {
 
     
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonIgnore
     private User user;
 
-    @NotNull
-    @Size(max = 128)
-    @Column(unique = true)
-    private String username;
+    
 
     @NotNull
-    @Size(max = 128)
-    private String password;
-
-
+    @Size(max = 200)
+    private String token;
+    
     public Account() {
         super();
     };
-
-    public Account(User user, String username, String password) {
+  
+    public Account(User user, String token) {
         this.user = user;
-        this.username = username;
-        this.password = password;
+        this.token = token;
     }
     //constructor
 
@@ -65,25 +64,19 @@ public class Account {
         this.id = id;
     }
     //getteri
-    public String getPassword() {
-        return password;
-    }
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
+   
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) {
-        this.password = password;
-    }
     /**
-     * @param username the username to set
+     * @return the token
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public String getToken() {
+        return token;
+    }/**
+     * @param token the token to set
+     */
+    public void setToken(String token) {
+        this.token = token;
     }
 }
