@@ -26,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableFeignClients
+@EnableEurekaClient
 public class RecipeApplication {
 
 	public static void main(String[] args) {
