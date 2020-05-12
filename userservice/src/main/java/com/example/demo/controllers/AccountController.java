@@ -6,10 +6,12 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.example.demo.errors.exception.DontHavePrivilegedException;
 import com.example.demo.errors.exception.TheSameUsernameExeption;
 import com.example.demo.errors.exception.UserNotFoundException;
 import com.example.demo.helper.AuthorizationHelper;
 import com.example.demo.models.Account;
+import com.example.demo.models.User;
 import com.example.demo.repositories.AccountRepository;
 import com.example.demo.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,25 +64,36 @@ public class AccountController {
     @DeleteMapping("/account/delete/{id}")
     public void deleteAccount(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id) {
         authorizationhelper.authorize(token);
-        try {
+
+        Account account = accountService.getAccountById(id);
+        User user = account.getUser();
+
+        //provjera da li je user privilegovan
+
+        
+        if(user.getRole().getRoleId()==1) {
             accountService.delete(id);
-        } catch (Exception k) {
-            throw new UserNotFoundException("Account: " + id + " not Found");
-        }
+        } 
+        else throw new DontHavePrivilegedException(user.getEmail() + " is not privilaged");
     }
 
     @PutMapping("/account/update/{id}")
     public Account putUser(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id, @Valid @RequestBody Account accountDetails) {
         authorizationhelper.authorize(token);
+
+        //provjera da li je user privilegovan
+
       Account account = accountService.getAccountById(id);
-      try {
+        User user = account.getUser();
+
+
+      if(user.getRole().getRoleId()==1) {
         account.setToken(accountDetails.getToken());
         accountService.save(account);
   
-      } catch (Exception k) {
-        throw new UserNotFoundException("Account: " + id + " not Found");
-      }
-       
+        } 
+        else throw new DontHavePrivilegedException(user.getEmail() + " is not privilaged");
+        
         return account;
     }
 

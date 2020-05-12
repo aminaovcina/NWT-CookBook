@@ -3,9 +3,15 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.Entity;
 
 import java.util.Date;
+
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -79,6 +85,11 @@ public class User {
         this.city = city;
         this.email = email;
     }
+
+    @Override
+    public String toString() {   
+        return "Users [userName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+        }
   //geter i i seteri
 
   /**

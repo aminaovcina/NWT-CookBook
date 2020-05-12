@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-
+//@Component
 public class InterceptorManager extends WebMvcConfigurerAdapter {
     @Autowired
     CustomInterceptor customInterceptor;

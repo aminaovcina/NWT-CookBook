@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.errors.exception.AuthenticationException;
+import com.example.demo.errors.exception.DontHavePrivilegedException;
 import com.example.demo.errors.exception.TheSameEmailException;
 import com.example.demo.errors.exception.UserNotFoundException;
 import com.example.demo.feign.RecipeUser;
@@ -74,17 +75,23 @@ public class UserController {
   @DeleteMapping("/user/delete/{id}")
   public void deleteUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id) {
     authorizationhelper.authorize(token);
-    try {
+   
+
+    //provjera da li je user privilegovan
+
+    
+    User user = userService.getUserById(id);
+    if(user.getRole().getRoleId()==1) {
       userService.delete(id);
-    } catch (Exception k) {
-      throw new UserNotFoundException("User: " + id + " not Found");
-    }
+    } 
+    else throw new DontHavePrivilegedException(user.getEmail() + " is not privilaged");
   }
 
   @PostMapping("/user/save")
   public int saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody User user) {
     authorizationhelper.authorize(token);
     try {
+
       userService.save(user);
     }
     catch(Exception ex) {
@@ -97,20 +104,27 @@ public class UserController {
   public User putUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
     authorizationhelper.authorize(token);
     User user = userService.getUserById(id);
-    try {
-      user.setFirstName(userDetails.getFirstName());
-      user.setLastName(userDetails.getLastName());
-      user.setCity(userDetails.getCity());
-      user.setGender(userDetails.getGender());
-      user.setDate_Of_Birth(userDetails.getDate_Of_Birth());
-      user.setActive(userDetails.getActive());
-      user.setEmail(userDetails.getEmail());
+   
 
-      userService.save(user);
+      //provjera ako je rola 1, tj, ako je privilegovani korisnik, da se 
+      //omoguci  update korisnika
 
-    } catch (Exception k) {
-      throw new UserNotFoundException("User: " + id + " not Found");
-    }
+
+
+      if(user.getRole().getRoleId()==1) {
+        user.setFirstName(userDetails.getFirstName());
+        user.setLastName(userDetails.getLastName());
+        user.setCity(userDetails.getCity());
+        user.setGender(userDetails.getGender());
+        user.setDate_Of_Birth(userDetails.getDate_Of_Birth());
+        user.setActive(userDetails.getActive());
+        user.setEmail(userDetails.getEmail());
+  
+        userService.save(user);
+      }
+      else throw new DontHavePrivilegedException(user.getEmail() + " is not privilaged");
+     
+
      
       return user;
   }

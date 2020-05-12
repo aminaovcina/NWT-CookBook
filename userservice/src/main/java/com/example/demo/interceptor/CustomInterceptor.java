@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+//@Component
 public class CustomInterceptor extends HandlerInterceptorAdapter {
     
     @Autowired

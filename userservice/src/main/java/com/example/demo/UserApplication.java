@@ -15,12 +15,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+
 @EnableFeignClients
 @EnableEurekaClient
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableAuthorizationServer
-@ComponentScan
 public class UserApplication {
 
 	@Bean
@@ -29,22 +30,13 @@ public class UserApplication {
     }
 	public static void main(final String[] args) {
 		SpringApplication.run(UserApplication.class, args);
-		/*final InstanceInfo instanceInfo = client.getNextServerFromEureka("systemevents", false);
-        final ManagedChannel channel = ManagedChannelBuilder.forAddress(instanceInfo.getIPAddr(), instanceInfo.getPort())
-                .usePlaintext()
-                .build();
-
-        final EventServiceGrpc.EventServiceBlockingStub stub = EventServiceGrpc.newBlockingStub(channel); 
-        stub.trackEvent(EventRequest.newBuilder()
-        .setTimestamp("")
-        .setStatus(200)
-        .setRequest(null)
-        .setServiceName(null)
-        .build());
-
-        channel.shutdown();*/
+		
 	}
 
+	@Bean
+    public Jackson2JsonMessageConverter converter() {
+        return new Jackson2JsonMessageConverter();
+    }
 	/*@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 	   return builder.build();

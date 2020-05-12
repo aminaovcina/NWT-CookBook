@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.demo.errors.exception.AuthenticationException;
 import com.example.demo.errors.exception.AuthorizationException;
+import com.example.demo.errors.exception.DontHavePrivilegedException;
 import com.example.demo.errors.exception.TheSameEmailException;
 import com.example.demo.errors.exception.TheSameUsernameExeption;
 import com.example.demo.errors.exception.UserNotFoundException;
@@ -101,6 +102,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handleAuthentication(
     AuthenticationException ex, WebRequest request) {
       ApiError apiError =  new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, "Authentification error!", ex.getMessage());
+      
+      return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+  }
+
+
+  //za pogresnu rolu
+  @ExceptionHandler({DontHavePrivilegedException.class })
+  public ResponseEntity<Object> handlePrivilaged(
+    DontHavePrivilegedException ex, WebRequest request) {
+      ApiError apiError =  new ApiError(HttpStatus.LOCKED, "You don't have privilaged!", ex.getMessage());
       
       return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
   }
