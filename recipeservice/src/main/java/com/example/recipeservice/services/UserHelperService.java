@@ -16,5 +16,8 @@ public interface UserHelperService{
 
     @GetMapping("accounts/validate")
     boolean getAccountValidate(@RequestHeader(AUTHORIZATION) String token);
+
+    @GetMapping("user/role")
+    int getRoleByToken(@RequestHeader(AUTHORIZATION) String token);
 }
   

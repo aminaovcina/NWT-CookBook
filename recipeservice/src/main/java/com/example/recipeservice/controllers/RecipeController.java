@@ -61,6 +61,7 @@ public class RecipeController {
     @GetMapping("/recipe/{id}")
     private Recipe getRecipeById(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id) {
         authorizationhelper.authorize(token);
+        authorizationhelper.authorizeRole(token);
         Recipe recipe = null;
         try{
             recipe = recipeService.getRecipeById(id);
