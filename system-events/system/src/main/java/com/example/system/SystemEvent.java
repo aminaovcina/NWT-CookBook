@@ -26,19 +26,17 @@ public class SystemEvent {
     @Column(name = "request")
     private String request;
 
-    @Size(max = 100)
     @Column(name = "status")
-    private String status;
+    private int status;
 
 
     public SystemEvent() {
         super();
     }
-    public SystemEvent ( String timestamp, String serviceName, String userId, String request, String status) {
+    public SystemEvent ( String timestamp, String serviceName,  String request, int status) {
 
         this.timestamp = timestamp;
         this.serviceName = serviceName;
-        this.userId = userId;
         this.request = request;
         this.status = status;
     }
@@ -61,7 +59,7 @@ public class SystemEvent {
     }/**
      * @return the status
      */
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }/**
      * @return the timestamp
@@ -91,7 +89,7 @@ public class SystemEvent {
     }/**
      * @param status the status to set
      */
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }/**
      * @param timestamp the timestamp to set

@@ -1,31 +1,26 @@
 package com.example.system.server;
+import com.example.system.SystemEvent;
+import com.example.system.SystemEventService;
+import com.example.system.grpc.EventRequest;
+import com.example.system.grpc.EventResponse;
+import com.example.system.grpc.EventServiceGrpc;
+import com.example.system.grpc.EventServiceGrpc.EventServiceImplBase;
 
-import com.example.system.EventServiceGrpc.EventServiceImplBase;
-import com.example.system.EventServiceOuterClass.EventRequest;
-import com.example.system.EventServiceOuterClass.EventResponse;
+import org.lognet.springboot.grpc.GRpcService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import io.grpc.stub.StreamObserver;
 
+@GRpcService
+public class EventServiceImpl extends EventServiceGrpc.EventServiceImplBase {
 
-public class EventServiceImpl extends EventServiceImplBase {
+  @Autowired
+  SystemEventService service;
+
   @Override
   public void trackEvent(EventRequest request, StreamObserver<EventResponse> responseObserver) {
-    
-    System.out.println("Request received from client:\n" + request);
-
-    String greeting = new StringBuilder().append("Hello, ")
-        .append(request.getTimestamp())
-        .append(" ")
-        .append(request.getStatus())
-        .toString();
-
-    EventResponse response = EventResponse.newBuilder()
-        .setStatus(greeting)
-        .build();
-
-    responseObserver.onNext(response);
-    responseObserver.onCompleted();
-
-    super.trackEvent(request, responseObserver);
+    service.save(new SystemEvent(request.getTimestamp(), request.getServiceName(), request.getRequest(), request.getStatus()));
   }
 
  
