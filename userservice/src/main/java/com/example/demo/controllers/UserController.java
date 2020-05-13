@@ -21,6 +21,8 @@ import com.example.demo.models.UserRegister;
 import com.example.demo.repositories.AccountRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.UserService;
+
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,6 +44,13 @@ public class UserController {
 
   @Autowired
   AuthorizationHelper authorizationhelper;
+
+
+
+  @Autowired
+    private AmqpTemplate amqpTemplate;   
+  
+
 
   private UserRepository applicationUserRepository;
   private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -239,6 +248,13 @@ public class UserController {
       throw new UserNotFoundException("User with token: " + token + " not Found");
     }
     return role;
+  }
+
+
+  @GetMapping("/usersAzra")
+  public String getAllUsersAzra() {
+    amqpTemplate.convertAndSend("userserviceExchange", "userservice", userService.getAllUsers());
+    return "Message sent to the RabbitMQ Successfully";
   }
   
 
