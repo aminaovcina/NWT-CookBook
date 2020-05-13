@@ -70,7 +70,7 @@ public class AccountController {
 
         //provjera da li je user privilegovan
 
-        
+
         if(user.getRole().getRoleId()==1) {
             accountService.delete(id);
         } 
@@ -102,7 +102,6 @@ public class AccountController {
     public boolean getAccountValidate(@RequestHeader(AUTHORIZATION) String token) {
         
         try {
-            String tokenFromTable="";
 
             //provjera da li token ima u tabeli accounta
             List<Account> accounts = accountService.getAllAccounts();

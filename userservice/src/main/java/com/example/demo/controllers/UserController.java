@@ -79,7 +79,7 @@ public class UserController {
 
     //provjera da li je user privilegovan
 
-    
+
     User user = userService.getUserById(id);
     if(user.getRole().getRoleId()==1) {
       userService.delete(id);
@@ -220,6 +220,26 @@ public class UserController {
     return null;
   }
 
+
+  
+  @GetMapping("/user/role")
+  public int getRoleByToken(@RequestHeader(AUTHORIZATION) String token) {
+    //authorizationhelper.authorize(token);
+    List<User> users = null;
+    int role = 0;
+    try {
+      users = userService.getAllUsers();
+      for(int i=0; i<users.size(); i++) {
+        if(users.get(i).getToken().equals(token)) {
+          role = users.get(i).getRole().getRoleId();
+        }
+      }
+
+    } catch (NoSuchElementException k) {
+      throw new UserNotFoundException("User with token: " + token + " not Found");
+    }
+    return role;
+  }
   
 
 }
