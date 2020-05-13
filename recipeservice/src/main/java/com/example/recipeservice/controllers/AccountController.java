@@ -48,5 +48,10 @@ public class AccountController {
         return userHelperService.getAccountValidate(token);
     }
 
+    @GetMapping("user/role")
+    public int getRoleByToken(@RequestHeader(AUTHORIZATION) String token){
+        return userHelperService.getRoleByToken(token);
+    }
+
     
 }
