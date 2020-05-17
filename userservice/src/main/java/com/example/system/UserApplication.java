@@ -21,6 +21,7 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 @EnableEurekaClient
 @SpringBootApplication
 @EnableAuthorizationServer
+@EnableAutoConfiguration
 @EnableDiscoveryClient
 public class UserApplication {
 

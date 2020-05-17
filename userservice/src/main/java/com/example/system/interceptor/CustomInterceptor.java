@@ -19,9 +19,8 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     EventServiceConsumer consumer;
 
-  
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
                 try {        
                     EventRequest er =  com.example.system.grpc.EventRequest.newBuilder()
@@ -36,10 +35,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
                 catch(Exception e) {
                     System.out.println("OVDJEEEEEEEEEEEEEEEEEE"+ e);
                 }
-        return super.preHandle(request, response, handler);
+        super.afterCompletion(request, response, handler, ex);
     }
-
-
-  
 
 }
