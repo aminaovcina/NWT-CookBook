@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class UserController {
   public static final String AUTHORIZATION= "Authorization";
 
@@ -69,7 +70,7 @@ public class UserController {
     return userService.getAllUsers();
   }
 
-  @GetMapping("/user/{id}")
+  @GetMapping("/users/{id}")
   public User getUserById(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") int id) {
     authorizationhelper.authorize(token);
     User user = null;
@@ -81,7 +82,7 @@ public class UserController {
     return user;
   }
 
-  @DeleteMapping("/user/delete/{id}")
+  @DeleteMapping("/users/delete/{id}")
   public void deleteUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id) {
     authorizationhelper.authorize(token);
    
@@ -96,7 +97,7 @@ public class UserController {
     else throw new DontHavePrivilegedException(user.getEmail() + " is not privilaged");
   }
 
-  @PostMapping("/user/save")
+  @PostMapping("/users/save")
   public int saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody User user) {
     authorizationhelper.authorize(token);
     try {
@@ -109,7 +110,7 @@ public class UserController {
     return user.getId();
   }
 
-  @PutMapping("/user/update/{id}")
+  @PutMapping("/users/update/{id}")
   public User putUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
     authorizationhelper.authorize(token);
     User user = userService.getUserById(id);
@@ -168,7 +169,7 @@ public class UserController {
     }
     //api za registraciju
 
-    @PostMapping("/register")
+    @PostMapping("/users/register")
     public User registerUser(@Valid @RequestBody UserRegister userRequest) {
     User user = new User();
     try {
@@ -199,7 +200,7 @@ public class UserController {
   
    //api za login
 
-   @PostMapping("/login")
+   @PostMapping("/users/login")
    public Account loginUser(@Valid @RequestBody UserLogin loginRequest) {
      Account account = new Account();
      
@@ -231,7 +232,7 @@ public class UserController {
 
 
   
-  @GetMapping("/user/role")
+  @GetMapping("/users/role")
   public int getRoleByToken(@RequestHeader(AUTHORIZATION) String token) {
     //authorizationhelper.authorize(token);
     List<User> users = null;

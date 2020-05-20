@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 
 @EnableFeignClients
@@ -37,7 +38,9 @@ public class UserApplication {
 	@Bean
     public Jackson2JsonMessageConverter converter() {
         return new Jackson2JsonMessageConverter();
-    }
+	}
+	
+	
 	/*@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 	   return builder.build();

@@ -11,6 +11,9 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
+import { UserService } from './service/user.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -26,9 +29,10 @@ import { FavoritesComponent } from './components/favorites/favorites.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [UserService, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
