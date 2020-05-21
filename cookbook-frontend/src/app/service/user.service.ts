@@ -12,6 +12,7 @@ export class UserService {
   constructor(private http : HttpClient) {}
   private apiUrl = 'http://localhost:8070/users/register';
   private apiUrlLogin = 'http://localhost:8070/users/login';
+ 
   private handleError(error: any): Promise<Array<any>> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
@@ -42,5 +43,39 @@ export class UserService {
       }
     );
    }
+
+
+   findUser(): Observable<HttpResponse<User>> {
+     let apiUrlUser = 'http://localhost:8070/users/' +  JSON.parse(sessionStorage.getItem('account')).user_id;
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Accept': 'application/json'
+  });    
+  return this.http.get<User>(apiUrlUser, 
+    {
+      headers: httpHeaders,
+      observe: 'response'
+    }
+  );
+}
+
+saveChanges(userRequest: Object): Observable<HttpResponse<User>> {
+  let apiUrlSave = 'http://localhost:8070/users/update/8' ;
+
+  let httpHeaders = new HttpHeaders({
+    'Content-Type' : 'application/json',
+    'Accept': 'application/json'
+});    
+return this.http.put<User>(apiUrlSave, userRequest,
+    {
+      headers: httpHeaders,
+      observe: 'response'
+    }
+  );
+}
+
+
+
+
 }
   

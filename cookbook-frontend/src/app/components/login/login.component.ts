@@ -26,10 +26,13 @@ export class LoginComponent implements OnInit {
       "password": password
     };
 
-    this.userService.loginUser(eachProduct).subscribe(response => {
-      sessionStorage.setItem('token', JSON.stringify(response.body.token));
+    this.userService.loginUser(eachProduct).subscribe(account => {
+      sessionStorage.setItem('account', JSON.stringify(account.body));
+
+     
     },
     err => console.error(err));
+
   };
 }
 

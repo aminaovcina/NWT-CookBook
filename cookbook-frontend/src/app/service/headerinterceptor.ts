@@ -11,10 +11,12 @@ export class headerInterceptor implements HttpInterceptor {
     tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
     intercept(request: HttpRequest<any>, newRequest: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any> | any> {
-        let token = JSON.parse(sessionStorage.getItem('token'));
+       
+        let account = JSON.parse(sessionStorage.getItem('account'));
 
-        if (token) {
-            request = request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+
+        if (account) {
+            request = request.clone({ setHeaders: { Authorization: `Bearer ${account.token}` } });
         }
         return newRequest.handle(request).pipe(
             catchError(err => {

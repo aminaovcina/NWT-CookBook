@@ -36,10 +36,10 @@ export class RegistrationComponent implements OnInit {
       "email": email,
       "password": password,
       "passwordConfirm": confirmPassword,
-      "role": role,
-      "gender": gender,
-      "city": city,
-      "dateOfBirth": dateOfBirth
+     // "role": role.toString(),
+     // "gender": gender.toString(),
+     // "city": city.toString(),
+     // "dateOfBirth": dateOfBirth.toString()
     };
    
     this.userService.registerUser(eachProduct).subscribe(response => {
