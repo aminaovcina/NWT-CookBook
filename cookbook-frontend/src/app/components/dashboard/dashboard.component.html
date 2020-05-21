@@ -10,6 +10,9 @@
         <a class="nav-link" href="#" (click) = "login()">Login korisnika</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="#" (click) = "editprofile()">Uređivanje profila</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="#" (click) = "recipelist()">Pregled recepata</a>
       </li>
       <li class="nav-item">
@@ -21,6 +24,7 @@
       <li class="nav-item">
         <a class="nav-link" href="#" (click) = "favorite()">Vaši favoriti</a>
       </li>
+
     </ul>
   
   </nav>
@@ -41,6 +45,9 @@
 </div>
 <div *ngIf = SHOWFAVORITE>
   <app-favorites></app-favorites>
+</div>
+<div *ngIf = SHOWEDITPROFILE>
+  <app-profile-edit></app-profile-edit>
 </div>
 
   <div class="footer navbar navbar-expand-sm bg-primary navbar-dark justify-content-center">

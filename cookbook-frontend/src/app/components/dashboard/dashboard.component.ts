@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   SHOWREGISTRATION: boolean = false;
   SHOWFAVORITE: boolean = false;
   SHOWSUBSCRIBE: boolean = false;
+  SHOWEDITPROFILE: boolean = false;
   constructor() { }
 
   ngOnInit() {
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWLOGIN = false;
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
+    this.SHOWEDITPROFILE = false;
   }
   login(){
     this.SHOWREGISTRATION = false;
@@ -32,6 +34,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWLOGIN = true;
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
+    this.SHOWEDITPROFILE = false;
   }
   recipelist(){
     this.SHOWREGISTRATION = false;
@@ -40,6 +43,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWLOGIN = false;
     this.SHOWRECIPELIST = true;
     this.SHOWPOST = false;
+    this.SHOWEDITPROFILE = false;
   }
   post(){
     this.SHOWREGISTRATION = false;
@@ -48,6 +52,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWLOGIN = false;
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = true;
+    this.SHOWEDITPROFILE = false;
   }
   favorite(){
     this.SHOWREGISTRATION = false;
@@ -56,6 +61,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWLOGIN = false;
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
+    this.SHOWEDITPROFILE = false;
   }
   subscribe(){
     this.SHOWREGISTRATION = false;
@@ -64,6 +70,16 @@ export class DashboardComponent implements OnInit {
     this.SHOWLOGIN = false;
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
+    this.SHOWEDITPROFILE = false;
+  }
+  editprofile(){
+    this.SHOWREGISTRATION = false;
+    this.SHOWSUBSCRIBE = false;
+    this.SHOWFAVORITE = false;
+    this.SHOWLOGIN = false;
+    this.SHOWRECIPELIST = false;
+    this.SHOWPOST = false;
+    this.SHOWEDITPROFILE = true;
   }
 
 }

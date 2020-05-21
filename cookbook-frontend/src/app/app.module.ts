@@ -14,6 +14,7 @@ import { FavoritesComponent } from './components/favorites/favorites.component';
 import { UserService } from './service/user.service';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { headerInterceptor } from './service/headerinterceptor';
+import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { headerInterceptor } from './service/headerinterceptor';
     LoginComponent,
     RegistrationComponent,
     SubscriptionComponent,
-    FavoritesComponent
+    FavoritesComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,
