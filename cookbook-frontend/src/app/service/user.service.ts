@@ -17,61 +17,30 @@ export class UserService {
     return Promise.reject(error.message || error);
     }
 
-    registerUser(userRequest: Object): Promise<Array<User>> {
-       return this.http.post(this.apiUrl, JSON.stringify(userRequest), { headers: 
-        { "Access-Control-Allow-Origin": "*",
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, PATCH, HEAD" } })
-      .toPromise()
-      .then(response => response as User[])
-      .catch(this.handleError);
-      }
+    registerUser(userRequest: Object): Observable<HttpResponse<User>> {
+      let httpHeaders = new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Accept': 'application/json'
+    });    
+    return this.http.post<User>(this.apiUrl, userRequest,
+        {
+          headers: httpHeaders,
+          observe: 'response'
+        }
+      );
+    }
    
    loginUser(loginRequest: Object): Observable<HttpResponse<Account>> {
-    let httpHeaders = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      'Accept': 'application/json'
-   });    
-   return this.http.post<Account>(this.apiUrlLogin, loginRequest,
-     {
-       headers: httpHeaders,
-       observe: 'response'
-     }
-   );
+      let httpHeaders = new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Accept': 'application/json'
+    });    
+    return this.http.post<Account>(this.apiUrlLogin, loginRequest,
+      {
+        headers: httpHeaders,
+        observe: 'response'
+      }
+    );
    }
-/*
-@Injectable({
-  providedIn: 'root',
-})
-export class UserService {
-private apiUrl = 'localhost:8060/register';
-private apiUrlLogin = 'localhost:8060/login';
-
-constructor(private http: Http) {
- }
-
-registerUser(userRequest: Object): Promise<Array<User>> {
- let empHeaders = new Headers({ 'Content-Type': 'application/json' });
-  return this.http.post(this.apiUrl, JSON.stringify(userRequest), { headers: empHeaders })
- .toPromise()
- .then(response => response.json as unknown as User[])
- .catch(this.handleError);
- }
- 
-private handleError(error: any): Promise<Array<any>> {
- console.error('An error occurred', error);
- return Promise.reject(error.message || error);
- }
-
-loginUser(loginRequest: Object): Promise<Array<Account>> {
-  let empHeaders = new Headers({ 'Content-Type': 'application/json' });
-   return this.http.post(this.apiUrlLogin, JSON.stringify(loginRequest), { headers: empHeaders })
-  .toPromise()
-  .then(response => response.json as unknown as Account[])
-  .catch(this.handleError);
-  }
-  
- 
-}*/
-   }
+}
   

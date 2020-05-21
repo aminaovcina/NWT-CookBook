@@ -19,13 +19,13 @@
         <input type="email" id="email" class="form-control mb-4" placeholder="E-mail" required="true">
     
         <!-- Password -->
-        <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" required="true">
+        <input type="password" id="password" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" required="true">
         <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
             At least 8 characters and 1 digit
         </small>
     
          <!-- Confirm Password -->
-         <input type="password" id="defaultRegisterFormConfirmPassword" class="form-control" placeholder="Confirm Password" aria-describedby="defaultRegisterFormConfirmPasswordHelpBlock" required="true">
+         <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" aria-describedby="defaultRegisterFormConfirmPasswordHelpBlock" required="true">
          <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
             
         </small>
@@ -74,7 +74,7 @@
         </div>
 
         <!-- Sign up button -->
-        <button class="btn btn-info my-4 btn-block" type="submit" (click)="registerUser()">Sign in</button>
+        <button class="btn btn-info my-4 btn-block" type="button" (click)="registerUser()">Sign up</button>
     
        
     

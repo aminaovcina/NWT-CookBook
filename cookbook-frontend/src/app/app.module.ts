@@ -12,8 +12,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { UserService } from './service/user.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { headerInterceptor } from './service/headerinterceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     AngularFontAwesomeModule,
     HttpClientModule
   ],
-  providers: [UserService, HttpClient],
+  providers: [UserService, HttpClient, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: headerInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

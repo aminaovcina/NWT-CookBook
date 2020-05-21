@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 
+
 @Component({
-  
-  
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -23,17 +22,14 @@ export class LoginComponent implements OnInit {
 
     var eachProduct = 
     {
-      "username": "azraaa@nnesto.ba",
-      "password": "azra"
+      "username": email,
+      "password": password
     };
 
     this.userService.loginUser(eachProduct).subscribe(response => {
-      console.log('ima')
-      localStorage.setItem('token', JSON.stringify(response.body.token));
-      console.log(localStorage.getItem('token'))
+      sessionStorage.setItem('token', JSON.stringify(response.body.token));
     },
     err => console.error(err));
   };
-
 }
 

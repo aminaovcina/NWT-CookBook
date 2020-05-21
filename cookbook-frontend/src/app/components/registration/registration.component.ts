@@ -1,6 +1,4 @@
 import { Component, OnInit, Injectable} from '@angular/core';
-import { UserRequest } from 'src/app/models/userRequest';
-import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 
 
@@ -12,12 +10,7 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class RegistrationComponent implements OnInit {
   
-  private userRequest: UserRequest[];
-  
- constructor(
-    public userService: UserService) { 
-    console.log("sgsw");
-    }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
@@ -31,23 +24,31 @@ export class RegistrationComponent implements OnInit {
     let city = (<HTMLSelectElement>document.getElementById('city')).value;
     let gender = (<HTMLSelectElement>document.getElementById('gender')).value;
     let role = (<HTMLSelectElement>document.getElementById('role')).value;
-    
-    //let password = (<HTMLInputElement>document.getElementById('password')).value;
-   // let confirmPassword = (<HTMLInputElement>document.getElementById('confirmPassword')).value;
+    let password = (<HTMLInputElement>document.getElementById('password')).value;
+    let confirmPassword = (<HTMLInputElement>document.getElementById('confirmPassword')).value;
 
 
-    let userReqest = new UserRequest(firstName , "aa", "aa",lastName,dateOfBirth, email, city, gender, role);
+    //let userReqest = new UserRequest(firstName , "aa", "aa",lastName,dateOfBirth, email, city, gender, role);
     var eachProduct = 
     {
-      "firstName": "Azraa",
-      "lastName": "Azraa",
-      "email": "azraa1a@nnesto.ba",
-      "password": "azra",
-      "passwordConfirm": "azra"
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "password": password,
+      "passwordConfirm": confirmPassword,
+      "role": role,
+      "gender": gender,
+      "city": city,
+      "dateOfBirth": dateOfBirth
     };
    
-    //this.userService.registerUser(eachProduct);
-    };
+    this.userService.registerUser(eachProduct).subscribe(response => {
+      console.log('ima')
+      
+    },
+    err => console.error(err));
+  };
+  
 }
 
 
