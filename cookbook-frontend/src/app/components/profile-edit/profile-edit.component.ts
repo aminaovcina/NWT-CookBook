@@ -9,29 +9,30 @@ import { User } from 'src/app/models/user';
   providers: [UserService]
 })
 export class ProfileEditComponent implements OnInit {
- 
-  
   private user: User = JSON.parse(sessionStorage.getItem('account')).user;
-  userName = this.user.firstName + " " +this.user.lastName;
+  userName = this.user.firstName + " " + this.user.lastName;
   mail = this.user.email;
-
+ 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+   let user: User = JSON.parse(sessionStorage.getItem('account')).user;
     
-    (<HTMLInputElement>document.getElementById('firstName')).value = this.user.firstName;
-    (<HTMLInputElement>document.getElementById('lastName')).value = this.user.lastName;
+    
 
-    (<HTMLInputElement>document.getElementById('email')).value = this.user.email;
-    (<HTMLSelectElement>document.getElementById('grad')).value = this.user.city;
+    (<HTMLInputElement>document.getElementById('firstName')).value = user.firstName;
+    (<HTMLInputElement>document.getElementById('lastName')).value = user.lastName;
 
-
-    (<HTMLSelectElement>document.getElementById('gender')).value = this.user.gender.toString();
-   
-    //(<HTMLInputElement>document.getElementById('date')).value = Date.parse(this.user.dateOfBirth).toString();
-    //(<HTMLSelectElement>document.getElementById('role')).value = this.user.role;
+    (<HTMLInputElement>document.getElementById('email')).value = user.email;
+    (<HTMLSelectElement>document.getElementById('city')).value = user.city;
+    (<HTMLSelectElement>document.getElementById('gender')).value = user.gender;
+    (<HTMLInputElement>document.getElementById('dateOfBirth')).value = user.dateOfBirth;
+    (<HTMLSelectElement>document.getElementById('role')).value = user.role;
     
   };
+  logoutUser() {
+  
+    this.userService.logoutUser().subscribe(respones => {})};
 
   saveChanges()
   {
@@ -41,7 +42,7 @@ export class ProfileEditComponent implements OnInit {
     let email = (<HTMLInputElement>document.getElementById('email')).value;
     let city = (<HTMLSelectElement>document.getElementById('city')).value;
     let gender = (<HTMLSelectElement>document.getElementById('gender')).value;
-    //let role = (<HTMLSelectElement>document.getElementById('role')).value;
+    let role = (<HTMLSelectElement>document.getElementById('role')).value;
     let password = (<HTMLInputElement>document.getElementById('password')).value;
 
     var eachProduct = 
@@ -50,10 +51,10 @@ export class ProfileEditComponent implements OnInit {
       "lastName": lastName,
       "email": email,
       "password": password,
-     // "role": role,
+      "role": {"roleId": role},
       "gender": gender,
       "city": city,
-      "dateOfBirth": dateOfBirth
+      "date_Of_Birth": dateOfBirth
     };
   
     this.userService.saveChanges(eachProduct).subscribe(response => {
@@ -64,13 +65,6 @@ export class ProfileEditComponent implements OnInit {
   };
 
 
-  logoutUser() {
-   // window.location("/page2?tab=2)");
-    this.userService.logoutUser().subscribe(response => {
-      console.log('ima')
-      
-    },
-    err => console.error(err));
-  }
+ 
   
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, Injectable} from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 
-
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -15,8 +14,8 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
   }
 
-
   registerUser() {
+    
     let firstName = (<HTMLInputElement>document.getElementById('firstName')).value;
     let lastName = (<HTMLInputElement>document.getElementById('lastName')).value;
     let dateOfBirth = (<HTMLInputElement>document.getElementById('dateOfBirth')).value;
@@ -26,7 +25,8 @@ export class RegistrationComponent implements OnInit {
     let role = (<HTMLSelectElement>document.getElementById('role')).value;
     let password = (<HTMLInputElement>document.getElementById('password')).value;
     let confirmPassword = (<HTMLInputElement>document.getElementById('confirmPassword')).value;
-
+    
+  
     var eachProduct = 
     {
       "firstName": firstName,
@@ -36,19 +36,19 @@ export class RegistrationComponent implements OnInit {
       "passwordConfirm": confirmPassword,
       "gender": gender.toString(),
       "city": city.toString(),
-     // "role": role.toString(),
-     // "dateOfBirth": dateOfBirth.toString()
+      "role": {"roleId": role},
+      "date_Of_Birth": dateOfBirth
     };
    
     this.userService.registerUser(eachProduct).subscribe(response => {
       console.log('ima')
-      
+     
     },
     err =>{ console.error(err)
       //this.toastr.error("Toastr Error Notification",'Error') 
+    
+      
     });
   };
-  
 }
-
 
