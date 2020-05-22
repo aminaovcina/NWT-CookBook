@@ -1,5 +1,6 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
+
+<div class="container" >
 <div class="row flex-lg-nowrap">
  
 
@@ -92,7 +93,7 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Trenutni Password</label>
-                              <input class="form-control" type="password" id="currentPassword">
+                              <input class="form-control" type="password" id="currentPassword" [disabled]= "buttonDisabled">
                             </div>
                           </div>
                         </div>
@@ -100,7 +101,7 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Novi Password</label>
-                              <input class="form-control" type="password" id="password" >
+                              <input class="form-control" type="password" id="password"[disabled]= "buttonDisabled1" >
                             </div>
                           </div>
                         </div>
@@ -108,7 +109,7 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Potvrdi  <span class="d-none d-xl-inline">Password</span></label>
-                              <input class="form-control" type="password" id="confirmPassword"></div>
+                              <input class="form-control" type="password" id="confirmPassword" [disabled]= "buttonDisabled2"></div>
                           </div>
                         </div>
                       </div>

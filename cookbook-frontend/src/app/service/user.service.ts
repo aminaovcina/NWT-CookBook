@@ -59,6 +59,20 @@ export class UserService {
   }
 
 
+   findUser(): Observable<HttpResponse<User>> {
+     let apiUrlUser = 'http://localhost:8070/users/' +  JSON.parse(sessionStorage.getItem('account')).user_id;
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Accept': 'application/json'
+  });    
+  return this.http.get<User>(apiUrlUser, 
+    {
+      headers: httpHeaders,
+      observe: 'response'
+    }
+  );
+}
+
 saveChanges(userRequest: Object): Observable<HttpResponse<User>> {
   let apiUrlSave = 'http://localhost:8070/users/update/' +  JSON.parse(sessionStorage.getItem('account')).user.id;
 

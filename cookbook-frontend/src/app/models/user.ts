@@ -6,13 +6,15 @@ export class User{
     email: string;
     city: string;
     gender: string;
-    role: string;
+    role: Role;
+    token: string;
 
     constructor( firstName: string, lastName: string, dateOfBirth: string,
         email: string,
         city: string,
         gender: string,
-        role: string){
+        role: Role,
+        token: string){
 
     this.firstName = firstName;
     this.lastName = lastName;
@@ -21,5 +23,6 @@ export class User{
     this.city = city;
     this.gender = gender;
     this.role = role;
+    this.token = token
     }
 }
