@@ -9,6 +9,7 @@ import com.example.system.errors.exception.DontHavePrivilegedException;
 import com.example.system.errors.exception.TheSameEmailException;
 import com.example.system.errors.exception.TheSameUsernameExeption;
 import com.example.system.errors.exception.UserNotFoundException;
+import com.example.system.errors.exception.WrongPasswordException;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -115,4 +116,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
       
       return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
   }
+
+  
+ //za nepreklapanje passworada
+ @ExceptionHandler({WrongPasswordException.class })
+ public ResponseEntity<Object> handlePrivilaged(
+  WrongPasswordException ex, WebRequest request) {
+     ApiError apiError =  new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, "Passwords can be the same!", ex.getMessage());
+     
+     return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+ }
+
 }

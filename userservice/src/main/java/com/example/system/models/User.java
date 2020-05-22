@@ -19,10 +19,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
    
-
-    @OneToOne(mappedBy = "user")
-    private Account account;
-    
     @NotNull
     @Size(max = 65)
     @Column(name = "first_name")
@@ -124,11 +120,6 @@ public class User {
       this.active = active;
   }
 /**
- * @return the account
- */
-public Account getAccount() {
-    return account;
-}/**
  * @return the city
  */
 public String getCity() {
@@ -163,11 +154,6 @@ public int getId() {
  */
 public String getLastName() {
     return lastName;
-}/**
- * @param account the account to set
- */
-public void setAccount(Account account) {
-    this.account = account;
 }/**
  * @param city the city to set
  */

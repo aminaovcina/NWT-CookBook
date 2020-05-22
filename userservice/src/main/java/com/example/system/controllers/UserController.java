@@ -1,5 +1,6 @@
 package com.example.system.controllers;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -11,6 +12,7 @@ import com.example.system.errors.exception.AuthenticationException;
 import com.example.system.errors.exception.DontHavePrivilegedException;
 import com.example.system.errors.exception.TheSameEmailException;
 import com.example.system.errors.exception.UserNotFoundException;
+import com.example.system.errors.exception.WrongPasswordException;
 import com.example.system.feign.RecipeUser;
 import com.example.system.helper.AuthorizationHelper;
 import com.example.system.models.Account;
@@ -172,7 +174,7 @@ public class UserController {
     @PostMapping("/users/register")
     public User registerUser(@Valid @RequestBody UserRegister userRequest) {
     User user = new User();
-    try {
+  
       user.setFirstName(userRequest.getFirstName());
       user.setLastName(userRequest.getLastName());
       user.setCity(userRequest.getCity());
@@ -182,6 +184,7 @@ public class UserController {
       user.setEmail(userRequest.getEmail());
       user.setRole(userRequest.getRole());
 
+  
       if(userRequest.getPassword().equals(userRequest.getPasswordConfirm())) {
         //kodiraj password u token i sacuvaj u tabelu User
 
@@ -190,11 +193,8 @@ public class UserController {
         userService.save(user);
       }
 
-    } catch (Exception k) {
-      k.printStackTrace();
-      throw new UserNotFoundException("User: " +  user.getFirstName() + " not Found");
-    }
-     
+      else throw new WrongPasswordException("Password and confirm password can be the same");
+    
       return user;
   }
   
@@ -212,7 +212,11 @@ public class UserController {
       if(bCryptPasswordEncoder.matches(password, user.getToken())) {
         account.setToken(user.getToken());
         account.setUser(user);
+        if(aRepository.findLoggedInUser(user.getId())!=null) {
+          return account;
+        }
         aRepository.save(account);
+        
       }
       else throw new AuthenticationException("");
       return account;

@@ -57,7 +57,7 @@ public class AccountControllerTest {
 	public String convertAccountToJson() {
         ObjectMapper m = new ObjectMapper();
         try {
-            User user = new User("azraaa", "ibriccc",  Gender.female, null, "sarajevo", "azgaraaa@bb.com");
+            User user = new User("azraaa", "ibriccc",  Gender.Zensko, null, "sarajevo", "azgaraaa@bb.com");
             return m.writeValueAsString(new Account(user,"azraIbriiigc"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -68,7 +68,7 @@ public class AccountControllerTest {
     public String convertAccountToJsonUpdate() {
         ObjectMapper m = new ObjectMapper();
         try {
-            User user = new User("anicaaa", "anic",  Gender.female, null, "sarajevo", "anaaa@bb.com");
+            User user = new User("anicaaa", "anic",  Gender.Zensko, null, "sarajevo", "anaaa@bb.com");
             return m.writeValueAsString(new Account(user,"aniiic"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();

@@ -27,8 +27,6 @@ export class RegistrationComponent implements OnInit {
     let password = (<HTMLInputElement>document.getElementById('password')).value;
     let confirmPassword = (<HTMLInputElement>document.getElementById('confirmPassword')).value;
 
-
-    //let userReqest = new UserRequest(firstName , "aa", "aa",lastName,dateOfBirth, email, city, gender, role);
     var eachProduct = 
     {
       "firstName": firstName,
@@ -36,9 +34,9 @@ export class RegistrationComponent implements OnInit {
       "email": email,
       "password": password,
       "passwordConfirm": confirmPassword,
+      "gender": gender.toString(),
+      "city": city.toString(),
      // "role": role.toString(),
-     // "gender": gender.toString(),
-     // "city": city.toString(),
      // "dateOfBirth": dateOfBirth.toString()
     };
    
@@ -46,7 +44,9 @@ export class RegistrationComponent implements OnInit {
       console.log('ima')
       
     },
-    err => console.error(err));
+    err =>{ console.error(err)
+      //this.toastr.error("Toastr Error Notification",'Error') 
+    });
   };
   
 }

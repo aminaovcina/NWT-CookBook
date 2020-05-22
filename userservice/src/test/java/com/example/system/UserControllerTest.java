@@ -65,7 +65,7 @@ public class UserControllerTest {
 	public String convertUserToJson() {
         ObjectMapper m = new ObjectMapper();
         try {
-            return m.writeValueAsString(new User("azra", "ibric",  Gender.female, null, "sarajevo", "azara@bb.com"));
+            return m.writeValueAsString(new User("azra", "ibric",  Gender.Zensko, null, "sarajevo", "azara@bb.com"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class UserControllerTest {
 	public String convertUserToJsonTheSmeEmail() {
         ObjectMapper m = new ObjectMapper();
         try {
-            return m.writeValueAsString(new User("azra", "ibric",  Gender.female, null, "sarajevo", "azara@bb.com"));
+            return m.writeValueAsString(new User("azra", "ibric",  Gender.Zensko, null, "sarajevo", "azara@bb.com"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class UserControllerTest {
 	public String convertUserToJsonUpdate() {
         ObjectMapper m = new ObjectMapper();
         try {
-            return m.writeValueAsString(new User("azra", "ibric",  Gender.female, null, "sarajevo", "azzzz@bb.com"));
+            return m.writeValueAsString(new User("azra", "ibric",  Gender.Zensko, null, "sarajevo", "azzzz@bb.com"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

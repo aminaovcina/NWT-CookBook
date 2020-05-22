@@ -61,7 +61,16 @@ export class ProfileEditComponent implements OnInit {
       
     },
     err => console.error(err));
-};
+  };
 
+
+  logoutUser() {
+   // window.location("/page2?tab=2)");
+    this.userService.logoutUser().subscribe(response => {
+      console.log('ima')
+      
+    },
+    err => console.error(err));
+  }
   
 }
