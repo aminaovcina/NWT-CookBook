@@ -107,7 +107,7 @@ public class AccountController {
             //provjera da li token ima u tabeli accounta
             List<Account> accounts = accountService.getAllAccounts();
             for(int i=0; i<accounts.size(); i++)
-                if(("Bearer " + accounts.get(i).getToken()).equals(token)) return true;
+                if((BEARER + accounts.get(i).getToken()).equals(token)) return true;
 
 
         } catch (Exception k) {
