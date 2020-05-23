@@ -26,7 +26,7 @@ export class ProfileEditComponent implements OnInit {
     (<HTMLInputElement>document.getElementById('email')).value =  this.user.email;
     (<HTMLSelectElement>document.getElementById('city')).value =  this.user.city;
     (<HTMLSelectElement>document.getElementById('gender')).value =  this.user.gender;
-    (<HTMLInputElement>document.getElementById('dateOfBirth')).value =  this.user.dateOfBirth;
+    (<HTMLInputElement>document.getElementById('dateOfBirth')).value =  this.user.date_Of_Birth;
 
    
     
@@ -47,14 +47,16 @@ export class ProfileEditComponent implements OnInit {
     
   };
   logoutUser() {
-  
-    this.userService.logoutUser().subscribe(respones => {})};
+    this.userService.logoutUser().subscribe(respones => {});
+    sessionStorage.clear()
+    this.ngOnInit()
+  }
 
   saveChanges()
   {
     this.user.firstName = (<HTMLInputElement>document.getElementById('firstName')).value;
     this.user.lastName = (<HTMLInputElement>document.getElementById('lastName')).value;
-    this.user.dateOfBirth = (<HTMLInputElement>document.getElementById('dateOfBirth')).value;
+    this.user.date_Of_Birth = (<HTMLInputElement>document.getElementById('dateOfBirth')).value;
     this.user.email = (<HTMLInputElement>document.getElementById('email')).value;
     this.user.city = (<HTMLSelectElement>document.getElementById('city')).value;
     this.user.gender = (<HTMLSelectElement>document.getElementById('gender')).value;
@@ -75,7 +77,7 @@ export class ProfileEditComponent implements OnInit {
       "role": {"roleId": this.user.role.roleId},
       "gender": this.user.gender,
       "city": this.user.city,
-      "date_Of_Birth": this.user.dateOfBirth,
+      "dateOfBirth": this.user.date_Of_Birth,
       "currentPassword": password,
       "password": newPassword,
       "passwordConfirm": confirmPassword
@@ -86,6 +88,7 @@ export class ProfileEditComponent implements OnInit {
       account.user = this.user;
       account.token  = response.body.token;
       sessionStorage.setItem('account', JSON.stringify( account));
+      this.ngOnInit()
       
     },
     err => console.error(err));

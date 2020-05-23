@@ -40,15 +40,29 @@ export class RegistrationComponent implements OnInit {
       "date_Of_Birth": dateOfBirth
     };
    
-    this.userService.registerUser(eachProduct).subscribe(response => {
-      console.log('ima')
-     
-    },
-    err =>{ console.error(err)
-      //this.toastr.error("Toastr Error Notification",'Error') 
-    
+    if (this.validateEmail(email) && this.validatePassword(password)) {
+      this.userService.registerUser(eachProduct).subscribe(response => {
+        console.log('ima')
+       
+      },
+      err =>{ console.error(err)
+        //this.toastr.error("Toastr Error Notification",'Error') 
       
-    });
+        
+      });
+    } else {
+      //Validacijski error
+    }
+   
   };
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  validatePassword(password) {
+    var re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/;
+    return re.test(String(password).toLowerCase());
+  }
 }
 

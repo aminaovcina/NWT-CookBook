@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
     };
 
     this.userService.loginUser(eachProduct).subscribe(account => {
+      sessionStorage.clear()
       sessionStorage.setItem('account', JSON.stringify(account.body));
 
      
