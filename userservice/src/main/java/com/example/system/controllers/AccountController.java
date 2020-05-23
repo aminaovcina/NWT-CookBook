@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class AccountController {
      public static final String AUTHORIZATION= "Authorization";
      public static String BEARER = "Bearer ";
@@ -106,7 +107,7 @@ public class AccountController {
             //provjera da li token ima u tabeli accounta
             List<Account> accounts = accountService.getAllAccounts();
             for(int i=0; i<accounts.size(); i++)
-                if(accounts.get(i).getToken().equals(token)) return true;
+                if(("Bearer " + accounts.get(i).getToken()).equals(token)) return true;
 
 
         } catch (Exception k) {

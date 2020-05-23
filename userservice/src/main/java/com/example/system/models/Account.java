@@ -22,8 +22,6 @@ public class Account {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    
-
     @NotNull
     @Size(max = 200)
     private String token;

@@ -19,7 +19,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
    
-    @NotNull
     @Size(max = 65)
     @Column(name = "first_name")
     private String firstName;
@@ -32,9 +31,8 @@ public class User {
     @Column(length = 10)
     private Gender gender;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "dateOfBirth")
-    private Date dateOfBirth;
+    @Column(name = "date_of_birth")
+    private String dateOfBirth;
 
 
     @Column(name = "Active")
@@ -61,7 +59,7 @@ public class User {
     public User() {
         super();
     }
-    public User ( String firstName, String lastName, Gender gender, Date date_Of_Birth, String city, String email, String token, Role role) {
+    public User ( String firstName, String lastName, Gender gender, String date_Of_Birth, String city, String email, String token, Role role) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,7 +70,7 @@ public class User {
         this.token = token;
         this.role = role;
     }
-    public User ( String firstName, String lastName, Gender gender, Date date_Of_Birth, String city, String email) {
+    public User ( String firstName, String lastName, Gender gender, String date_Of_Birth, String city, String email) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -127,7 +125,7 @@ public String getCity() {
 }/**
  * @return the date_Of_Birth
  */
-public Date getDate_Of_Birth() {
+public String getDate_Of_Birth() {
     return dateOfBirth;
 }/**
  * @return the email
@@ -162,7 +160,7 @@ public void setCity(String city) {
 }/**
  * @param date_Of_Birth the date_Of_Birth to set
  */
-public void setDate_Of_Birth(Date date_Of_Birth) {
+public void setDate_Of_Birth(String date_Of_Birth) {
     this.dateOfBirth = date_Of_Birth;
 }/**
  * @param email the email to set

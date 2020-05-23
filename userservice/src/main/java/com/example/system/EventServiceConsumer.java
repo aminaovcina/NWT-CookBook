@@ -38,6 +38,8 @@ public class EventServiceConsumer{
         EventResponse response = blockingStub.trackEvent(EventRequest.newBuilder().setStatus(request.getStatus())
         .setRequest(request.getRequest())
         .setServiceName(request.getServiceName())
+        .setTimestamp(request.getTimestamp())
+        .setUserId(request.getUserId())
         .build());
         
     }

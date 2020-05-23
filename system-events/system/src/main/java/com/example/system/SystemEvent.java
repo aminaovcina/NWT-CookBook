@@ -33,12 +33,13 @@ public class SystemEvent {
     public SystemEvent() {
         super();
     }
-    public SystemEvent ( String timestamp, String serviceName,  String request, int status) {
+    public SystemEvent ( String timestamp, String serviceName,  String request, int status, String userId) {
 
         this.timestamp = timestamp;
         this.serviceName = serviceName;
         this.request = request;
         this.status = status;
+        this.userId = userId;
     }
 
     /**

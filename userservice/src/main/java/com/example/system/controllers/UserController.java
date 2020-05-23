@@ -4,6 +4,7 @@ import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -17,10 +18,13 @@ import com.example.system.feign.RecipeUser;
 import com.example.system.helper.AuthorizationHelper;
 import com.example.system.models.Account;
 import com.example.system.models.Recipe;
+import com.example.system.models.Role;
 import com.example.system.models.User;
+import com.example.system.models.UserEdit;
 import com.example.system.models.UserLogin;
 import com.example.system.models.UserRegister;
 import com.example.system.repositories.AccountRepository;
+import com.example.system.repositories.RoleRepository;
 import com.example.system.repositories.UserRepository;
 import com.example.system.services.UserService;
 
@@ -48,6 +52,8 @@ public class UserController {
   @Autowired
   AuthorizationHelper authorizationhelper;
 
+  @Autowired
+  RoleRepository rRepository;
 
 
   @Autowired
@@ -113,31 +119,40 @@ public class UserController {
   }
 
   @PutMapping("/users/update/{id}")
-  public User putUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id, @Valid @RequestBody User userDetails) {
+  public User putUser(@RequestHeader(AUTHORIZATION) String token,@PathVariable("id") int id, @Valid @RequestBody UserEdit userDetails) {
     authorizationhelper.authorize(token);
     User user = userService.getUserById(id);
    
+    if( userDetails.getCurrentPassword()!=null &&
+    userDetails.getPassword() != null && userDetails.getPasswordConfirm()!=null) {
+      String currentPassword = userDetails.getCurrentPassword();
+      String password = userDetails.getPassword();
+      String confirmPassword = userDetails.getPasswordConfirm();
+      
+      if(!bCryptPasswordEncoder.matches(currentPassword, user.getToken()) || 
+         !password.equals(confirmPassword)) {
+            throw new AuthenticationException("wrong password!");
+         }
+      user.setToken(bCryptPasswordEncoder.encode(password));
+    }
 
-      //provjera ako je rola 1, tj, ako je privilegovani korisnik, da se 
-      //omoguci  update korisnika
+   
+      user.setFirstName(userDetails.getFirstName()!=null?userDetails.getFirstName():user.getFirstName());
+      user.setLastName(userDetails.getLastName()!=null?userDetails.getLastName():user.getLastName());
+      user.setCity(userDetails.getCity()!=null?userDetails.getCity():user.getCity());
+      user.setGender(userDetails.getGender()!=null?userDetails.getGender():user.getGender());
+      user.setDate_Of_Birth(userDetails.getDateOfBirth()!=null?userDetails.getDateOfBirth():user.getDate_Of_Birth());
+      user.setActive(userDetails.getActive()!=null?userDetails.getActive():user.getActive());
+      user.setEmail(userDetails.getEmail()!=null?userDetails.getEmail():user.getEmail());
+      user.setRole(userDetails.getRole()!=null?userDetails.getRole():user.getRole());
 
+      
 
+      userService.save(user);
+      
+    
+   
 
-      if(user.getRole().getRoleId()==1) {
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setCity(userDetails.getCity());
-        user.setGender(userDetails.getGender());
-        user.setDate_Of_Birth(userDetails.getDate_Of_Birth());
-        user.setActive(userDetails.getActive());
-        user.setEmail(userDetails.getEmail());
-  
-        userService.save(user);
-      }
-      else throw new DontHavePrivilegedException(user.getEmail() + " is not privilaged");
-     
-
-     
       return user;
   }
 

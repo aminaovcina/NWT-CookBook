@@ -1,8 +1,7 @@
 package com.example.system.models;
 
-import java.util.Date;
 
-public class UserRegister {
+public class UserEdit {
     private String firstName;
     private String lastName;
     private Gender gender;
@@ -11,10 +10,19 @@ public class UserRegister {
     private String city;
     private String email;
 
+    private String currentPassword;
     private String password;
     private String passwordConfirm;
     private Role role;
 
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+    
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
     /**
      * @param role the role to set
      */

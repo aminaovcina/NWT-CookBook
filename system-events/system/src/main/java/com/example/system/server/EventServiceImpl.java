@@ -20,7 +20,7 @@ public class EventServiceImpl extends EventServiceGrpc.EventServiceImplBase {
 
   @Override
   public void trackEvent(EventRequest request, StreamObserver<EventResponse> responseObserver) {
-    service.save(new SystemEvent(request.getTimestamp(), request.getServiceName(), request.getRequest(), request.getStatus()));
+    service.save(new SystemEvent(request.getTimestamp(), request.getServiceName(), request.getRequest(), request.getStatus(), request.getUserId()));
     responseObserver.onCompleted();
   }
 
