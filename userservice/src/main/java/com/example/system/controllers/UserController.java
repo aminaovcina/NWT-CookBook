@@ -60,8 +60,6 @@ public class UserController {
     private AmqpTemplate amqpTemplate;   
   
 
-
-  private UserRepository applicationUserRepository;
   private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public UserController(UserRepository applicationUserRepository,
@@ -128,7 +126,7 @@ public class UserController {
       String currentPassword = userDetails.getCurrentPassword();
       String password = userDetails.getPassword();
       String confirmPassword = userDetails.getPasswordConfirm();
-      
+
       if(!bCryptPasswordEncoder.matches(currentPassword, user.getToken()) || 
          !password.equals(confirmPassword)) {
             throw new AuthenticationException("wrong password!");
