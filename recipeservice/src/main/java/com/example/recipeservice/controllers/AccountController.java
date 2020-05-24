@@ -6,6 +6,8 @@ import com.example.recipeservice.exceptionHandling.AccountNotFoundException;
 import com.example.recipeservice.helpers.AuthorizationHelper;
 import com.example.recipeservice.helpers.UserDeseralizer;
 import com.example.recipeservice.models.Account;
+import com.example.recipeservice.models.Role;
+import com.example.recipeservice.models.User;
 import com.example.recipeservice.repositories.AccountInterface;
 import com.example.recipeservice.services.AccountService;
 import com.example.recipeservice.services.UserHelperService;
@@ -44,13 +46,19 @@ public class AccountController {
       }
 
     @GetMapping("user/validate")
-    public boolean getAccountValidate(@RequestHeader(AUTHORIZATION) String token){
+    public User getAccountValidate(@RequestHeader(AUTHORIZATION) String token){
         return userHelperService.getAccountValidate(token);
     }
 
-    @GetMapping("user/role")
-    public int getRoleByToken(@RequestHeader(AUTHORIZATION) String token){
-        return userHelperService.getRoleByToken(token);
+    @GetMapping("users/role")
+    public Role getRoleByToken(@RequestHeader(AUTHORIZATION) String token){
+        try {
+            return userHelperService.getRoleByToken(token);
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     
