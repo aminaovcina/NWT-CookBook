@@ -36,8 +36,8 @@ export class RegistrationComponent implements OnInit {
       "passwordConfirm": confirmPassword,
       "gender": gender.toString(),
       "city": city.toString(),
-      "role": {"roleId": role},
-      "date_Of_Birth": dateOfBirth
+      "role": {"roleId":role},
+      "dateOfBirth": dateOfBirth
     };
    
     if (this.validateEmail(email) && this.validatePassword(password)) {

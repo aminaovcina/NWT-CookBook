@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 import { User } from 'src/app/models/user';
+import { componentFactoryName } from '@angular/compiler';
 @Component({
   selector: 'app-profile-edit',
   templateUrl: './profile-edit.component.html',
@@ -49,7 +50,7 @@ export class ProfileEditComponent implements OnInit {
   logoutUser() {
     this.userService.logoutUser().subscribe(respones => {});
     sessionStorage.clear()
-    this.ngOnInit()
+    componentFactoryName
   }
 
   saveChanges()
