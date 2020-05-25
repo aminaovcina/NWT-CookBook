@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.example.recipeservice.helpers.UserDeseralizer;
+import com.example.recipeservice.models.Role;
+import com.example.recipeservice.models.User;
 
 @FeignClient(name="userservice")
 public interface UserHelperService{
@@ -15,9 +17,9 @@ public interface UserHelperService{
     UserDeseralizer getUserById(@PathVariable("id") Long id);
 
     @GetMapping("accounts/validate")
-    boolean getAccountValidate(@RequestHeader(AUTHORIZATION) String token);
+    User getAccountValidate(@RequestHeader(AUTHORIZATION) String token);
 
-    @GetMapping("user/role")
-    int getRoleByToken(@RequestHeader(AUTHORIZATION) String token);
+    @GetMapping("users/role")
+    Role getRoleByToken(@RequestHeader(AUTHORIZATION) String token);
 }
   

@@ -13,11 +13,11 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 
 public class RabbitMQConfig {
 
-    @Bean
+   /* @Bean
     DirectExchange deadLetterExchange() {
         return new DirectExchange("deadLetterExchange");
     }
@@ -60,6 +60,6 @@ public class RabbitMQConfig {
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
 
-    }
+    }*/
 
 }

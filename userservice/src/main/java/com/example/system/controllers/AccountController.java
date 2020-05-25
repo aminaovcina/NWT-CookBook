@@ -31,9 +31,9 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-
+/*
     @PostMapping("/account/save")
-    public int saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody Account account) {
+    public Account saveUser(@RequestHeader(AUTHORIZATION) String token, @RequestBody Account account) {
         authorizationhelper.authorize(token);
         try {
             accountService.save(account);
@@ -41,8 +41,8 @@ public class AccountController {
         catch(Exception ex) {
             throw new TheSameUsernameExeption("Username must be unique");
         }
-        return account.getId();
-    }
+        return account;
+    }*/
 
     @GetMapping("/accounts")
     public List<Account> getAllAccounts(@RequestHeader(AUTHORIZATION) String token) {
@@ -100,20 +100,22 @@ public class AccountController {
 
     //api za validaciju sA mikroservisima
     @GetMapping("/accounts/validate")
-    public boolean getAccountValidate(@RequestHeader(AUTHORIZATION) String token) {
-        
+    public User getAccountValidate(@RequestHeader(AUTHORIZATION) String token) {
+        User user = new User();
         try {
-
             //provjera da li token ima u tabeli accounta
             List<Account> accounts = accountService.getAllAccounts();
             for(int i=0; i<accounts.size(); i++)
-                if(("Bearer " + accounts.get(i).getToken()).equals(token)) return true;
+                if((BEARER + accounts.get(i).getToken()).equals(token)) {
+
+                    user = accounts.get(i).getUser();
+                } 
 
 
         } catch (Exception k) {
             throw new UserNotFoundException("Token: " + token + " not Found");
         }
-        return false;
+        return user;
     }
 
     //api za logout

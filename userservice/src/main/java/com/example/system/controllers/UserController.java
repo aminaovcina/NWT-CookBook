@@ -147,12 +147,7 @@ public class UserController {
       user.setRole(userDetails.getRole()!=null?userDetails.getRole():user.getRole());
 
       
-
       userService.save(user);
-      
-    
-   
-
       return user;
   }
 
@@ -252,30 +247,27 @@ public class UserController {
 
   
   @GetMapping("/users/role")
-  public int getRoleByToken(@RequestHeader(AUTHORIZATION) String token) {
+  public Role getRoleByToken(@RequestHeader(AUTHORIZATION) String token) {
     //authorizationhelper.authorize(token);
     List<User> users = null;
-    int role = 0;
+    Role role = null;
     try {
       users = userService.getAllUsers();
       for(int i=0; i<users.size(); i++) {
-        if(users.get(i).getToken().equals(token)) {
-          role = users.get(i).getRole().getRoleId();
+        if(("Bearer " + users.get(i).getToken()).equals(token)) {
+          role = users.get(i).getRole();
+          break;
         }
       }
 
     } catch (NoSuchElementException k) {
       throw new UserNotFoundException("User with token: " + token + " not Found");
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return role;
   }
 
 
-  @GetMapping("/usersAzra")
-  public String getAllUsersAzra() {
-    amqpTemplate.convertAndSend("userserviceExchange", "userservice", userService.getAllUsers());
-    return "Message sent to the RabbitMQ Successfully";
-  }
-  
 
 }
