@@ -53,7 +53,7 @@ public class User {
     private String email;
 
     @JoinColumn(name="role")
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.REFRESH)
     private Role role;
 
     public User() {
