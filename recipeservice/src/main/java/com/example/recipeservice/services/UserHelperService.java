@@ -11,7 +11,7 @@ import com.example.recipeservice.helpers.UserDeseralizer;
 public interface UserHelperService{
     public static final String AUTHORIZATION= "Authorization";
 
-    @GetMapping("/user/{id}")
+    @GetMapping("user/{id}")
     UserDeseralizer getUserById(@PathVariable("id") Long id);
 
     @GetMapping("accounts/validate")
