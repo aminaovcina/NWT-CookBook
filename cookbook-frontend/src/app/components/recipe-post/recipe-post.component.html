@@ -1,7 +1,43 @@
-<p>recipe-post works!</p>
+<div class="ml-5 mt-2">
+  <h2>Objava recepta</h2>
+  <h6>
+      Ovdje možete izvršiti objavu novog recepta
+  </h6>
+</div>
+
+
+<div class="mt-2 ml-5 mr-5">
 <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon1">@</span>
+      <span class="input-group-text" id="basic-addon1">Naziv recepta</span>
     </div>
-    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+    <input type="text" class="form-control" aria-describedby="basic-addon1">
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">Vrijeme kuhanja</span>
+    </div>
+    <input type="number" class="form-control" aria-describedby="basic-addon1">
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">Temperatura kuhanja</span>
+    </div>
+    <input type="number" class="form-control" aria-describedby="basic-addon1">
+  </div>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Priprema recepta</span>
+    </div>
+    <textarea class="form-control" aria-label="With textarea"></textarea>
+  </div>
+  <div class="input-group mt-2">
+            
+    <select class="form-control" id="dish">
+      <option value="main">Main dish</option>
+      <option value="side">Side dish</option>
+      <option value="dessert">Dessert</option>
+    </select>
+  </div>
+
   </div>

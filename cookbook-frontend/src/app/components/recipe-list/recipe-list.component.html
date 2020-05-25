@@ -1,1 +1,33 @@
-<p>recipe-list works!</p>
+<div class="ml-5 mt-2">
+    <h2>Pregled svih recepata</h2>
+    <h6>
+        Ovdje možete pronaći recepte koji vas zanimaju
+    </h6>
+</div>
+
+
+<div class="mt-2 ml-5 mr-5">
+    <div *ngIf = "recipeList.length == 0">
+        <div class="alert alert-danger" role="alert">
+            Nema recepata za prikaz!
+          </div>
+    </div>
+  <div *ngIf = "recipeList.length != 0"> 
+      <!-- ngFor kroz listu recepata -->
+<div class="card border-info">
+    <div class="card-header">
+      Naslov recepta
+    </div>
+    <div class="card-body text-info">
+      <blockquote class="blockquote mb-0">
+        <p>Opis recepta</p>
+        <p class="card-text"><small class="text-muted">Temperatura kuhanja: </small></p>
+        <p class="card-text"><small class="text-muted">Vrijeme kuhanja: </small></p>
+        <p class="card-text"><small class="text-muted">Jelo: </small></p>
+        <footer class="blockquote-footer">Autor <cite title="Source Title">Autor</cite></footer>
+        <footer class="blockquote-footer">Objavljeno <cite title="Source Title">Datum objave</cite></footer>
+      </blockquote>
+    </div>
+  </div>
+</div>
+  </div>

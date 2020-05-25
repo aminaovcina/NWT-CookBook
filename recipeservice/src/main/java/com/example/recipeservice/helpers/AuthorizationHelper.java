@@ -14,7 +14,7 @@ public class AuthorizationHelper {
     UserHelperService userHelperService;
     public boolean authorize(String token) throws AuthorizationException {
         User user = userHelperService.getAccountValidate(token);
-        if(user.getToken() == token) return true;
+        if(("Bearer " + user.getToken()).equals(token)) return true;
         else throw new AuthorizationException("You are not logged in!");
     }
 
