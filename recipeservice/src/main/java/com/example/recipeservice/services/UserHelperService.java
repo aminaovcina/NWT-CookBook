@@ -13,7 +13,7 @@ import com.example.recipeservice.models.User;
 public interface UserHelperService{
     public static final String AUTHORIZATION= "Authorization";
 
-    @GetMapping("/user/{id}")
+    @GetMapping("user/{id}")
     UserDeseralizer getUserById(@PathVariable("id") Long id);
 
     @GetMapping("accounts/validate")

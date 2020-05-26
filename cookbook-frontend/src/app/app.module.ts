@@ -15,6 +15,7 @@ import { UserService } from './service/user.service';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { headerInterceptor } from './service/headerinterceptor';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { RecipeService } from './service/recipe.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
     AngularFontAwesomeModule,
     HttpClientModule
   ],
-  providers: [UserService, HttpClient, {
+  providers: [UserService, RecipeService, HttpClient, {
     provide: HTTP_INTERCEPTORS,
     useClass: headerInterceptor,
     multi: true
