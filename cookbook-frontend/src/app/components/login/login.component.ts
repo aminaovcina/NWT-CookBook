@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 
 
@@ -10,9 +10,12 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class LoginComponent implements OnInit {
 
+  @ViewChild('alert', { static: true }) alert: ElementRef
+
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+
   }
 
   loginUser() {
@@ -29,6 +32,7 @@ export class LoginComponent implements OnInit {
     this.userService.loginUser(eachProduct).subscribe(account => {
       sessionStorage.clear()
       sessionStorage.setItem('account', JSON.stringify(account.body));
+      alert("Uspjesan login!")
 
      
     },

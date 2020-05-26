@@ -90,10 +90,11 @@ export class ProfileEditComponent implements OnInit {
       account.token  = response.body.token;
       sessionStorage.setItem('account', JSON.stringify( account));
       this.ngOnInit()
+      alert("Sacuvano!")
       
     },
     err => console.error(err));
-
+    alert("Greska!")
   };
 
   

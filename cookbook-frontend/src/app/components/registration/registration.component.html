@@ -1,6 +1,5 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-
 <div class="container">
 <div class="row flex-lg-nowrap">
   <div class="col-12 col-lg-auto mb-3" style="width: 900px;">
@@ -22,11 +21,14 @@
     
         <!-- E-mail -->
         <input type="email" id="email" class="form-control mb-4" placeholder="E-mail" required="true">
+         <small id="emaailValidation" class="form-text text-muted mb-4">
+            Email mora biti u ispravnom formatu (test@test.ba)
+        </small>
     
         <!-- Password -->
         <input type="password" id="password" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" required="true">
         <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-            At least 8 characters and 1 digit
+            Password mora da ima najmanje 2 karaktera i jedan broj
         </small>
     
          <!-- Confirm Password -->
@@ -77,13 +79,13 @@
 
         <!-- Sign up button -->
         <button class="btn btn-info my-4 btn-block" type="button" (click)="registerUser()">Sign up</button>
-    
+       
         <hr>
-
-
        
     </form>
+    
     <!-- Default form register -->
 </div>
 </div>
 </div>
+
