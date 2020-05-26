@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable} from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild,ElementRef } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -9,13 +9,14 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class RegistrationComponent implements OnInit {
   
+  @ViewChild('alert', { static: true }) alert: ElementRef;
+
   constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
 
   registerUser() {
-    
     let firstName = (<HTMLInputElement>document.getElementById('firstName')).value;
     let lastName = (<HTMLInputElement>document.getElementById('lastName')).value;
     let dateOfBirth = (<HTMLInputElement>document.getElementById('dateOfBirth')).value;
@@ -43,15 +44,18 @@ export class RegistrationComponent implements OnInit {
     if (this.validateEmail(email) && this.validatePassword(password)) {
       this.userService.registerUser(eachProduct).subscribe(response => {
         console.log('ima')
+        alert("Uspjesna registracija!")
+     
        
       },
       err =>{ console.error(err)
         //this.toastr.error("Toastr Error Notification",'Error') 
-      
+        alert("Neuspjesna registracija!" + " " + err)
         
       });
     } else {
       //Validacijski error
+      alert("Pogresan email ili password!")
     }
    
   };
