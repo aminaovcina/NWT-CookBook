@@ -5,10 +5,10 @@ export class Recipe{
     title: string;
     description: string;
     dish: Dish;
-    dishId: number;
-    accountId: number;
-    cookingTime: number;
-    postDate: Date;
     cookingTemperature: number;
+    accountId: number;
+    dishId: number;
+    postDate: Date;
+    cookingTime: number;
 
 }

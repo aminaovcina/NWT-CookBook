@@ -17,6 +17,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class RecipeCategoryController {
     public static final String AUTHORIZATION= "Authorization";
     @Autowired

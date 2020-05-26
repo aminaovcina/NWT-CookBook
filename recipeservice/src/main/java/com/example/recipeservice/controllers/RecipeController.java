@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class RecipeController {
     public static final String AUTHORIZATION= "Authorization";
     @Autowired
@@ -31,7 +32,7 @@ public class RecipeController {
 
     @GetMapping("/recipe")
     private List<Recipe> getAllRecipes(@RequestHeader(AUTHORIZATION) String token){
-        authorizationhelper.authorize(token);
+        // authorizationhelper.authorize(token);
         return recipeService.getAllRecipes();
     }
     @GetMapping("/recipesByDish/{id}")
