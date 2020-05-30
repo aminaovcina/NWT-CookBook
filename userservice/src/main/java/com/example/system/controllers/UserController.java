@@ -15,6 +15,8 @@ import com.example.system.errors.exception.TheSameEmailException;
 import com.example.system.errors.exception.UserNotFoundException;
 import com.example.system.errors.exception.WrongPasswordException;
 import com.example.system.feign.RecipeUser;
+import com.example.system.helper.ApplicationConfigReader;
+import com.example.system.helper.ApplicationConstants;
 import com.example.system.helper.AuthorizationHelper;
 import com.example.system.models.Account;
 import com.example.system.models.Recipe;
@@ -23,14 +25,20 @@ import com.example.system.models.User;
 import com.example.system.models.UserEdit;
 import com.example.system.models.UserLogin;
 import com.example.system.models.UserRegister;
+import com.example.system.rabbit.RabbitSender;
 import com.example.system.repositories.AccountRepository;
 import com.example.system.repositories.RoleRepository;
 import com.example.system.repositories.UserRepository;
 import com.example.system.services.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +47,27 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class UserController {
   public static final String AUTHORIZATION= "Authorization";
+
+  private static final Logger log = LoggerFactory.getLogger(UserService.class);
+  private final RabbitTemplate rabbitTemplate;
+  private ApplicationConfigReader applicationConfig;
+  private RabbitSender messageSender;
+  public ApplicationConfigReader getApplicationConfig() {
+      return applicationConfig;
+  }
+  @Autowired
+  public void setApplicationConfig(ApplicationConfigReader applicationConfig) {
+      this.applicationConfig = applicationConfig;
+  }
+
+  public RabbitSender getMessageSender() {
+		return messageSender;
+	}
+
+	@Autowired
+	public void setMessageSender(RabbitSender messageSender) {
+		this.messageSender = messageSender;
+	}
 
   @Autowired
   UserService userService;
@@ -64,13 +93,29 @@ public class UserController {
   private UserRepository applicationUserRepository;
   private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    public UserController(UserRepository applicationUserRepository,
-                          BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.applicationUserRepository = applicationUserRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+  @Autowired
+  public UserController(UserRepository applicationUserRepository,
+                        BCryptPasswordEncoder bCryptPasswordEncoder,
+                        final RabbitTemplate rabbitTemplate) {
+      this.applicationUserRepository = applicationUserRepository;
+      this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+      this.rabbitTemplate = rabbitTemplate;
+  }
 
- 
+  @PostMapping("rabbit/test")
+  public ResponseEntity<?> sendMessage(@RequestBody User user) {
+    String exchange = getApplicationConfig().getApp1Exchange();
+    String routingKey = getApplicationConfig().getApp1RoutingKey();
+    /* Sending to Message Queue */
+    try {
+      messageSender.sendMessage(rabbitTemplate, exchange, routingKey, user);
+      return new ResponseEntity<String>(ApplicationConstants.IN_QUEUE, HttpStatus.OK);
+    } catch (Exception ex) {
+      log.error("Exception occurred while sending message to the queue. Exception= {}", ex);
+      return new ResponseEntity(ApplicationConstants.MESSAGE_QUEUE_SEND_ERROR,
+      HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+}
 
   @GetMapping("/users")
   public List<User> getAllUsers(@RequestHeader(AUTHORIZATION) String token) {
