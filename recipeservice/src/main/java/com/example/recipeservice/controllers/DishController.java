@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class DishController {
     public static final String AUTHORIZATION= "Authorization";
     @Autowired

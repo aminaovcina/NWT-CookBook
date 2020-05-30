@@ -12,20 +12,26 @@
             Nema recepata za prikaz!
           </div>
     </div>
-  <div *ngIf = "recipeList.length != 0"> 
+    <div *ngIf = "!account">
+      <div class="alert alert-danger" role="alert">
+          Za pregled je potreban login!
+        </div>
+  </div>
+  <div *ngIf = "recipeList.length != 0 && account"> 
       <!-- ngFor kroz listu recepata -->
-<div class="card border-info">
+<div class="card border-info mb-4" *ngFor = "let recipe of recipeList" >
     <div class="card-header">
-      Naslov recepta
+      {{recipe.title}}
     </div>
     <div class="card-body text-info">
       <blockquote class="blockquote mb-0">
-        <p>Opis recepta</p>
-        <p class="card-text"><small class="text-muted">Temperatura kuhanja: </small></p>
-        <p class="card-text"><small class="text-muted">Vrijeme kuhanja: </small></p>
-        <p class="card-text"><small class="text-muted">Jelo: </small></p>
-        <footer class="blockquote-footer">Autor <cite title="Source Title">Autor</cite></footer>
-        <footer class="blockquote-footer">Objavljeno <cite title="Source Title">Datum objave</cite></footer>
+        <p>{{recipe.description}}</p>
+        <p class="card-text"><small class="text-muted">Temperatura kuhanja: {{ recipe.cookingTemperature}}</small></p>
+        <p class="card-text"><small class="text-muted">Vrijeme kuhanja: {{ recipe.cookingTime}}</small></p>
+        <p class="card-text"><small class="text-muted">Jelo: {{recipe.dish.title}}</small></p>
+        <p class="card-text"><small class="text-muted">{{recipe.dish.description}}</small></p>
+        <footer class="blockquote-footer">Autor <cite title="Source Title"></cite></footer>
+        <footer class="blockquote-footer">Objavljeno <cite title="Source Title">{{recipe.postDate}}</cite></footer>
       </blockquote>
     </div>
   </div>
