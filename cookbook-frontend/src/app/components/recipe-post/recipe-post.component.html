@@ -7,37 +7,64 @@
 
 
 <div class="mt-2 ml-5 mr-5">
+  <form #recipeForm = "ngForm">
 <div class="input-group mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text" id="basic-addon1">Naziv recepta</span>
     </div>
-    <input type="text" class="form-control" aria-describedby="basic-addon1">
+    <input id="naziv"  [(ngModel)]="model.title" #naziv="ngModel" name = "naziv" required type="text" class="form-control" aria-describedby="basic-addon1">
   </div>
+  <div [hidden]="naziv.valid || naziv.pristine"
+     class="alert alert-danger">
+  Naziv je obavezan!
+</div>
   <div class="input-group mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text" id="basic-addon1">Vrijeme kuhanja</span>
     </div>
-    <input type="number" class="form-control" aria-describedby="basic-addon1">
+    <input id="vrijeme" [(ngModel)]="model.cookingTime" #vrijeme="ngModel" name="vrijeme" required type="number" class="form-control" aria-describedby="basic-addon1">
   </div>
+  <div [hidden]="vrijeme.valid || vrijeme.pristine"
+  class="alert alert-danger">
+Vrijeme kuhanja je obavezan podatak!
+</div>
   <div class="input-group mb-3">
     <div class="input-group-prepend">
       <span class="input-group-text" id="basic-addon1">Temperatura kuhanja</span>
     </div>
-    <input type="number" class="form-control" aria-describedby="basic-addon1">
+    <input id="temperatura" [(ngModel)]="model.cookingTemperature" #temperatura="ngModel" name= "temperatura" required type="number" class="form-control" aria-describedby="basic-addon1">
   </div>
+  <div [hidden]="temperatura.valid || temperatura.pristine"
+  class="alert alert-danger">
+Temperatura kuhanja je obavezan podatak!
+</div>
   <div class="input-group">
     <div class="input-group-prepend">
       <span class="input-group-text">Priprema recepta</span>
     </div>
-    <textarea class="form-control" aria-label="With textarea"></textarea>
+    <textarea id="opis" name ="opis" [(ngModel)]="model.description" #opis="ngModel" required class="form-control" aria-label="With textarea"></textarea>
   </div>
-  <div class="input-group mt-2">
-            
-    <select class="form-control" id="dish">
-      <option value="main">Main dish</option>
-      <option value="side">Side dish</option>
-      <option value="dessert">Dessert</option>
+  <div [hidden]="opis.valid || opis.pristine"
+  class="alert alert-danger">
+Način pripreme recepta je obavezan podatak!
+</div>
+  <div class="input-group mt-2"> 
+    <select class="form-control" name="dish" id="dish">
+      <option [value]="dish.id" *ngFor="let dish of dishList">            
+         {{dish.title}}</option>
     </select>
   </div>
-
+  </form>
+  <button class="btn btn-primary mt-3" type="submit" (click)="postRecipe()">Objavi recept</button>
+  <div class="mt-3" *ngIf = "objavljeno == true">
+    <div class="alert alert-success" role="alert">
+        Recept uspješno objavljen!
+      </div>
+</div>
+<div class="mt-3" *ngIf = "objavljeno == false">
+  <div class="alert alert-danger" role="alert">
+      Desila se greška pri objavi recepta!
+    </div>
+</div>
   </div>
+ 

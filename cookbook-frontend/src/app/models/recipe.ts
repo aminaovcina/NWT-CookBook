@@ -10,5 +10,17 @@ export class Recipe{
     dishId: number;
     postDate: Date;
     cookingTime: number;
+    constructor(){
+        this.id = null;
+        this.title = '';
+        this.description = '';
+        this.dish = null;
+        this.cookingTemperature = null;
+        this.cookingTime = null;
+        this.accountId = null;
+        this.dishId = null;
+        this.postDate = null;
+        this.cookingTime = null;
+    }
 
 }

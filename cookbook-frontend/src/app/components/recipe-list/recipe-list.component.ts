@@ -16,17 +16,11 @@ export class RecipeListComponent implements OnInit {
   odgovor: any;
   account: any;
   constructor(private recipeService: RecipeService) { 
-    console.log("dodje")
-   
-  console.log(this.recipeList)
   this.account = JSON.parse(sessionStorage.getItem('account'));
-  
   }
-
   ngOnInit() {
     this.recipeService.getRecepti()
     .subscribe(heroes => this.recipeList = heroes);
-    console.log(this.recipeList)
   }
 
 

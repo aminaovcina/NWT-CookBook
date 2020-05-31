@@ -82,7 +82,7 @@ public class RecipeController {
     }
     @PostMapping("/recipe/save")
     private Long saveRecipe(@RequestHeader(AUTHORIZATION) String token, @RequestBody Recipe recipe) {
-        authorizationhelper.authorize(token);
+        //authorizationhelper.authorize(token);
         recipeService.saveOrUpdateRecipe(recipe);
         return recipe.getId();
     } 

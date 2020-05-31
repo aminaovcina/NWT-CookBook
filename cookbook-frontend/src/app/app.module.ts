@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
@@ -33,9 +34,10 @@ import { RecipeService } from './service/recipe.service';
     BrowserModule,
     AppRoutingModule,
     AngularFontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [UserService, RecipeService, HttpClient, {
+  providers: [UserService, RecipeService, DatePipe, HttpClient, {
     provide: HTTP_INTERCEPTORS,
     useClass: headerInterceptor,
     multi: true
