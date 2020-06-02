@@ -54,6 +54,12 @@ Način pripreme recepta je obavezan podatak!
          {{dish.title}}</option>
     </select>
   </div>
+  <div *ngFor="let category of categoryList; let i=index" class="col-md-2">
+    <label>
+      <input type="checkbox" [value]="category.id" (change)="onCheckChange(category.id)">
+      {{category.name}}
+    </label>
+  </div>
   </form>
   <button class="btn btn-primary mt-3" type="submit" (click)="postRecipe()">Objavi recept</button>
   <div class="mt-3" *ngIf = "objavljeno == true">

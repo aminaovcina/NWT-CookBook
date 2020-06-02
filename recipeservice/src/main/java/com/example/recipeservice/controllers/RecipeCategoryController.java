@@ -28,7 +28,7 @@ public class RecipeCategoryController {
     AuthorizationHelper authorizationhelper;
     @GetMapping("/recipe/category/{id}")
      private List<Category> getCategoryByRecipeId(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id) {
-        authorizationhelper.authorize(token);
+        //authorizationhelper.authorize(token);
         List<Category> kategorije = null;
         try{
             kategorije = recipeCategoryService.getCategoryByRecipeId(id);
@@ -37,6 +37,12 @@ public class RecipeCategoryController {
          }
          return kategorije;
      }
+     @PostMapping("/recipe/category/save")
+     private Long saveRecipeCategory(@RequestHeader(AUTHORIZATION) String token, @RequestBody RecipeCategory category) {
+        //authorizationhelper.authorize(token);
+        recipeCategoryService.postRecipeCategory(category);
+        return category.getId();
+    } 
 
 
 

@@ -37,7 +37,7 @@ public class RecipeController {
     }
     @GetMapping("/recipesByDish/{id}")
         private List<Recipe> getRecipesByDish(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id){
-        authorizationhelper.authorize(token);
+        //authorizationhelper.authorize(token);
         List<Recipe> recepti = null;
         try{
             recepti = recipeService.getRecipesByDish(id);
@@ -49,7 +49,7 @@ public class RecipeController {
     }
     @GetMapping("/recipes/user/{id}")
     private List<Recipe> getRecipesByUser(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id){
-        authorizationhelper.authorize(token);
+        //authorizationhelper.authorize(token);
         List<Recipe> recepti = null;
         try{
             recepti = recipeService.getRecipesByUser(id);
@@ -73,7 +73,7 @@ public class RecipeController {
     }
     @DeleteMapping("/recipe/delete/{id}")
     private void deleteRecipe(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id) {
-        authorizationhelper.authorize(token);
+        //authorizationhelper.authorize(token);
         try{
             recipeService.deleteRecipe(id);
         }catch(Exception ex){
@@ -81,10 +81,10 @@ public class RecipeController {
         }      
     }
     @PostMapping("/recipe/save")
-    private Long saveRecipe(@RequestHeader(AUTHORIZATION) String token, @RequestBody Recipe recipe) {
+    private Recipe saveRecipe(@RequestHeader(AUTHORIZATION) String token, @RequestBody Recipe recipe) {
         //authorizationhelper.authorize(token);
         recipeService.saveOrUpdateRecipe(recipe);
-        return recipe.getId();
+        return recipe;
     } 
     
    
