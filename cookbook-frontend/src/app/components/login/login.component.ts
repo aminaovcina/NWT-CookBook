@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     let email = (<HTMLInputElement>document.getElementById('email')).value;
     let password = (<HTMLInputElement>document.getElementById('password')).value;
 
+   // alert("Pogresan password!")
 
     var eachProduct = 
     {
@@ -33,10 +34,13 @@ export class LoginComponent implements OnInit {
       sessionStorage.clear()
       sessionStorage.setItem('account', JSON.stringify(account.body));
       alert("Uspjesan login!")
-
      
     },
-    err => console.error(err));
+    err =>{ console.error(err)
+     // if(err==)
+      alert("Neuspjesan login!  " + err)
+      
+    });
 
   };
 }
