@@ -93,8 +93,9 @@ export class ProfileEditComponent implements OnInit {
       alert("Sacuvano!")
       
     },
-    err => console.error(err));
+    err => {console.error(err)
     alert("Greska!")
+    });
   };
 
   

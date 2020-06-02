@@ -27,6 +27,7 @@ export class RegistrationComponent implements OnInit {
     let password = (<HTMLInputElement>document.getElementById('password')).value;
     let confirmPassword = (<HTMLInputElement>document.getElementById('confirmPassword')).value;
     
+    if(password!=confirmPassword)  alert("Ne preklapaju se pasword-i!")
   
     var eachProduct = 
     {
@@ -41,7 +42,18 @@ export class RegistrationComponent implements OnInit {
       "dateOfBirth": dateOfBirth
     };
    
-    if (this.validateEmail(email) && this.validatePassword(password)) {
+   
+    if  (!this.validateEmail(email)) {
+      //Validacijski error
+      alert("Pogresan format email-a!")
+    }
+    if  (!this.validatePassword(password)) {
+      //Validacijski error
+      alert("Pogresan format password-a!")
+    }
+    if(firstName=="" || lastName=="") alert("Popunite sva polja!")
+
+    if (this.validateEmail(email) && this.validatePassword(password) && firstName!="" && lastName!="") {
       this.userService.registerUser(eachProduct).subscribe(response => {
         console.log('ima')
         alert("Uspjesna registracija!")
@@ -49,15 +61,10 @@ export class RegistrationComponent implements OnInit {
        
       },
       err =>{ console.error(err)
-        //this.toastr.error("Toastr Error Notification",'Error') 
         alert("Neuspjesna registracija!" + " " + err)
         
       });
-    } else {
-      //Validacijski error
-      alert("Pogresan email ili password!")
-    }
-   
+    } 
   };
   validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
