@@ -23,6 +23,7 @@ export class headerInterceptor implements HttpInterceptor {
                 if (err instanceof HttpErrorResponse) {
                     switch ((<HttpErrorResponse>err).status) {
                         case 401: return <any>this.handle401Error(request, newRequest);
+                        default: alert(err.error.message)
                     }
                 } else {
                     return throwError(err);

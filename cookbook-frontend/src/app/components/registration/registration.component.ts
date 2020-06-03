@@ -27,7 +27,6 @@ export class RegistrationComponent implements OnInit {
     let password = (<HTMLInputElement>document.getElementById('password')).value;
     let confirmPassword = (<HTMLInputElement>document.getElementById('confirmPassword')).value;
     
-    if(password!=confirmPassword)  alert("Ne preklapaju se pasword-i!")
   
     var eachProduct = 
     {

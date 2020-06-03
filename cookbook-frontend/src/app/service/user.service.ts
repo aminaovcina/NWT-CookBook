@@ -3,8 +3,9 @@ import { Headers, RequestOptions } from '@angular/http';
 import { User } from '../models/user';
 import { UserRequest } from '../models/userRequest';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http'
-import { Observable } from 'rxjs';
+import { HttpClient, HttpResponse, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable()
@@ -36,14 +37,14 @@ export class UserService {
         'Content-Type' : 'application/json',
         'Accept': 'application/json'
     });    
-    return this.http.post<Account>(this.apiUrlLogin, loginRequest,
-      {
-        headers: httpHeaders,
-        observe: 'response'
-      }
-    );
-   }
+      return this.http.post<Account>(this.apiUrlLogin, loginRequest,
+        {
+          headers: httpHeaders,
+          observe: 'response'
+        }
+      )
 
+  }
     
    logoutUser():  Observable<HttpResponse<any>> {
      let apiUrlUserLogout = 'http://localhost:8070/logout';
