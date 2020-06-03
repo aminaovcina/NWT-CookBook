@@ -17,6 +17,7 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { headerInterceptor } from './service/headerinterceptor';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { RecipeService } from './service/recipe.service';
+import { YourPostsComponent } from './components/your-posts/your-posts.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RecipeService } from './service/recipe.service';
     RegistrationComponent,
     SubscriptionComponent,
     FavoritesComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    YourPostsComponent
   ],
   imports: [
     BrowserModule,

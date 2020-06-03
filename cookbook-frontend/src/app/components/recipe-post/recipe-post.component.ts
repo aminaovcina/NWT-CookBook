@@ -16,9 +16,14 @@ export class RecipePostComponent implements OnInit {
   objavljeno: boolean;
   dishList : Dish[] = [];
   categoryList: Category[] = [];
+  recipeCategory: number[] = [];
   model : Recipe = new Recipe();
   constructor(private recipeService: RecipeService, private datePipe: DatePipe) { 
     this.account = JSON.parse(sessionStorage.getItem('account'));
+  }
+  onCheckChange(categoryId){
+    this.recipeCategory.push(categoryId);
+    console.log(this.recipeCategory);
   }
   postRecipe(){
     let description = (<HTMLInputElement>document.getElementById('opis')).value;
@@ -42,6 +47,17 @@ export class RecipePostComponent implements OnInit {
     }
     this.recipeService.postRecipe(recipePost).subscribe(response => {
       this.objavljeno = true;
+      console.log(response.body)
+      this.recipeCategory.forEach(element => {
+        var recipeCategoryPost = {
+          "category": this.categoryList[element],
+          "recipe": response.body
+        }
+        this.recipeService.postRecipeCategory(recipeCategoryPost).subscribe(novi => {
+
+        });
+        
+      });
     },
     err =>{  
       this.objavljeno = false; 

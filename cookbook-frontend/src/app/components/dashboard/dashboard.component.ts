@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   SHOWFAVORITE: boolean = false;
   SHOWSUBSCRIBE: boolean = false;
   SHOWEDITPROFILE: boolean = false;
+  SHOWYOURPOSTS: boolean = false;
   constructor() { }
 
   ngOnInit() {
@@ -26,6 +27,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
     this.SHOWEDITPROFILE = false;
+    this.SHOWYOURPOSTS = false;
   }
   login(){
     this.SHOWREGISTRATION = false;
@@ -35,6 +37,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
     this.SHOWEDITPROFILE = false;
+    this.SHOWYOURPOSTS = false;
   }
   recipelist(){
     this.SHOWREGISTRATION = false;
@@ -44,6 +47,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWRECIPELIST = true;
     this.SHOWPOST = false;
     this.SHOWEDITPROFILE = false;
+    this.SHOWYOURPOSTS = false;
   }
   post(){
     this.SHOWREGISTRATION = false;
@@ -53,6 +57,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = true;
     this.SHOWEDITPROFILE = false;
+    this.SHOWYOURPOSTS = false;
   }
   favorite(){
     this.SHOWREGISTRATION = false;
@@ -62,6 +67,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
     this.SHOWEDITPROFILE = false;
+    this.SHOWYOURPOSTS = false;
   }
   subscribe(){
     this.SHOWREGISTRATION = false;
@@ -71,6 +77,7 @@ export class DashboardComponent implements OnInit {
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
     this.SHOWEDITPROFILE = false;
+    this.SHOWYOURPOSTS = false;
   }
   editprofile(){
     this.SHOWREGISTRATION = false;
@@ -80,6 +87,18 @@ export class DashboardComponent implements OnInit {
     this.SHOWRECIPELIST = false;
     this.SHOWPOST = false;
     this.SHOWEDITPROFILE = true;
+    this.SHOWYOURPOSTS = false;
+  }
+
+  yourPosts(){
+    this.SHOWREGISTRATION = false;
+    this.SHOWSUBSCRIBE = false;
+    this.SHOWFAVORITE = false;
+    this.SHOWLOGIN = false;
+    this.SHOWRECIPELIST = false;
+    this.SHOWPOST = false;
+    this.SHOWEDITPROFILE = false;
+    this.SHOWYOURPOSTS = true;
   }
 
 }

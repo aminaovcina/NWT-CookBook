@@ -19,6 +19,9 @@
         <a class="nav-link" href="#" (click) = "post()">Objavi recept</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="#" (click) = "yourPosts()">Vaše objave</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="#" (click) = "subscribe()">Vaše subskripcije</a>
       </li>
       <li class="nav-item">
@@ -28,6 +31,12 @@
     </ul>
   
   </nav>
+  <div *ngIf = "!SHOWRECIPELIST && !SHOWLOGIN && !SHOWSUBSCRIBE && !SHOWYOURPOSTS && !SHOWPOST && !SHOWREGISTRATION && !SHOWFAVORITE && !SHOWEDITPROFILE">
+    <div class="d-flex justify-content-center">
+    <img src="../../../assets/images/logo.jpg" width="700px" height="500px">
+   </div>
+  
+  </div>
   <div *ngIf = SHOWRECIPELIST>
     <app-recipe-list></app-recipe-list>
 </div>
@@ -49,8 +58,10 @@
 <div *ngIf = SHOWEDITPROFILE>
   <app-profile-edit></app-profile-edit>
 </div>
-
-  <div class="footer navbar navbar-expand-sm bg-primary navbar-dark justify-content-center">
+<div *ngIf = SHOWYOURPOSTS>
+  <app-your-posts></app-your-posts>
+</div>
+  <div class="footer  bg-primary  justify-content-center">
     <p>CookBook Aplikacija</p>
   </div>
   

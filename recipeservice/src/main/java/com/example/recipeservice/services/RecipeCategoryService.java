@@ -27,5 +27,8 @@ public class RecipeCategoryService {
         }
         return kategorije;
     }
+    public RecipeCategory postRecipeCategory(RecipeCategory recipeCategory){
+        return recipeCategoryRepository.save(recipeCategory);
+    }
 
 }
