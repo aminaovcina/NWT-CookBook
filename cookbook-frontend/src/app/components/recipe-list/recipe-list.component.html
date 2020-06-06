@@ -7,17 +7,32 @@
 
 
 <div class="mt-2 ml-5 mr-5 justify-content-center">
-    <div *ngIf = "recipeList.length == 0">
-        <div class="alert alert-danger" role="alert">
-            Nema recepata za prikaz!
-          </div>
-    </div>
+   
     <div *ngIf = "!account">
       <div class="alert alert-danger" role="alert">
           Za pregled je potreban login!
         </div>
   </div>
-  <div *ngIf = "recipeList.length != 0 && account"> 
+  <div class="input-group mt-2" *ngIf ="account"> 
+    <select class="form-control" name="dish"  #mySelect1
+    (change)='dishRecipes(mySelect1.value)'>
+      <option [value]="dish.id" *ngFor="let dish of dishList">            
+         {{dish.title}}</option>
+    </select>
+  </div>
+  <div class="input-group mt-2" *ngIf = "account"> 
+    <select class="form-control" name="category" id="category"  #mySelect2
+    (change)='categoryRecipes(mySelect2.value)'>
+      <option [value]="category.id" *ngFor="let category of categoryList">            
+         {{category.name}}</option>
+    </select>
+  </div>
+  <div *ngIf = "recipeList.length == 0 && account">
+    <div class="alert alert-danger" role="alert">
+        Nema recepata za prikaz!
+      </div>
+</div>
+  <div class="mt-2" *ngIf = "recipeList.length != 0 && account"> 
       <!-- ngFor kroz listu recepata -->
 <div class="card border-info mb-4" *ngFor = "let recipe of recipeList" >
     <div class="card-header">
@@ -30,8 +45,7 @@
         <p class="card-text"><small class="text-muted">Vrijeme kuhanja: {{ recipe.cookingTime}}</small></p>
         <p class="card-text"><small class="text-muted">Jelo: {{recipe.dish.title}}</small></p>
         <p class="card-text"><small class="text-muted">{{recipe.dish.description}}</small></p>
-        <footer class="blockquote-footer">Autor <cite title="Source Title"></cite></footer>
-        <footer class="blockquote-footer">Objavljeno <cite title="Source Title">{{recipe.postDate}}</cite></footer>
+        <footer class="blockquote-footer">Objavljeno <cite title="Source Title">{{recipe.postdate}}</cite></footer>
       </blockquote>
     </div>
   </div>

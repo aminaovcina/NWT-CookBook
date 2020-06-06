@@ -27,8 +27,26 @@ public class RecipeCategoryService {
         }
         return kategorije;
     }
+    public List<Recipe> getRecipesByCategoryId(Long id){
+        List<Recipe> recepti = new ArrayList<Recipe>();
+        List<RecipeCategory> svi = (List<RecipeCategory>) recipeCategoryRepository.findAll();
+       for (RecipeCategory recipeCategory : svi) {
+           Recipe recepat = recipeCategory.getRecipe();
+           Category kategorija = recipeCategory.getCategory();
+           if(kategorija.getId() == id){
+               recepti.add(recepat);
+           }       
+        }
+        return recepti;
+    }
     public RecipeCategory postRecipeCategory(RecipeCategory recipeCategory){
         return recipeCategoryRepository.save(recipeCategory);
+    }
+    public void deleteFromRecipe(Long id){
+        List<RecipeCategory> lista = (List<RecipeCategory>) recipeCategoryRepository.findAll();
+        for(RecipeCategory a : lista){
+            if(a.getRecipe().getId() == id) recipeCategoryRepository.delete(a);
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.recipeservice.models;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
@@ -30,31 +31,31 @@ public class Recipe {
 
     private int cookingtime;
 
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date postdate;
 
     @OneToMany(mappedBy = "recipe") //Jedan recipe moze imati vise categorya
     @JsonIgnore
     private List<RecipeCategory> rc;
 
+    private Long account_id;
+    
+
     @ManyToOne //vise recepata pripada istom tipu jela
     @JoinColumn(name="dish_id")
     private Dish dish;
 
-    @ManyToOne
-    @JoinColumn(name="account_id")
-    private Account account;
     protected Recipe() {
         super();
     };
     //constructor
-    public Recipe(String title, String description, int duration, int temperature, Dish dish, Date date, Account account){
+    public Recipe(String title, String description, int duration, int temperature, Dish dish, Date date, Long account){
         this.title = title;
         this.description = description;
         this.cookingtime = duration;
         this.cookingtemperature = temperature;
         this.dish = dish;
-        this.account = account;
+        this.account_id = account;
         this.postdate = date;
     };
     //getteri
@@ -92,7 +93,7 @@ public class Recipe {
         return dish.getId();
     }
     public Long getAccountId(){
-        return account.getId();
+        return account_id;
     }
     public Date getPostDate(){
         return postdate;

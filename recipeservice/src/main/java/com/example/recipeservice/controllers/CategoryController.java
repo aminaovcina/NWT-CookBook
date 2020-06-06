@@ -25,7 +25,7 @@ public class CategoryController {
 
     @GetMapping("/category")
     private List<Category> getAllCategories(@RequestHeader(AUTHORIZATION) String token){
-        //authorizationhelper.authorize(token);
+        authorizationhelper.authorize(token);
         return categoryService.getAllCategories();
     }
     @GetMapping("/category/{id}")

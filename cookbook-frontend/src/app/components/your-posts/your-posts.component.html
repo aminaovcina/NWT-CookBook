@@ -40,7 +40,7 @@
         <p class="card-text"><small class="text-muted">Vrijeme kuhanja: {{ recipe.cookingTime}}</small></p>
         <p class="card-text"><small class="text-muted">Jelo: {{recipe.dish.title}}</small></p>
         <p class="card-text"><small class="text-muted">{{recipe.dish.description}}</small></p>
-        <footer class="blockquote-footer">Objavljeno <cite title="Source Title">{{recipe.postDate}}</cite></footer>
+        <footer class="blockquote-footer">Objavljeno <cite title="Source Title">{{ recipe.postdate}}</cite></footer>
         <button class="btn btn-danger mt-3" type="submit" (click)="deleteRecipe(recipe.id)">Obrisi objavu</button>
       </blockquote>
     </div>

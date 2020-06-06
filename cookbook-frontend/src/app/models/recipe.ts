@@ -1,5 +1,4 @@
 import { Dish } from "./dish";
-
 export class Recipe{
     id: number;
     title: string;
@@ -9,6 +8,7 @@ export class Recipe{
     accountId: number;
     dishId: number;
     postDate: Date;
+    postdate: string;
     cookingTime: number;
     constructor(){
         this.id = null;
@@ -20,6 +20,7 @@ export class Recipe{
         this.accountId = null;
         this.dishId = null;
         this.postDate = null;
+        this.postdate = '';
         this.cookingTime = null;
     }
 

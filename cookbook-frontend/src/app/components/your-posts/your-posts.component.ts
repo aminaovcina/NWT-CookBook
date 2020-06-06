@@ -8,17 +8,19 @@ import { RecipeService } from '../../service/recipe.service';
   styleUrls: ['./your-posts.component.scss']
 })
 export class YourPostsComponent implements OnInit {
- // private user: User = JSON.parse(sessionStorage.getItem('account')).user;
+  //private user: User = JSON.parse(sessionStorage.getItem('account')).user;
   recipeList : Recipe[] = [];
   recipe : Recipe;
   odgovor: any;
-  account: any = true;
+  account: any = null;
   obrisano: boolean;
+  user_id: number;
   constructor(private recipeService: RecipeService) { 
-  // this.account = JSON.parse(sessionStorage.getItem('account'));
+    this.account = JSON.parse(sessionStorage.getItem('account'));
   }
   ngOnInit() {
-    this.recipeService.getYourRecepti()
+    this.user_id = JSON.parse(sessionStorage.getItem('account')).user.id;
+    this.recipeService.getYourRecepti(this.user_id)
     .subscribe(heroes => this.recipeList = heroes);
   }
   deleteRecipe(idRecepta){

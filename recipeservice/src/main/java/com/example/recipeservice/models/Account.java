@@ -8,19 +8,29 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "account")
+@Table(name = "Account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy = "account") //Jedan korisnik ima vise objava
-    @JsonIgnore
-    private List<Recipe> posts;
+    private String name;
+    private String lastname;
+
     public Account() {
         super();
     }
+    public Account(String name, String lastname){
+        this.name = name;
+        this.lastname = lastname;
+    }
     public Long getId() {
         return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public String getLastname(){
+        return lastname;
     }
 
 }

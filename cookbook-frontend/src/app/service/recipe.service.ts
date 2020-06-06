@@ -18,7 +18,7 @@ getRecepti(): Observable<Recipe[]> {
   let account = JSON.parse(sessionStorage.getItem('account'));
   let httpHeaders = new HttpHeaders({
      'Authorization' : `Bearer  + ${account.token}`
-    // 'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+     //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
 });   
   return this.http.get<Recipe[]>(this.apiUrl, {
     headers: httpHeaders
@@ -27,13 +27,14 @@ getRecepti(): Observable<Recipe[]> {
   
   );
 }
-getYourRecepti(): Observable<Recipe[]> {
-  //let apiUrlUsersRecipes = 'http://localhost:8080/recipes/user/' +  JSON.parse(sessionStorage.getItem('account')).user_id;
-  let apiUrlUsersRecipes = 'http://localhost:8080/recipes/user/1';
-  // let account = JSON.parse(sessionStorage.getItem('account'));
+getYourRecepti(id: number): Observable<Recipe[]> {
+  console.log(JSON.parse(sessionStorage.getItem('account')));
+  let apiUrlUsersRecipes = 'http://localhost:8080/recipes/user/' + id;
+  //let apiUrlUsersRecipes = 'http://localhost:8080/recipes/user/1';
+  let account = JSON.parse(sessionStorage.getItem('account'));
   let httpHeaders = new HttpHeaders({
-    //  'Authorization' : `Bearer  + ${account.token}`
-    'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+      'Authorization' : `Bearer  + ${account.token}`
+    //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
 });   
   return this.http.get<Recipe[]>(apiUrlUsersRecipes, {
     headers: httpHeaders
@@ -42,13 +43,42 @@ getYourRecepti(): Observable<Recipe[]> {
   
   );
 }
+getReceptiByDish(dishId: number): Observable<Recipe[]> {
+  let apiUrlDishRecipes = 'http://localhost:8080/recipesByDish/' + dishId;
+  let account = JSON.parse(sessionStorage.getItem('account'));
+  let httpHeaders = new HttpHeaders({
+      'Authorization' : `Bearer  + ${account.token}`
+    //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+});   
+  return this.http.get<Recipe[]>(apiUrlDishRecipes, {
+    headers: httpHeaders
+  }).pipe(
+    tap(_ => console.log('fetched dish recipes'))
+  
+  );
+}
+getReceptiByCategory(categoryId: number): Observable<Recipe[]> {
+  let apiUrlCategoryRecipes = 'http://localhost:8080/recipes/category/' + categoryId;
+  let account = JSON.parse(sessionStorage.getItem('account'));
+  let httpHeaders = new HttpHeaders({
+      'Authorization' : `Bearer  + ${account.token}`
+    //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+});   
+  return this.http.get<Recipe[]>(apiUrlCategoryRecipes, {
+    headers: httpHeaders
+  }).pipe(
+    tap(_ => console.log('fetched category recipes'))
+  
+  );
+}
 deleteRecipe(userRequest: number): Observable<HttpResponse<any>> {
   let apiUrlDelete = 'http://localhost:8080/recipe/delete/' + userRequest;
+  let account = JSON.parse(sessionStorage.getItem('account'));
   let httpHeaders = new HttpHeaders({
     'Content-Type' : 'application/json',
     'Accept': 'application/json',
-    //'Authorization' : `Bearer  + ${account.token}`
-    'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+    'Authorization' : `Bearer  + ${account.token}`
+    //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
 });    
 return this.http.delete<any>(apiUrlDelete, 
     {
@@ -58,10 +88,10 @@ return this.http.delete<any>(apiUrlDelete,
   );
 }
 getDishs(): Observable<Dish[]> {
-  //let account = JSON.parse(sessionStorage.getItem('account'));
+  let account = JSON.parse(sessionStorage.getItem('account'));
   let httpHeaders = new HttpHeaders({
-     //'Authorization' : `Bearer  + ${account.token}`
-    'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+     'Authorization' : `Bearer  + ${account.token}`
+    //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
 });   
   return this.http.get<Dish[]>(this.apiUrlDishs, {
     headers: httpHeaders
@@ -72,10 +102,10 @@ getDishs(): Observable<Dish[]> {
 }
 
 getCategories(): Observable<Category[]> {
-  //let account = JSON.parse(sessionStorage.getItem('account'));
+  let account = JSON.parse(sessionStorage.getItem('account'));
   let httpHeaders = new HttpHeaders({
-     //'Authorization' : `Bearer  + ${account.token}`
-    'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+     'Authorization' : `Bearer  + ${account.token}`
+    //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
 });   
   return this.http.get<Category[]>(this.apiUrlCategories, {
     headers: httpHeaders
@@ -86,11 +116,12 @@ getCategories(): Observable<Category[]> {
 }
 postRecipeCategory(userRequest: Object): Observable<HttpResponse<any>> {
   let apiUrlSave = 'http://localhost:8080/recipe/category/save';
+  let account = JSON.parse(sessionStorage.getItem('account'));
   let httpHeaders = new HttpHeaders({
     'Content-Type' : 'application/json',
     'Accept': 'application/json',
-    //'Authorization' : `Bearer  + ${account.token}`
-    'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+    'Authorization' : `Bearer  + ${account.token}`
+    //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
 });    
 return this.http.post<any>(apiUrlSave, userRequest,
     {
@@ -102,11 +133,12 @@ return this.http.post<any>(apiUrlSave, userRequest,
 
 postRecipe(userRequest: Object): Observable<HttpResponse<any>> {
   let apiUrlSave = 'http://localhost:8080/recipe/save';
+  let account = JSON.parse(sessionStorage.getItem('account'));
   let httpHeaders = new HttpHeaders({
     'Content-Type' : 'application/json',
     'Accept': 'application/json',
-    //'Authorization' : `Bearer  + ${account.token}`
-    'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
+    'Authorization' : `Bearer  + ${account.token}`
+    //'Authorization' : `Bearer $2a$10$xxWNKZtEQoYwai5G3leoreO69cq6jpnLpc89HRwg7GZkjYbA3SXoO`
 });    
 return this.http.post<any>(apiUrlSave, userRequest,
     {

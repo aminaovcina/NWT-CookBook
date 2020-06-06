@@ -11,15 +11,15 @@ import { Category } from '../../models/category';
   styleUrls: ['./recipe-post.component.scss']
 })
 export class RecipePostComponent implements OnInit {
-
-  account: any;
+  account: any = null;
   objavljeno: boolean;
   dishList : Dish[] = [];
   categoryList: Category[] = [];
   recipeCategory: number[] = [];
   model : Recipe = new Recipe();
-  constructor(private recipeService: RecipeService, private datePipe: DatePipe) { 
+  constructor(private recipeService: RecipeService, private datePipe: DatePipe) {
     this.account = JSON.parse(sessionStorage.getItem('account'));
+    console.log(this.account);
   }
   onCheckChange(categoryId){
     this.recipeCategory.push(categoryId);
@@ -39,10 +39,10 @@ export class RecipePostComponent implements OnInit {
       "description": description,
       "dish" : dishobject,
       "cookingTemperature": temperatura,
-      // "accountId": JSON.parse(sessionStorage.getItem('account')).id,
-      "accountId": 1,
-      "dishId": dish,
-      "postDate": datum,
+      "account_id": 1,
+      "dish_id": dish,
+      "postDate": today,
+      "postdate": datum,
       "cookingTime": cookingtime
     }
     this.recipeService.postRecipe(recipePost).subscribe(response => {
@@ -50,22 +50,35 @@ export class RecipePostComponent implements OnInit {
       console.log(response.body)
       this.recipeCategory.forEach(element => {
         var recipeCategoryPost = {
-          "category": this.categoryList[element],
-          "recipe": response.body
+          "category": this.categoryList.find(x => x.id == element),
+          "recipe": {
+            "id": response.body,
+            "title": title,
+            "description": description,
+            "dish" : dishobject,
+            "cookingTemperature": temperatura,
+            "account_id": 1,
+            "dish_id": dish,
+            "postDate": today,
+            "postdate": datum,
+            "cookingTime": cookingtime
+          },
+          "category_id": element,
+          "recipe_id": response.body
         }
         this.recipeService.postRecipeCategory(recipeCategoryPost).subscribe(novi => {
 
         });
-        
+
       });
     },
-    err =>{  
-      this.objavljeno = false; 
+    err =>{
+      this.objavljeno = false;
     });
     if(this.objavljeno != true){
       this.objavljeno = false;
     }
-   
+
   }
   ngOnInit() {
     this.recipeService.getDishs()
