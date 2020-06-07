@@ -50,7 +50,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
                 
                 }
                 catch(Exception e) {
-                    System.out.println("OVDJEEEEEEEEEEEEEEEEEE"+ e);
+                    
                 }
         super.afterCompletion(request, response, handler, ex);
     }
