@@ -48,9 +48,21 @@ export class ProfileEditComponent implements OnInit {
     
   };
   logoutUser() {
+   
     this.userService.logoutUser().subscribe(respones => {});
     sessionStorage.clear()
-    componentFactoryName
+    componentFactoryName;
+
+    this.userName =  "";
+    this.mail =  "";
+    (<HTMLInputElement>document.getElementById('firstName')).value =  "";
+    (<HTMLInputElement>document.getElementById('lastName')).value = "";
+
+    (<HTMLInputElement>document.getElementById('email')).value = "";
+    (<HTMLSelectElement>document.getElementById('city')).value =  "";
+    (<HTMLSelectElement>document.getElementById('gender')).value = "";
+    (<HTMLInputElement>document.getElementById('dateOfBirth')).value =  "";
+    (<HTMLSelectElement>document.getElementById('role')).value =  "";
   }
 
   saveChanges()
