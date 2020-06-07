@@ -32,12 +32,12 @@ public class RecipeController {
 
     @GetMapping("/recipe")
     private List<Recipe> getAllRecipes(@RequestHeader(AUTHORIZATION) String token){
-        // authorizationhelper.authorize(token);
+        authorizationhelper.authorize(token);
         return recipeService.getAllRecipes();
     }
     @GetMapping("/recipesByDish/{id}")
         private List<Recipe> getRecipesByDish(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id){
-        //authorizationhelper.authorize(token);
+        authorizationhelper.authorize(token);
         List<Recipe> recepti = null;
         try{
             recepti = recipeService.getRecipesByDish(id);
@@ -49,7 +49,7 @@ public class RecipeController {
     }
     @GetMapping("/recipes/user/{id}")
     private List<Recipe> getRecipesByUser(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id){
-        //authorizationhelper.authorize(token);
+        authorizationhelper.authorize(token);
         List<Recipe> recepti = null;
         try{
             recepti = recipeService.getRecipesByUser(id);
@@ -81,10 +81,10 @@ public class RecipeController {
         }      
     }
     @PostMapping("/recipe/save")
-    private Recipe saveRecipe(@RequestHeader(AUTHORIZATION) String token, @RequestBody Recipe recipe) {
-        //authorizationhelper.authorize(token);
+    private Long saveRecipe(@RequestHeader(AUTHORIZATION) String token, @RequestBody Recipe recipe) {
+        authorizationhelper.authorize(token);
         recipeService.saveOrUpdateRecipe(recipe);
-        return recipe;
+        return recipe.getId();
     } 
     
    

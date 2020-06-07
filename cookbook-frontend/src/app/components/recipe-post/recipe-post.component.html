@@ -4,9 +4,15 @@
       Ovdje možete izvršiti objavu novog recepta
   </h6>
 </div>
+<div class="mt-2 ml-5 mr-5 justify-content-center">
+<div *ngIf = "!account">
+  <div class="alert alert-danger" role="alert">
+      Za objavu je potreban login!
+    </div>
+</div>
+</div>
 
-
-<div class="mt-2 ml-5 mr-5">
+<div class="mt-2 ml-5 mr-5" *ngIf = "account">
   <form #recipeForm = "ngForm">
 <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -48,12 +54,14 @@ Temperatura kuhanja je obavezan podatak!
   class="alert alert-danger">
 Način pripreme recepta je obavezan podatak!
 </div>
+<h6>Vrsta jela</h6>
   <div class="input-group mt-2"> 
     <select class="form-control" name="dish" id="dish">
       <option [value]="dish.id" *ngFor="let dish of dishList">            
          {{dish.title}}</option>
     </select>
   </div>
+  <h6>Oznake objave</h6>
   <div *ngFor="let category of categoryList; let i=index" class="col-md-2">
     <label>
       <input type="checkbox" [value]="category.id" (change)="onCheckChange(category.id)">

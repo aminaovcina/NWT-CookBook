@@ -11,6 +11,7 @@ import com.example.recipeservice.services.UserHelperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.example.recipeservice.models.Category;
+import com.example.recipeservice.models.Recipe;
 import com.example.recipeservice.models.RecipeCategory;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class RecipeCategoryController {
     AuthorizationHelper authorizationhelper;
     @GetMapping("/recipe/category/{id}")
      private List<Category> getCategoryByRecipeId(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id) {
-        //authorizationhelper.authorize(token);
+        authorizationhelper.authorize(token);
         List<Category> kategorije = null;
         try{
             kategorije = recipeCategoryService.getCategoryByRecipeId(id);
@@ -37,9 +38,20 @@ public class RecipeCategoryController {
          }
          return kategorije;
      }
+     @GetMapping("/recipes/category/{id}")
+     private List<Recipe> getRecipesByCategoryId(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id) {
+        authorizationhelper.authorize(token);
+        List<Recipe> kategorije = null;
+        try{
+            kategorije = recipeCategoryService.getRecipesByCategoryId(id);
+         }catch(NoSuchElementException ex){
+             throw new RecipeNotFoundException(id);
+         }
+         return kategorije;
+     }
      @PostMapping("/recipe/category/save")
      private Long saveRecipeCategory(@RequestHeader(AUTHORIZATION) String token, @RequestBody RecipeCategory category) {
-        //authorizationhelper.authorize(token);
+        authorizationhelper.authorize(token);
         recipeCategoryService.postRecipeCategory(category);
         return category.getId();
     } 

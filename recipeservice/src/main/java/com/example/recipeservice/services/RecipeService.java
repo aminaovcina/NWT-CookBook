@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.recipeservice.models.Recipe;
+import com.example.recipeservice.repositories.RecipeCategoryInterface;
 import com.example.recipeservice.repositories.RecipeInterface;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class RecipeService{
     @Autowired
     RecipeInterface recipeRepository;
+    RecipeCategoryService recipeCategoryService;
     public List<Recipe> getAllRecipes() {
         return (List<Recipe>) recipeRepository.findAll();
     }

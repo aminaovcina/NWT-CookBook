@@ -26,7 +26,7 @@ public class DishController {
 
     @GetMapping("/dish")
     private List<Dish> getAllDishes(@RequestHeader(AUTHORIZATION) String token){
-        //authorizationhelper.authorize(token);
+        authorizationhelper.authorize(token);
         return dishService.getAllDishes();
     }
     @GetMapping("/dish/{id}")
