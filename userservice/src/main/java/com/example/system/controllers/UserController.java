@@ -104,11 +104,12 @@ public class UserController {
 
   @PostMapping("rabbit/test")
   public ResponseEntity<?> sendMessage(@RequestBody User user) {
-    String exchange = getApplicationConfig().getApp1Exchange();
-    String routingKey = getApplicationConfig().getApp1RoutingKey();
+    String exchange = getApplicationConfig().getApp2Exchange();
+    String routingKey = getApplicationConfig().getApp2RoutingKey();
     /* Sending to Message Queue */
     try {
-      messageSender.sendMessage(rabbitTemplate, exchange, routingKey, user);
+      //Write user
+      messageSender.sendMessage(rabbitTemplate, exchange, routingKey, user.toString());
       return new ResponseEntity<String>(ApplicationConstants.IN_QUEUE, HttpStatus.OK);
     } catch (Exception ex) {
       log.error("Exception occurred while sending message to the queue. Exception= {}", ex);
@@ -240,7 +241,7 @@ public class UserController {
       user.setRole(userRequest.getRole());
 
   
-      if(userRequest.getPassword().equals(userRequest.getPasswordConfirm())) {
+      if(userRequest.getPassword().equals(userRequest.getPasswordConfirm()) && !checkEmailInTable(userRequest.getEmail())) {
         //kodiraj password u token i sacuvaj u tabelu User
 
         user.setToken(bCryptPasswordEncoder.encode(userRequest.getPassword()));
@@ -248,9 +249,19 @@ public class UserController {
         userService.save(user);
       }
 
-      else throw new WrongPasswordException("Password and confirm password can be the same");
+      else throw new WrongPasswordException("Passwords don't match or email already exists!");
     
       return user;
+  }
+
+  public boolean checkEmailInTable(String email) {
+
+    List<User> users = userService.getAllUsers();
+    for(int i=0; i<users.size(); i++) {
+      if(users.get(i).getEmail().equals(email))
+       return true;
+    }
+    return false;
   }
   
    //api za login

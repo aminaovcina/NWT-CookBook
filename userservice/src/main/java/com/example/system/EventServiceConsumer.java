@@ -31,7 +31,7 @@ public class EventServiceConsumer{
     private EurekaClient client;
 
     public void trackEvent(RpcController controller, EventRequest request, RpcCallback<EventResponse> done) {
-        final ManagedChannel channel = ManagedChannelBuilder.forAddress("192.168.56.1", 6565)
+        final ManagedChannel channel = ManagedChannelBuilder.forAddress("192.168.56.1", 6560)
         .usePlaintext()
                 .build();
         blockingStub = EventServiceGrpc.newBlockingStub(channel);

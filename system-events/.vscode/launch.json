@@ -1,6 +1,12 @@
 {
     "configurations": [
-    
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - GrpcServer",
+            "request": "launch",
+            "mainClass": "com.example.system.server.GrpcServer",
+            "projectName": "system"
+        },
         {
             "type": "java",
             "name": "Spring Boot-Application<system>",

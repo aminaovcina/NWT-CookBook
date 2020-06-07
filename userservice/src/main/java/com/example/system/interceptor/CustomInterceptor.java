@@ -37,7 +37,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
                         User user = authorization.authorize(request.getHeader("Authorization"));
                         userId = String.valueOf(user.getId());
                     } catch(AuthorizationException e) {
-                        userId = null;
+                        userId = "";
                     }
                     EventRequest er =  com.example.system.grpc.EventRequest.newBuilder()
                     .setStatus(response.getStatus())
@@ -50,7 +50,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
                 
                 }
                 catch(Exception e) {
-                    System.out.println("OVDJEEEEEEEEEEEEEEEEEE"+ e);
+                    
                 }
         super.afterCompletion(request, response, handler, ex);
     }
