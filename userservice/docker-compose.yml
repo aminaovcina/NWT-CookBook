@@ -1,0 +1,19 @@
+version: "3"
+services:
+  eureka:
+    build: ../eureka-service
+    ports:
+    - "8761:8761"
+    networks:
+    - webnet
+  user:
+    build: ./
+    ports:
+    - "8080:8080"
+    networks:
+    - webnet
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://userservice_eureka_1:8761/eureka/
+
+networks:
+  webnet:
