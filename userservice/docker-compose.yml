@@ -4,16 +4,17 @@ services:
     build: ../eureka-service
     ports:
     - "8761:8761"
-    networks:
-    - webnet
+    environment:
+      eureka.client.registerWithEureka: "false"
+      eureka.client.fetchRegistry: "false"
+      server.port: 8761
   user:
     build: ./
     ports:
-    - "8080:8080"
-    networks:
-    - webnet
+    - "8070:8070"
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://userservice_eureka_1:8761/eureka/
-
-networks:
-  webnet:
+      eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+      spring.application.name: userservice
+      server.port: 8070
+      restart: on-failure
+      grpc.eureka.service-id: systemevents
