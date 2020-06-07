@@ -73,7 +73,8 @@ public class RecipeController {
     }
     @DeleteMapping("/recipe/delete/{id}")
     private void deleteRecipe(@RequestHeader(AUTHORIZATION) String token, @PathVariable("id") Long id) {
-        //authorizationhelper.authorize(token);
+        authorizationhelper.authorize(token);
+        authorizationhelper.authorizeRole(token);
         try{
             recipeService.deleteRecipe(id);
         }catch(Exception ex){
@@ -82,7 +83,7 @@ public class RecipeController {
     }
     @PostMapping("/recipe/save")
     private Long saveRecipe(@RequestHeader(AUTHORIZATION) String token, @RequestBody Recipe recipe) {
-        authorizationhelper.authorize(token);
+        //authorizationhelper.authorize(token);
         recipeService.saveOrUpdateRecipe(recipe);
         return recipe.getId();
     } 

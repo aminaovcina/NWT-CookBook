@@ -7,11 +7,11 @@
 
 
 <div class="mt-2 ml-5 mr-5 justify-content-center">
-    <div *ngIf = "recipeList.length == 0 && account">
+    <!-- <div *ngIf = "recipeList.length == 0 && account">
         <div class="alert alert-danger" role="alert">
             Nema recepata za prikaz!
           </div>
-    </div>
+    </div> -->
     <div *ngIf = "!account">
       <div class="alert alert-danger" role="alert">
           Za pregled je potreban login!
@@ -22,11 +22,11 @@
         Recept uspješno obrisan!
       </div>
 </div>
-<div class="mt-3" *ngIf = "obrisano == false">
+<!-- <div class="mt-3" *ngIf = "obrisano == false">
   <div class="alert alert-danger" role="alert">
       Desila se greška pri brisanju recepta!
     </div>
-</div>
+</div> -->
   <div *ngIf = "recipeList.length != 0 && account"> 
       <!-- ngFor kroz listu recepata -->
 <div class="card border-info mb-4" *ngFor = "let recipe of recipeList" >
@@ -41,7 +41,7 @@
         <p class="card-text"><small class="text-muted">Jelo: {{recipe.dish.title}}</small></p>
         <p class="card-text"><small class="text-muted">{{recipe.dish.description}}</small></p>
         <footer class="blockquote-footer">Objavljeno <cite title="Source Title">{{ recipe.postdate}}</cite></footer>
-        <button class="btn btn-danger mt-3" type="submit" (click)="deleteRecipe(recipe.id)">Obrisi objavu</button>
+        <div *ngIf = "privilegovan == 1"><button class="btn btn-danger mt-3" type="submit" (click)="deleteRecipe(recipe.id)">Obrisi objavu</button></div>
       </blockquote>
     </div>
   </div>
