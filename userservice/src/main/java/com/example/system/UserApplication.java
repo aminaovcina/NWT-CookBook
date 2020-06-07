@@ -85,23 +85,7 @@ public class UserApplication implements RabbitListenerConfigurer {
 	public Binding declareBindingApp1() {
 	return BindingBuilder.bind(getApp1Queue()).to(getApp1Exchange()).with(getApplicationConfig().getApp1RoutingKey());
 	}
-	/* Creating a bean for the Message queue Exchange */
-	@Bean
-	public TopicExchange getApp2Exchange() {
-	return new TopicExchange(getApplicationConfig().getApp2Exchange());
-	}
-	/* Creating a bean for the Message queue */
-	@Bean
-	public Queue getApp2Queue() {
-	return new Queue(getApplicationConfig().getApp2Queue());
-	}
-	/* Binding between Exchange and Queue using routing key */
-	@Bean
-	public Binding declareBindingApp2() {
-	return BindingBuilder.bind(getApp2Queue()).to(getApp2Exchange()).with(getApplicationConfig().getApp2RoutingKey());
-	}
 	
-
 	@Bean
 	public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
 		final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);

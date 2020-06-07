@@ -122,7 +122,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
  @ExceptionHandler({WrongPasswordException.class })
  public ResponseEntity<Object> handlePrivilaged(
   WrongPasswordException ex, WebRequest request) {
-     ApiError apiError =  new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, "Passwords can be the same!", ex.getMessage());
+     ApiError apiError =  new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, "Passwords don't match or user email already exists!", ex.getMessage());
      
      return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
  }
